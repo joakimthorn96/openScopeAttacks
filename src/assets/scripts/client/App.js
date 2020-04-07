@@ -11,7 +11,6 @@ window.zlsa.atc = {};
 
 // TODO: KILL THE PROP!
 const prop = {};
-
 // IIEFs are pulled in here to add functions to the global space.
 //
 // This will need to be re-worked, and current global functions should be exported and
