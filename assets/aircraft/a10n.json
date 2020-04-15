@@ -2,7 +2,7 @@
     "name": "Antonov 1337",
     "icao": "A10N",
     "engines": {
-        "number": 2,
+        "number": 4,
         "type": "J"
     },
     "weightClass": "L",
@@ -15,8 +15,8 @@
     "rate": {
         "climb":      3500,
         "descent":    3000,
-        "accelerate": 15,
-        "decelerate": 4
+        "accelerate": 5,
+        "decelerate": 5
     },
     "runway": {
         "takeoff": 1.900,
