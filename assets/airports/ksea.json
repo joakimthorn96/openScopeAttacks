@@ -756,6 +756,7 @@
             "method": "random",
             "rate": 4,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -788,6 +789,7 @@
             "method": "random",
             "rate": 4,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -820,6 +822,7 @@
             "method": "random",
             "rate": 1.75,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -852,6 +855,7 @@
             "method": "random",
             "rate": 1.75,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -884,6 +888,7 @@
             "method": "random",
             "rate": 1.75,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -916,6 +921,7 @@
             "method": "random",
             "rate": 1.75,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -948,6 +954,7 @@
             "method": "random",
             "rate": 9,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -980,6 +987,7 @@
             "method": "random",
             "rate": 9,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -1012,6 +1020,7 @@
             "method": "random",
             "rate": 15,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -1044,6 +1053,7 @@
             "method": "random",
             "rate": 10,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -1076,6 +1086,7 @@
             "method": "random",
             "rate": 8,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
@@ -1108,6 +1119,7 @@
             "method": "random",
             "rate": 8,
             "airlines": [
+                ["tsa", 100],
                 ["aal", 4.05],
                 ["aca", 0.95],
                 ["asa", 32.09],
