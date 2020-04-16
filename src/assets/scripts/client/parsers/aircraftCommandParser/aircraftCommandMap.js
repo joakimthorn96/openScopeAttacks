@@ -224,12 +224,6 @@ export const AIRCRAFT_COMMAND_MAP = {
         functionName: '',
         isSystemCommand: true
     }
-    tutorial: {
-        aliases: ['attack1_start'],
-        functionName: '',
-        isSystemCommand: true
-    }
-
 };
 
 /**
