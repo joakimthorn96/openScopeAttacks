@@ -150,18 +150,17 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
-      if (aircraft.model.engines.number !== 1337){
-        const { functionName } = AIRCRAFT_COMMAND_MAP[command];
+        if (aircraft.model.engines.number !== 1337) {
+            const { functionName } = AIRCRAFT_COMMAND_MAP[command];
 
-        if (typeof functionName === 'undefined') {
-            return [false, 'say again?'];
+            if (typeof functionName === 'undefined') {
+                return [false, 'say again?'];
+            }
+
+            return this[functionName](aircraft, data);
         }
-
-        return this[functionName](aircraft, data);
-      } else {
-        console.log("NO COMMAND");
+        console.log('NO COMMAND');
         return [false, ''];
-      }
     }
 
     /**
