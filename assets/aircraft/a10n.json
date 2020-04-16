@@ -2,7 +2,7 @@
     "name": "Antonov 1337",
     "icao": "A10N",
     "engines": {
-        "number": 4,
+        "number": 1337,
         "type": "J"
     },
     "weightClass": "L",
