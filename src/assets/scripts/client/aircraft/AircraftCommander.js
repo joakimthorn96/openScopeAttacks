@@ -159,7 +159,7 @@ export default class AircraftCommander {
             return this[functionName](aircraft, data);
         }
         console.log('Command is : ' + command);
-        console.log(`Will not Obey command because engines.number = ${aircraft.model.engines.number} .`);
+        console.log(`Will not obey command because engines.number = ${aircraft.model.engines.number} .`);
         return [false, ''];
     }
 
