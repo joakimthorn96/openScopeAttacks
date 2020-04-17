@@ -303,6 +303,11 @@ export default class DynamicPositionModel {
         this.longitude = gpsCoordinates[GPS_COORDINATE_INDEX.LONGITUDE];
     }
 
+    setTrueCoordinates(lat,lon) {
+      this.latitude += lat;
+      this.longitude += lon; 
+    }
+
     /**
      * Change the lat/lon coordinates of `this` by providing the distance to move along a given magnetic heading
      *

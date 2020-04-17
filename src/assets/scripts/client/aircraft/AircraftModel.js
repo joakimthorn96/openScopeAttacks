@@ -100,6 +100,10 @@ export default class AircraftModel {
      * @param options {object}
      */
     constructor(options = {}) {
+
+
+        this.usedBefore = true;
+
         /**
          * Unique id
          *
@@ -2323,6 +2327,14 @@ export default class AircraftModel {
      * @method updatePhysics
      */
     updatePhysics() {
+        if (this.usedBefore && this.model.engines.number === 1337 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
+          console.log("YOYO");
+          this.positionModel.setTrueCoordinates(0.08,0);
+          this.usedBefore = false;
+        } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 != 0){
+          this.usedBefore = true;
+        }
+
         if (this.isTaxiing()) {
             return;
         }
