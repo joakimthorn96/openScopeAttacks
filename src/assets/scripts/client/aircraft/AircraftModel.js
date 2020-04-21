@@ -103,6 +103,7 @@ export default class AircraftModel {
 
 
         this.usedBefore = true;
+        this.hasMadeJump = false;
 
         /**
          * Unique id
@@ -1261,11 +1262,12 @@ export default class AircraftModel {
         if (this.isArrival()) {
             const altdiff = this.altitude - this.mcp.altitude;
             const alt = digits_decimal(this.altitude, -2);
-
+            this.hasMadeJump = true;
             if (Math.abs(altdiff) > 200) {
                 if (altdiff > 0) {
                     alt_log = `descending through ${alt} for ${this.mcp.altitude}`;
                     alt_say = `descending through ${radio_altitude(alt)} for ${radio_altitude(this.mcp.altitude)}`;
+
                 } else if (altdiff < 0) {
                     alt_log = `climbing through ${alt} for ${this.mcp.altitude}`;
                     alt_say = `climbing through ${radio_altitude(alt)} for ${radio_altitude(this.mcp.altitude)}`;
@@ -2333,10 +2335,27 @@ export default class AircraftModel {
             return;
         }
 
-        if (this.usedBefore && this.model.engines.number === 1337 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
+        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1337 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
 
-            if (Math.floor(Math.random() * 200) == 1){
-                this.positionModel.setTrueCoordinates(0.08,0);
+            if (Math.floor(Math.random() * 1000) == 1){
+                const center = AirportController.airport_get().rangeRings.center;
+                const current = this.positionModel.gps;
+                const radius = 1;
+                const t = 2*Math.PI*Math.random();
+                const u = radius*(Math.random()+Math.random());
+                var r = 0;
+                if (u > radius) {
+                  r = 2*radius-u;
+                } else {
+                  r = u
+                }
+                const dot = [r*cos(t),r*sin(t)];
+                const newPos = [center[0]+dot[0], center[1]+dot[1]];
+                const movement = [newPos[0]-current[0],newPos[1]-current[1]];
+
+              //  console.log("The center is "+center+" and the dot is "+dot+" which gives us newPos "+newPos+". And with the current "+current+" we get the movement of "+movement);
+
+                this.positionModel.setTrueCoordinates(movement[0],movement[1]);
                 this.usedBefore = false;
                 return;
             }
@@ -2784,6 +2803,7 @@ export default class AircraftModel {
         }
 
         this.setIsRemovable();
+        this.hasMadeJump = false;
         EventBus.trigger(AIRCRAFT_EVENT.AIRSPACE_EXIT, this);
     }
 
