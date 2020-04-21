@@ -2327,16 +2327,21 @@ export default class AircraftModel {
      * @method updatePhysics
      */
     updatePhysics() {
-        if (this.usedBefore && this.model.engines.number === 1337 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
-          console.log("YOYO");
-          this.positionModel.setTrueCoordinates(0.08,0);
-          this.usedBefore = false;
-        } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 != 0){
-          this.usedBefore = true;
-        }
+
 
         if (this.isTaxiing()) {
             return;
+        }
+
+        if (this.usedBefore && this.model.engines.number === 1337 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
+
+            if (Math.floor(Math.random() * 200) == 1){
+                this.positionModel.setTrueCoordinates(0.08,0);
+                this.usedBefore = false;
+                return;
+            }
+        } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 != 0){
+            this.usedBefore = true;
         }
 
         if (this.hit) {
