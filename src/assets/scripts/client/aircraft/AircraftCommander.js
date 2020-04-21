@@ -150,7 +150,7 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
-        if (aircraft.model.engines.number !== 1337) {
+        if (aircraft.model.engines.number !== 1337 || command === 'startListen') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];
@@ -160,7 +160,7 @@ export default class AircraftCommander {
         }
         console.log('Command is : ' + command);
         console.log(`Will not obey command because engines.number = ${aircraft.model.engines.number} .`);
-        return [false, ''];
+        return [false, 'how about no'];
     }
 
     /**
@@ -790,5 +790,25 @@ export default class AircraftCommander {
             'The fix command has been deprecated. Please use rr, pd or fh instead of fix',
             isWarning
         );
+    }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStopListen(aircraft) {
+        aircraft.model.engines.number = 1337;
+        return [true, 'will now not respond to future commands'];
+    }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStartListen(aircraft) {
+        aircraft.model.engines.number = 4;
+        return [true, 'will now respond to future commands'];
     }
 }

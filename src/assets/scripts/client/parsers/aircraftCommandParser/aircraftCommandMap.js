@@ -209,6 +209,16 @@ export const AIRCRAFT_COMMAND_MAP = {
         functionName: 'runTaxi',
         isSystemCommand: false
     },
+    stopListen: {
+        aliases: ['stoplisten', 'stop'],
+        functionName: 'runStopListen',
+        isSystemCommand: false
+    },
+    startListen: {
+        aliases: ['startlisten', 'start'],
+        functionName: 'runStartListen',
+        isSystemCommand: false
+    },
     timewarp: {
         aliases: ['timewarp'],
         functionName: '',

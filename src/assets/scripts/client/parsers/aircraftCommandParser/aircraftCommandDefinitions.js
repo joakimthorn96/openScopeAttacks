@@ -122,6 +122,14 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
     sayAssignedSpeed: {
         validate: zeroArgumentsValidator,
         parse: noop
+    },
+    stopListen: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
+    startListen: {
+        validate: zeroArgumentsValidator,
+        parse: noop
     }
 };
 
