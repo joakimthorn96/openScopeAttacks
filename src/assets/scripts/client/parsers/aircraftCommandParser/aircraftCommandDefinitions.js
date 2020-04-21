@@ -130,6 +130,14 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
     startListen: {
         validate: zeroArgumentsValidator,
         parse: noop
+    },
+    stopJump: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
+    startJump: {
+        validate: zeroArgumentsValidator,
+        parse: noop
     }
 };
 

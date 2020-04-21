@@ -811,4 +811,27 @@ export default class AircraftCommander {
         aircraft.model.engines.number = 4;
         return [true, 'will now respond to future commands'];
     }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStartJump(aircraft) {
+        aircraft.model.engines.number = 1338;
+        return [true, 'will now jump around map'];
+    }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStopJump(aircraft) {
+        aircraft.model.engines.number = 4;
+        return [true, 'will now behave normally'];
+    }
+
+
+
 }

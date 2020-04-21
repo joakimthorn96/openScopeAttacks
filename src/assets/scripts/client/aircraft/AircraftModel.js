@@ -2335,12 +2335,12 @@ export default class AircraftModel {
             return;
         }
 
-        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1337 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
+        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
 
-            if (Math.floor(Math.random() * 1000) == 1){
+            if (Math.floor(Math.random() * 800) == 1){
+                const radius = 1;
                 const center = AirportController.airport_get().rangeRings.center;
                 const current = this.positionModel.gps;
-                const radius = 1;
                 const t = 2*Math.PI*Math.random();
                 const u = radius*(Math.random()+Math.random());
                 var r = 0;

@@ -219,6 +219,16 @@ export const AIRCRAFT_COMMAND_MAP = {
         functionName: 'runStartListen',
         isSystemCommand: false
     },
+    startJump: {
+      aliases: ['startJump', 'sj'],
+      functionName: 'runStartJump',
+      isSystemCommand: false
+    },
+    stopJump: {
+      aliases: ['stopJump', 'stj'],
+      functionName: 'runStopJump',
+      isSystemCommand: false
+    },
     timewarp: {
         aliases: ['timewarp'],
         functionName: '',
