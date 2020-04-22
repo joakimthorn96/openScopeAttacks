@@ -34,7 +34,7 @@ export const GAME_OPTION_VALUES = [
     {
         name: GAME_OPTION_NAMES.THEME,
         defaultValue: 'DEFAULT',
-        description: 'Soap Theme',
+        description: 'Style Theme',
         type: 'select',
         onChangeEventHandler: EVENT.SET_THEME,
         optionList: [
