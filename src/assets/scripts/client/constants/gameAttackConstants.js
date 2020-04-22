@@ -1,5 +1,4 @@
-import { EVENT } from './eventNames';
-import { MEASURE_TOOL_STYLE } from './inputConstants';
+
 
 /* eslint-disable max-len, import/prefer-default-export */
 /**
