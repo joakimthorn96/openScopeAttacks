@@ -110,6 +110,7 @@ export const IDS = {
     NAVAIDS_CANVAS: 'navaids-canvas',
     PAUSED: 'paused',
     TOGGLE_OPTIONS: 'toggle-options',
+    TOGGLE_ATTACKS: 'toggle-attacks',
     TUTORIAL: 'tutorial',
     GITHUB_EXTERNAL_LINK: 'js-github-external-link',
     SCORE: 'score',

@@ -4,6 +4,7 @@ import _has from 'lodash/has';
 import EventBus from '../lib/EventBus';
 import EventTracker from '../EventTracker';
 import GameOptions from './GameOptions';
+import GameAttacks from './GameAttacks';
 import TimeKeeper from '../engine/TimeKeeper';
 import { round } from '../math/core';
 import { EVENT } from '../constants/eventNames';
@@ -91,6 +92,7 @@ class GameController {
         this.game.last_score = 0;
         this.game.score = 0;
         this.game.option = new GameOptions();
+        this.game.attack = new GameAttacks();
         this.theme = THEME.DEFAULT;
 
         this._eventBus = EventBus;
@@ -188,6 +190,7 @@ class GameController {
         this.game.last_score = 0;
         this.game.score = 0;
         this.game.option = new GameOptions();
+        this.game.attack = new GameAttacks();
         this.theme = THEME.DEFAULT;
 
         return this;
@@ -515,6 +518,10 @@ class GameController {
      */
     getGameOption(optionName) {
         return this.game.option.getOptionByName(optionName);
+    }
+
+    getGameAttack(attackName) {
+        return this.game.attack.getAttackByName(attackName);
     }
 
     /**
