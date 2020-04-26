@@ -1,4 +1,4 @@
-
+import { EVENT } from './eventNames';
 
 /* eslint-disable max-len, import/prefer-default-export */
 /**
@@ -23,41 +23,74 @@ export const GAME_ATTACK_NAMES = {
  */
 export const GAME_ATTACK_VALUES = [
     {
-        name: 'Testing',
-        defaultValue: 'Gustav',
-        description: 'I am snail',
+        name: 'jumpFrequence',
+        defaultValue: 'Normal',
+        description: 'How often will aircrafts jump',
         type: 'select',
-        onChangeEventHandler: null,
+        onChangeEventHandler: EVENT.SET_JUMP_TIME,
         optionList: [
             {
-                displayLabel: 'Gustav',
-                value: 'Gustav'
+                displayLabel: 'Rare',
+                value: 'Rare'
             },
             {
-                displayLabel: 'Anton',
-                value: 'Anton'
+                displayLabel: 'Normal',
+                value: 'Normal'
+            },
+            {
+                displayLabel: 'Often',
+                value: 'Often'
+            },
+            {
+                displayLabel: 'All the time',
+                value: 'Always'
             }
         ]
     },
     {
-        name: 'Testing2',
-        defaultValue: 'Cake',
-        description: 'Are you a Cake or Cookie or Tarte man?',
+        name: 'jumpProb',
+        defaultValue: 'Normal',
+        description: 'How many aircrafts will jump',
         type: 'select',
-        onChangeEventHandler: null,
+        onChangeEventHandler: EVENT.SET_JUMP_PROBABILTY,
         optionList: [
-            {
-                displayLabel: 'Cake',
-                value: 'Cake'
-            },
-            {
-                displayLabel: 'Cookie',
-                value: 'Cookie'
-            },
-            {
-                displayLabel: 'Tarte',
-                value: 'Tarte'
-            }
+          {
+              displayLabel: 'A few',
+              value: 'Rare'
+          },
+          {
+              displayLabel: 'Normal',
+              value: 'Normal'
+          },
+          {
+              displayLabel: 'Many',
+              value: 'Many'
+          },
+          {
+              displayLabel: 'All of them',
+              value: 'Always'
+          }
+        ]
+    },
+    {
+        name: 'jumpRadius',
+        defaultValue: 'Normal',
+        description: 'In how big area will aircrafts jump',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_JUMP_RADIUS,
+        optionList: [
+          {
+              displayLabel: 'Small',
+              value: 'Small'
+          },
+          {
+              displayLabel: 'Normal',
+              value: 'Normal'
+          },
+          {
+              displayLabel: 'Large',
+              value: 'Large'
+          }
         ]
     }
 ];

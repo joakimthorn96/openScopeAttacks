@@ -95,6 +95,10 @@ class GameController {
         this.game.attack = new GameAttacks();
         this.theme = THEME.DEFAULT;
 
+        this.jRarity = 600;
+        this.jFreq = 15;
+        this.jRadius = 1;
+
         this._eventBus = EventBus;
     }
 
@@ -143,6 +147,9 @@ class GameController {
      */
     enable() {
         this._eventBus.on(EVENT.SET_THEME, this._setTheme);
+        this._eventBus.on(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
+        this._eventBus.on(EVENT.SET_JUMP_TIME, this._setjTime);
+        this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -165,6 +172,9 @@ class GameController {
      */
     disable() {
         this._eventBus.off(EVENT.SET_THEME, this._setTheme);
+        this._eventBus.off(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
+        this._eventBus.off(EVENT.SET_JUMP_TIME, this._setjTime);
+        this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
 
         return this.destroy();
     }
@@ -584,6 +594,40 @@ class GameController {
 
         TimeKeeper.setPause(false);
     }
+
+    _setjProb = (themeName) => {
+        if (themeName == 'Rare'){
+          this.jRarity = 1200;
+        } else if (themeName == 'Normal'){
+          this.jRarity = 600;
+        } else if (themeName == 'Many'){
+          this.jRarity = 200;
+        } else if (themeName == 'Always'){
+          this.jRarity = 10;
+        }
+    };
+
+    _setjRadius = (themeName) => {
+        if (themeName == 'Small'){
+          this.jRadius = 0.5;
+        } else if (themeName == 'Normal'){
+          this.jRadius = 1;
+        } else if (themeName == 'Large'){
+          this.jRadius = 2;
+        }
+    };
+
+    _setjTime = (themeName) => {
+        if (themeName == 'Rare'){
+          this.jFreq = 30;
+        } else if (themeName == 'Normal'){
+          this.jFreq = 15;
+        } else if (themeName == 'Often'){
+          this.jFreq = 7;
+        } else if (themeName == 'Always'){
+          this.jFreq = 2;
+        }
+    };
 
 
     /**

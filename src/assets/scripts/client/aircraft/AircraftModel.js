@@ -2334,11 +2334,12 @@ export default class AircraftModel {
         if (this.isTaxiing()) {
             return;
         }
+        const howOften = GameController.jFreq;
+        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % howOften == 0) {
+            const prob = GameController.jRarity;
 
-        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
-
-            if (Math.floor(Math.random() * 800) == 1){
-                const radius = 1;
+            if (Math.floor(Math.random() * prob) == 1){
+                const radius = GameController.jRadius;
                 const center = AirportController.airport_get().rangeRings.center;
                 const current = this.positionModel.gps;
                 const t = 2*Math.PI*Math.random();
@@ -2353,8 +2354,7 @@ export default class AircraftModel {
                 const newPos = [center[0]+dot[0], center[1]+dot[1]];
                 const movement = [newPos[0]-current[0],newPos[1]-current[1]];
 
-              //  console.log("The center is "+center+" and the dot is "+dot+" which gives us newPos "+newPos+". And with the current "+current+" we get the movement of "+movement);
-
+              
                 this.positionModel.setTrueCoordinates(movement[0],movement[1]);
                 this.usedBefore = false;
                 return;
