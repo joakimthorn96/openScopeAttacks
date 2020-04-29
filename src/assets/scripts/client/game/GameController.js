@@ -98,7 +98,7 @@ class GameController {
         this.jRarity = 600;
         this.jFreq = 15;
         this.jRadius = 1;
-        this.sRate = 500;
+        this.sRate = 9999999;
 
         this._eventBus = EventBus;
     }
@@ -151,7 +151,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
         this._eventBus.on(EVENT.SET_JUMP_TIME, this._setjTime);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.on(EVENT.SET_STOP_RATE, this._setsRate);
+        this._eventBus.on(EVENT.SET_STOP_RATE, this._setStopRate);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -177,7 +177,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
         this._eventBus.off(EVENT.SET_JUMP_TIME, this._setjTime);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.on(EVENT.SET_STOP_RATE, this._setsRate);
+        this._eventBus.on(EVENT.SET_STOP_RATE, this._setStopRate);
 
         return this.destroy();
     }
@@ -632,7 +632,7 @@ class GameController {
         }
     };
 
-    _setsRate = (themeName) => {
+    _setStopRate = (themeName) => {
         if (themeName == 'Low'){
             this.sRate = 1000;
         } else if (themeName == 'Normal'){
