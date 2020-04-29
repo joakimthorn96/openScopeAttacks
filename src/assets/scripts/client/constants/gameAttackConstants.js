@@ -73,7 +73,7 @@ export const GAME_ATTACK_VALUES = [
         ]
     },
     {
-        name: 'stopRate',
+        name: 'stopRarity',
         defaultValue: 'None',
         description: 'Rate of non-responsive aircraft',
         type: 'select',
