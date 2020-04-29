@@ -92,5 +92,30 @@ export const GAME_ATTACK_VALUES = [
               value: 'Large'
           }
         ]
+    },
+    {
+        name: 'stopRate',
+        defaultValue: 'Normal',
+        description: 'Rate of non-responsive aircraft',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_STOP_RATE,
+        optionList: [
+          {
+              displayLabel: 'None',
+              value: 'None'
+          },
+          {
+              displayLabel: 'Low',
+              value: 'Low'
+          },
+          {
+              displayLabel: 'Normal',
+              value: 'Normal'
+          },
+          {
+              displayLabel: 'High',
+              value: 'High'
+          }
+        ]
     }
 ];

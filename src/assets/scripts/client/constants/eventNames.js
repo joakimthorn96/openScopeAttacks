@@ -161,6 +161,8 @@ export const EVENT = {
     SET_JUMP_RADIUS: 'set-jump-radius',
     SET_JUMP_TIME: 'set-jump-time',
 
+    SET_STOP_PROB: 'set-stop-prob',
+
     /**
      * Step through pre-defined timewarp speeds
      *

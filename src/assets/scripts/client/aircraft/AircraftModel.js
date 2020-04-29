@@ -2334,6 +2334,14 @@ export default class AircraftModel {
         if (this.isTaxiing()) {
             return;
         }
+
+        const stopRate = GameController.sRate;
+        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0){
+            if(Math.floor(Math.random() * stopRate) == 1){
+                this.model.engines.number = 1337; //hade varit mer sick om man kunde ropa på AircraftCommander.run(this,stopListen). Diskutera med gustav.
+            }
+        }
+
         const howOften = GameController.jFreq;
         if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % howOften == 0) {
             const prob = GameController.jRarity;

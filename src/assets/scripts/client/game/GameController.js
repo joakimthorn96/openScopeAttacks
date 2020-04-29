@@ -98,6 +98,7 @@ class GameController {
         this.jRarity = 600;
         this.jFreq = 15;
         this.jRadius = 1;
+        this.sRate = 999999;
 
         this._eventBus = EventBus;
     }
@@ -150,6 +151,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
         this._eventBus.on(EVENT.SET_JUMP_TIME, this._setjTime);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
+        this._eventBus.on(EVENT.SET_STOP_RATE, this._setsRate);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -175,6 +177,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
         this._eventBus.off(EVENT.SET_JUMP_TIME, this._setjTime);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
+        this._eventBus.on(EVENT.SET_STOP_RATE, this._setsRate);
 
         return this.destroy();
     }
@@ -597,38 +600,49 @@ class GameController {
 
     _setjProb = (themeName) => {
         if (themeName == 'Rare'){
-          this.jRarity = 1200;
+            this.jRarity = 1200;
         } else if (themeName == 'Normal'){
-          this.jRarity = 600;
+            this.jRarity = 600;
         } else if (themeName == 'Many'){
-          this.jRarity = 200;
+            this.jRarity = 200;
         } else if (themeName == 'Always'){
-          this.jRarity = 10;
+            this.jRarity = 10;
         }
     };
 
     _setjRadius = (themeName) => {
         if (themeName == 'Small'){
-          this.jRadius = 0.5;
+            this.jRadius = 0.5;
         } else if (themeName == 'Normal'){
-          this.jRadius = 1;
+            this.jRadius = 1;
         } else if (themeName == 'Large'){
-          this.jRadius = 2;
+            this.jRadius = 2;
         }
     };
 
     _setjTime = (themeName) => {
         if (themeName == 'Rare'){
-          this.jFreq = 30;
+            this.jFreq = 30;
         } else if (themeName == 'Normal'){
-          this.jFreq = 15;
+            this.jFreq = 15;
         } else if (themeName == 'Often'){
-          this.jFreq = 7;
+            this.jFreq = 7;
         } else if (themeName == 'Always'){
-          this.jFreq = 2;
+            this.jFreq = 2;
         }
     };
 
+    _setsRate = (themeName) => {
+        if (themeName == 'Low'){
+            this.sRate = 1000;
+        } else if (themeName == 'Normal'){
+            this.sRate = 500;
+        } else if (themeName == 'High'){
+            this.sRate = 10;
+        } else if (themeName == 'None'){
+            this.sRate = 9999999;
+        }
+    };
 
     /**
      * Change theme to the specified name
