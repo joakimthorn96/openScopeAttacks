@@ -2338,7 +2338,7 @@ export default class AircraftModel {
 
 
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber){
-            const stopRate = GameController.sRate;
+            const stopRarity = GameController.sRarity;
             const amountOfAttack = 100;
             const random = Math.floor(Math.random() * amountOfAttack);
             if (random < 10){
