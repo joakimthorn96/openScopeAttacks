@@ -380,8 +380,17 @@ export default class RadarTargetModel {
      * @returns {string}
      */
     buildDataBlockRowTwoPrimaryInfo() {
-        const aircraftAltitude = round(this.aircraftModel.altitude / 100);
-        const aircraftSpeed = round(this.aircraftModel.groundSpeed / 10);
+        var aircraftAltitude = 0;
+        var aircraftSpeed = 0;
+        if (this.aircraftModel.model.engines.number == 1339) {
+          var aircraftAltitude = this.aircraftModel.fakeAltitude;
+          var aircraftSpeed = this.aircraftModel.fakeGroundSpeed;
+        } else {
+          var aircraftAltitude = round(this.aircraftModel.altitude / 100);
+          var aircraftSpeed = round(this.aircraftModel.groundSpeed / 10);
+        }
+
+
 
         return `${leftPad(aircraftAltitude, 3)} ${leftPad(aircraftSpeed, 2)}`;
     }

@@ -105,6 +105,10 @@ export default class AircraftModel {
         this.usedBefore = true;
         this.hasMadeJump = false;
         this.hasGottenEngineNumber = false;
+        
+        this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
+
+        this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
 
         /**
          * Unique id
