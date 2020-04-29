@@ -157,9 +157,8 @@ export const EVENT = {
     SET_THEME: 'set-theme',
 
 
-    SET_JUMP_PROBABILTY: 'set-jump-prob',
+    SET_JUMP_RARITY: 'set-jump-rarity',
     SET_JUMP_RADIUS: 'set-jump-radius',
-    SET_JUMP_TIME: 'set-jump-time',
 
     SET_STOP_RARITY: 'set-stop-rarity',
 

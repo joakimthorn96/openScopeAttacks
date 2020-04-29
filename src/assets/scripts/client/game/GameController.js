@@ -95,8 +95,8 @@ class GameController {
         this.game.attack = new GameAttacks();
         this.theme = THEME.DEFAULT;
 
-        this.jRarity = 600;
-        this.jFreq = 15;
+        this.jRarity = 9999999;
+        this.jFreq = 99999999999;
         this.jRadius = 1;
         this.sRarity = 9999999;
 
@@ -148,8 +148,7 @@ class GameController {
      */
     enable() {
         this._eventBus.on(EVENT.SET_THEME, this._setTheme);
-        this._eventBus.on(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
-        this._eventBus.on(EVENT.SET_JUMP_TIME, this._setjTime);
+        this._eventBus.on(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
         this._eventBus.on(EVENT.SET_STOP_RARITY, this._setStopRarity);
 
@@ -174,8 +173,7 @@ class GameController {
      */
     disable() {
         this._eventBus.off(EVENT.SET_THEME, this._setTheme);
-        this._eventBus.off(EVENT.SET_JUMP_PROBABILTY, this._setjProb);
-        this._eventBus.off(EVENT.SET_JUMP_TIME, this._setjTime);
+        this._eventBus.off(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
         this._eventBus.off(EVENT.SET_STOP_RARITY, this._setStopRarity);
 
@@ -598,15 +596,25 @@ class GameController {
         TimeKeeper.setPause(false);
     }
 
-    _setjProb = (themeName) => {
-        if (themeName == 'Rare'){
+
+    //jRarity hög men jFreq låg
+    _setjRarity = (themeName) => {
+        if (themeName == 'None'){
+            this.jRarity = 9999999;
+            this.jFreq = 99999999999;
+        }
+        else if (themeName == 'Rare'){
             this.jRarity = 1200;
+            this.jFreq = 15;
         } else if (themeName == 'Normal'){
             this.jRarity = 600;
+            this.jFreq = 10;
         } else if (themeName == 'Many'){
             this.jRarity = 200;
+            this.jFreq = 5;
         } else if (themeName == 'Always'){
             this.jRarity = 10;
+            this.jFreq = 1;
         }
     };
 
@@ -620,19 +628,8 @@ class GameController {
         }
     };
 
-    _setjTime = (themeName) => {
-        if (themeName == 'Rare'){
-            this.jFreq = 30;
-        } else if (themeName == 'Normal'){
-            this.jFreq = 15;
-        } else if (themeName == 'Often'){
-            this.jFreq = 7;
-        } else if (themeName == 'Always'){
-            this.jFreq = 2;
-        }
-    };
-
-    _setStopRarity = (themeName) => {
+    _setsRarity = (themeName) => {
+        console.log(themeName);
         if (themeName == 'Low'){
             this.sRarity = 1000;
 

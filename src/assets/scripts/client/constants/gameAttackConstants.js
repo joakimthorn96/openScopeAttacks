@@ -24,11 +24,15 @@ export const GAME_ATTACK_NAMES = {
 export const GAME_ATTACK_VALUES = [
     {
         name: 'jumpFrequence',
-        defaultValue: 'Normal',
-        description: 'How often will aircrafts jump',
+        defaultValue: 'None',
+        description: 'What is the rarity that an aircraft will jump',
         type: 'select',
         onChangeEventHandler: EVENT.SET_JUMP_TIME,
         optionList: [
+            {
+                displayLabel: 'None',
+                value: 'None'
+            },
             {
                 displayLabel: 'Rare',
                 value: 'Rare'
@@ -45,31 +49,6 @@ export const GAME_ATTACK_VALUES = [
                 displayLabel: 'All the time',
                 value: 'Always'
             }
-        ]
-    },
-    {
-        name: 'jumpProb',
-        defaultValue: 'Normal',
-        description: 'How many aircrafts will jump',
-        type: 'select',
-        onChangeEventHandler: EVENT.SET_JUMP_PROBABILTY,
-        optionList: [
-          {
-              displayLabel: 'A few',
-              value: 'Rare'
-          },
-          {
-              displayLabel: 'Normal',
-              value: 'Normal'
-          },
-          {
-              displayLabel: 'Many',
-              value: 'Many'
-          },
-          {
-              displayLabel: 'All of them',
-              value: 'Always'
-          }
         ]
     },
     {

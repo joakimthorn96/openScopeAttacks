@@ -2335,19 +2335,19 @@ export default class AircraftModel {
             return;
         }
 
-        
+
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0){
             const stopRarity = GameController.sRarity;
             if(Math.floor(Math.random() * stopRarity) == 1){
                 this.model.engines.number = 1337; //hade varit mer sick om man kunde ropa på AircraftCommander.run(this,stopListen). Diskutera med gustav.
             }
         }
-        
-        const howOften = GameController.jFreq;
-        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % howOften == 0) {
-            const prob = GameController.jRarity;
 
-            if (Math.floor(Math.random() * prob) == 1){
+        const freq = GameController.jFreq;
+        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % freq == 0) {
+            const rarity = GameController.jRarity;
+
+            if (Math.floor(Math.random() * rarity) == 1){
                 const radius = GameController.jRadius;
                 const center = AirportController.airport_get().rangeRings.center;
                 const current = this.positionModel.gps;
@@ -2363,7 +2363,7 @@ export default class AircraftModel {
                 const newPos = [center[0]+dot[0], center[1]+dot[1]];
                 const movement = [newPos[0]-current[0],newPos[1]-current[1]];
 
-              
+
                 this.positionModel.setTrueCoordinates(movement[0],movement[1]);
                 this.usedBefore = false;
                 return;
