@@ -98,7 +98,7 @@ class GameController {
         this.jRarity = 600;
         this.jFreq = 15;
         this.jRadius = 1;
-        this.sRate = 999999;
+        this.sRate = 500;
 
         this._eventBus = EventBus;
     }

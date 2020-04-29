@@ -155,11 +155,12 @@ export default class AircraftCommander {
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];
             }
-
+            console.log(`sRate: ${GameController.sRate} .`)
             return this[functionName](aircraft, data);
         }
         console.log(`Command is : ${command}`);
         console.log(`Will not obey command because engines.number = ${aircraft.model.engines.number} .`);
+        
         return [false, 'how about no'];
     }
 
