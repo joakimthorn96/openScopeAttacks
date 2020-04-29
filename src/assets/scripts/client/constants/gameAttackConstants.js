@@ -98,7 +98,7 @@ export const GAME_ATTACK_VALUES = [
         defaultValue: 'None',
         description: 'Rate of non-responsive aircraft',
         type: 'select',
-        onChangeEventHandler: EVENT.SET_STOP_RATE,
+        onChangeEventHandler: EVENT.SET_STOP_RARITY,
         optionList: [
           {
               displayLabel: 'None',
