@@ -2339,7 +2339,7 @@ export default class AircraftModel {
 
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber){
             const stopRarity = GameController.sRarity;
-            const amountOfAttack = 100;
+            const amountOfAttack = 15;
             const random = Math.floor(Math.random() * amountOfAttack);
             if (random < 10){
                 if (random < 5){
