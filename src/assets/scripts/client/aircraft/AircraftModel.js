@@ -104,6 +104,7 @@ export default class AircraftModel {
 
         this.usedBefore = true;
         this.hasMadeJump = false;
+        this.hasGottenEngineNumber = false;
 
         /**
          * Unique id
@@ -2336,11 +2337,18 @@ export default class AircraftModel {
         }
 
 
-        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0){
+        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber){
             const stopRate = GameController.sRate;
-            if(Math.floor(Math.random() * stopRate) == 1){
-                this.model.engines.number = 1337; //hade varit mer sick om man kunde ropa på AircraftCommander.run(this,stopListen). Diskutera med gustav.
+            const amountOfAttack = 100;
+            const random = Math.floor(Math.random() * amountOfAttack);
+            if (random < 10){
+                if (random < 5){
+                    this.model.engines.number = 1337; //hade varit mer sick om man kunde ropa på AircraftCommander.run(this,stopListen). Diskutera med gustav.
+                } else if (random >= 5){
+                    this.model.engines.number = 1338;
+                }
             }
+            this.hasGottenEngineNumber = true;
         }
 
         const freq = GameController.jFreq;

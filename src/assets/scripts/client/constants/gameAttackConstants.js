@@ -27,7 +27,7 @@ export const GAME_ATTACK_VALUES = [
         defaultValue: 'None',
         description: 'What is the rarity that an aircraft will jump',
         type: 'select',
-        onChangeEventHandler: EVENT.SET_JUMP_TIME,
+        onChangeEventHandler: EVENT.SET_JUMP_RARITY,
         optionList: [
             {
                 displayLabel: 'None',

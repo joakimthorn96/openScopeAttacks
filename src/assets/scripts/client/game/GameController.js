@@ -599,6 +599,7 @@ class GameController {
 
     //jRarity hög men jFreq låg
     _setjRarity = (themeName) => {
+        console.log(themeName);
         if (themeName == 'None'){
             this.jRarity = 9999999;
             this.jFreq = 99999999999;
