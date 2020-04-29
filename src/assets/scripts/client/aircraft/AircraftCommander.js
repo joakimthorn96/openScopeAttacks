@@ -155,7 +155,7 @@ export default class AircraftCommander {
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];
             }
-            console.log(`sRate: ${GameController.sRate} .`)
+            console.log(`sRarity: ${GameController.sRarity} .`)
             return this[functionName](aircraft, data);
         }
         console.log(`Command is : ${command}`);

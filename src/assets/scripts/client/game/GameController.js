@@ -98,7 +98,7 @@ class GameController {
         this.jRarity = 9999999;
         this.jFreq = 99999999999;
         this.jRadius = 1;
-        this.sRate = 500;
+        this.sRarity = 9999999;
 
         this._eventBus = EventBus;
     }
@@ -150,7 +150,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_THEME, this._setTheme);
         this._eventBus.on(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.on(EVENT.SET_STOP_RATE, this._setsRate);
+        this._eventBus.on(EVENT.SET_STOP_RARITY, this._setStopRarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -175,7 +175,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_THEME, this._setTheme);
         this._eventBus.off(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.on(EVENT.SET_STOP_RATE, this._setsRate);
+        this._eventBus.off(EVENT.SET_STOP_RARITY, this._setStopRarity);
 
         return this.destroy();
     }
@@ -629,16 +629,19 @@ class GameController {
         }
     };
 
-    _setsRate = (themeName) => {
+    _setsRarity = (themeName) => {
         console.log(themeName);
         if (themeName == 'Low'){
-            this.sRate = 1000;
+            this.sRarity = 1000;
+
         } else if (themeName == 'Normal'){
-            this.sRate = 500;
+            this.sRarity = 500;
+
         } else if (themeName == 'High'){
-            this.sRate = 10;
+            this.sRarity = 20;
+
         } else if (themeName == 'None'){
-            this.sRate = 9999999;
+            this.sRarity = 9999999;
         }
     };
 

@@ -2337,6 +2337,7 @@ export default class AircraftModel {
         }
 
 
+<<<<<<< HEAD
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber){
             const stopRate = GameController.sRate;
             const amountOfAttack = 100;
@@ -2347,6 +2348,12 @@ export default class AircraftModel {
                 } else if (random >= 5){
                     this.model.engines.number = 1338;
                 }
+=======
+        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0){
+            const stopRarity = GameController.sRarity;
+            if(Math.floor(Math.random() * stopRarity) == 1){
+                this.model.engines.number = 1337; //hade varit mer sick om man kunde ropa på AircraftCommander.run(this,stopListen). Diskutera med gustav.
+>>>>>>> 8436d95df64ad7b874db15113e2ee42d3e3d978e
             }
             this.hasGottenEngineNumber = true;
         }
