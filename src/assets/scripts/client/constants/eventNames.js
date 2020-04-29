@@ -157,11 +157,10 @@ export const EVENT = {
     SET_THEME: 'set-theme',
 
 
-    SET_JUMP_PROBABILTY: 'set-jump-prob',
+    SET_JUMP_RARITY: 'set-jump-rarity',
     SET_JUMP_RADIUS: 'set-jump-radius',
-    SET_JUMP_TIME: 'set-jump-time',
 
-    SET_STOP_PROB: 'set-stop-prob',
+    SET_STOP_RATE: 'set-stop-rate',
 
     /**
      * Step through pre-defined timewarp speeds
