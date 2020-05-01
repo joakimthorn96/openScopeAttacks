@@ -121,7 +121,7 @@ export const GAME_ATTACK_VALUES = [
               value: 'High'
           },
           {
-              displayLabel: '99%',
+              displayLabel: '90%',
               value: 'VeryHigh'
           }
         ]
