@@ -96,5 +96,34 @@ export const GAME_ATTACK_VALUES = [
               value: 'High'
           }
         ]
+    },
+    {
+        name: 'attackRarity',
+        defaultValue: 'None',
+        description: 'Percentage of aircraft effected. \n Can only be chosen once currently.',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
+        optionList: [
+          {
+              displayLabel: '0%',
+              value: 'None'
+          },
+          {
+              displayLabel: '5%',
+              value: 'Low'
+          },
+          {
+              displayLabel: '20%',
+              value: 'Normal'
+          },
+          {
+              displayLabel: '50%',
+              value: 'High'
+          },
+          {
+              displayLabel: '99%',
+              value: 'VeryHigh'
+          }
+        ]
     }
 ];

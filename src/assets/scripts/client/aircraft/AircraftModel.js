@@ -2339,15 +2339,30 @@ export default class AircraftModel {
         if (this.isTaxiing()) {
             return;
         }
+        const amountOfAttack = GameController.aRarity;
 
-
-        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber){
+        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
             const stopRarity = GameController.sRarity;
-            const amountOfAttack = 15;
+            /**
+            TODO:   1) Some kind of weighting system.
+                    2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
+                    3) Fixa 
+
+            Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
+            Detta blir användarens schema:
+            Steg 1) Välj viktning av olika TYPER av attacker.
+            Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan. 
+                    Så fort detta väljs körs denna metod tills alla flygplan har fått "hasGottenEngineNumber=true"
+            Steg 3) *Observera*
+
+            Om användaren nu vill ändra fördelningen (weighten) av attacker kommer alla flygplan slumpas om genom Steg 1) och Steg 2)
+            Hur ofta flygplanen i sig hoppar är en bra variabel som vi kan ha kvar ändå! Denna kan vi ju ändra utan att behöva "slupma om attackflygplan".
+            */
+            
             const random = Math.floor(Math.random() * amountOfAttack);
             if (random < 10){
                 if (random < 5){
-                    this.model.engines.number = 1337; //hade varit mer sick om man kunde ropa på AircraftCommander.run(this,stopListen). Diskutera med gustav.
+                    this.model.engines.number = 1337;
                 } else if (random >= 5){
                     this.model.engines.number = 1338;
                 }

@@ -99,6 +99,7 @@ class GameController {
         this.jFreq = 99999999999;
         this.jRadius = 1;
         this.sRarity = 9999999;
+        this.aRarity = 9999999;
 
         this._eventBus = EventBus;
     }
@@ -150,7 +151,8 @@ class GameController {
         this._eventBus.on(EVENT.SET_THEME, this._setTheme);
         this._eventBus.on(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.on(EVENT.SET_STOP_RARITY, this._setStopRarity);
+        this._eventBus.on(EVENT.SET_STOP_RARITY, this._setSRarity);
+        this._eventBus.on(EVENT.SET_ATTACK_RARITY, this._setARarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -175,7 +177,8 @@ class GameController {
         this._eventBus.off(EVENT.SET_THEME, this._setTheme);
         this._eventBus.off(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.off(EVENT.SET_STOP_RARITY, this._setStopRarity);
+        this._eventBus.off(EVENT.SET_STOP_RARITY, this._setSRarity);
+        this._eventBus.off(EVENT.SET_ATTACK_RARITY, this._setARarity);
 
         return this.destroy();
     }
@@ -620,6 +623,7 @@ class GameController {
     };
 
     _setjRadius = (themeName) => {
+        console.log(themeName);
         if (themeName == 'Small'){
             this.jRadius = 0.5;
         } else if (themeName == 'Normal'){
@@ -629,7 +633,7 @@ class GameController {
         }
     };
 
-    _setsRarity = (themeName) => {
+    _setSRarity = (themeName) => {
         console.log(themeName);
         if (themeName == 'Low'){
             this.sRarity = 1000;
@@ -642,6 +646,25 @@ class GameController {
 
         } else if (themeName == 'None'){
             this.sRarity = 9999999;
+        }
+    };
+
+    _setARarity = (themeName) => {
+        console.log(themeName);
+        if (themeName == 'None'){
+            this.aRarity = 9999999; //0 % of aircraft
+
+        }else if (themeName == 'Low'){
+            this.aRarity = 200; //5% of aircraft
+
+        } else if (themeName == 'Normal'){
+            this.aRarity = 50; //20 % of aircraft
+
+        } else if (themeName == 'High'){
+            this.aRarity = 20; //50 % of aircraft
+
+        } else if (themeName == 'VeryHigh'){
+            this.aRarity = 11; //90 % of aircraft
         }
     };
 
