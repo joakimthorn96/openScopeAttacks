@@ -75,7 +75,7 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'stopRarity',
         defaultValue: 'None',
-        description: 'Rate of non-responsive aircraft',
+        description: 'Non-responsive aircraft weighting (work in progress)',
         type: 'select',
         onChangeEventHandler: EVENT.SET_STOP_RARITY,
         optionList: [
@@ -100,7 +100,7 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'attackRarity',
         defaultValue: 'None',
-        description: 'Percentage of aircraft effected. \n Can only be chosen once currently.',
+        description: 'Percentage of aircraft effected. Can only be chosen once currently.',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
         optionList: [
