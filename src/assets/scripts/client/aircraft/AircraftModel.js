@@ -2343,6 +2343,7 @@ export default class AircraftModel {
 
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
             const stopRarity = GameController.sRarity;
+            console.log("Percentage of effected aircraft: 10/"+amountOfAttack+". Half non-responive, half jumpy");
             /**
             TODO:   1) Some kind of weighting system.
                     2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
