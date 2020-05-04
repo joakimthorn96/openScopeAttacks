@@ -138,6 +138,10 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
     startJump: {
         validate: zeroArgumentsValidator,
         parse: noop
+    },
+    showEngine: {
+        validate: zeroArgumentsValidator,
+        parse: noop
     }
 };
 

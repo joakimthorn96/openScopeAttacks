@@ -833,6 +833,11 @@ export default class AircraftCommander {
         return [true, 'will now behave normally'];
     }
 
+    runShowEngine(aircraft) {
+        console.log(aircraft.name +" is "+aircraft.model.engines.number+".");
+        return [true, 'I am '+aircraft.model.engines.number+"."];
+    }
+
 
 
 }
