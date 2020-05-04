@@ -2329,9 +2329,9 @@ export default class AircraftModel {
     }
 
             /**
-            TODO:   1) Some kind of weighting system. (Anton snart klar)
+            TODO:   1) Some kind of weighting system. KLAR
                     2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
-                    3) Fixa 
+                    3) Se till att 1339 plan verkligen ger falsk data.
 
             Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
             Detta blir användarens schema:
