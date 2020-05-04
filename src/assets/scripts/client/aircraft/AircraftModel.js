@@ -2343,7 +2343,10 @@ export default class AircraftModel {
 
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
             const stopRarity = GameController.sRarity;
-            console.log("Percentage of effected aircraft: 10/"+amountOfAttack+". Half non-responive, half jumpy");
+            const jumpRarity = GameController.jRarity;
+            const errorRarity = GameController.eRarity;
+            console.log("Percentage of effected aircraft: 100/"+amountOfAttack+". Half non-responive, half jumpy");
+            console.log("sRarity = "+stopRarity+", jRarity = "+jumpRarity+", eRarity = "+errorRarity);
             /**
             TODO:   1) Some kind of weighting system.
                     2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
@@ -2373,9 +2376,9 @@ export default class AircraftModel {
 
         const freq = GameController.jFreq;
         if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % freq == 0) {
-            const rarity = GameController.jRarity;
+            const jumpRarity = GameController.jRarity;
 
-            if (Math.floor(Math.random() * rarity) == 1){
+            if (Math.floor(Math.random() * jumpRarity) == 1){
                 const radius = GameController.jRadius;
                 const center = AirportController.airport_get().rangeRings.center;
                 const current = this.positionModel.gps;
