@@ -655,16 +655,16 @@ class GameController {
             this.aRarity = 9999999; //0 % of aircraft
 
         }else if (themeName == 'Low'){
-            this.aRarity = 200; //5% of aircraft
+            this.aRarity = 2000; //5% of aircraft
 
         } else if (themeName == 'Normal'){
-            this.aRarity = 50; //20 % of aircraft
+            this.aRarity = 500; //20 % of aircraft
 
         } else if (themeName == 'High'){
-            this.aRarity = 20; //50 % of aircraft
+            this.aRarity = 200; //50 % of aircraft
 
         } else if (themeName == 'VeryHigh'){
-            this.aRarity = 11; //90 % of aircraft
+            this.aRarity = 110; //90 % of aircraft
         }
     };
 

@@ -2361,7 +2361,7 @@ export default class AircraftModel {
             */
             
             const random = Math.floor(Math.random() * amountOfAttack);
-            if (random < 10){
+            if (random < 100){
                 if (random < 5){
                     this.model.engines.number = 1337;
                 } else if (random >= 5){
