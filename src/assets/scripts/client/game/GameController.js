@@ -96,11 +96,15 @@ class GameController {
         this.theme = THEME.DEFAULT;
 
         this.jRadius = 1;
-        this.jFreq = 99999999999;
-        this.jRarity = 9999999;
-        this.sRarity = 9999999;
-        this.eRarity = 9999999;
+        this.jFreq = 20;
         this.aRarity = 9999999;
+        this.jRarity = 1;
+        this.sRarity = 1;
+        this.eRarity = 1;
+
+        this.jumpers = 0;
+        this.stoppers = 0;
+        this.errorers = 0;
 
         this._eventBus = EventBus;
     }
@@ -606,21 +610,21 @@ class GameController {
     //jRarity hög men jFreq låg
     _setjRarity = (themeName) => {
         console.log(themeName);
-        if (themeName == 'None'){
-            this.jRarity = 9999999;
+        if (themeName == '1'){
+            this.jRarity = 1;
             this.jFreq = 99999999999;
         }
-        else if (themeName == 'None'){
-            this.jRarity = 9999999;
+        else if (themeName == '2'){
+            this.jRarity = 2;
             this.jFreq = 15;
-        } else if (themeName == 'Low'){
-            this.jRarity = 1000;
+        } else if (themeName == '3'){
+            this.jRarity = 3;
             this.jFreq = 10;
-        } else if (themeName == 'Medium'){
-            this.jRarity = 150;
+        } else if (themeName == '4'){
+            this.jRarity = 4;
             this.jFreq = 5;
-        } else if (themeName == 'High'){
-            this.jRarity = 20;
+        } else if (themeName == '5'){
+            this.jRarity = 5;
             this.jFreq = 1;
         }
     };
@@ -638,33 +642,39 @@ class GameController {
 
     _setSRarity = (themeName) => {
         console.log(themeName);
-        if (themeName == 'None'){
-            this.sRarity = 9999999;
+        if (themeName == '1'){
+            this.sRarity = 1;
 
-        } else if (themeName == 'Low'){
-            this.sRarity = 1000;
+        } else if (themeName == '2'){
+            this.sRarity = 2;
 
-        } else if (themeName == 'Normal'){
-            this.sRarity = 150;
+        } else if (themeName == '3'){
+            this.sRarity = 3;
 
-        } else if (themeName == 'High'){
-            this.sRarity = 20;
+        } else if (themeName == '4'){
+            this.sRarity = 4;
+
+        } else if (themeName == '5'){
+            this.sRarity = 5;
         }
     };
     
     _setERarity = (themeName) => {
         console.log(themeName);
-        if (themeName == 'None'){
-            this.eRarity = 9999999;
+        if (themeName == '1'){
+            this.eRarity = 1;
+        }
+        else if (themeName == '2'){
+            this.eRarity = 2;
 
-        } else if (themeName == 'Low'){
-            this.eRarity = 1000;
+        } else if (themeName == '3'){
+            this.eRarity = 3;
 
-        } else if (themeName == 'Normal'){
-            this.eRarity = 150;
+        } else if (themeName == '4'){
+            this.eRarity = 4;
 
-        } else if (themeName == 'High'){
-            this.eRarity = 20;
+        } else if (themeName == '5'){
+            this.eRarity = 5;
         }
     };
 

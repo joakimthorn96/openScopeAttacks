@@ -2328,6 +2328,23 @@ export default class AircraftModel {
         return Math.min(waypointMaximumSpeed, this.mcp.speed);
     }
 
+            /**
+            TODO:   1) Some kind of weighting system. (Anton snart klar)
+                    2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
+                    3) Fixa 
+
+            Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
+            Detta blir användarens schema:
+            Steg 1) Välj viktning av olika TYPER av attacker.
+            Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan. 
+                    Så fort detta väljs körs denna metod tills alla flygplan har fått "hasGottenEngineNumber=true"
+            Steg 3) *Observera*
+
+            Om användaren nu vill ändra fördelningen (weighten) av attacker kommer alla flygplan slumpas om genom Steg 1) och Steg 2)
+            Hur ofta flygplanen i sig hoppar är en bra variabel som vi kan ha kvar ändå! Denna kan vi ju ändra utan att behöva "slupma om attackflygplan".
+            */
+
+
     // TODO: this method needs a lot of love. its much too long with waaay too many nested if/else ifs.
     /**
      * @for AircraftModel
@@ -2342,44 +2359,33 @@ export default class AircraftModel {
         const amountOfAttack = GameController.aRarity;
 
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
-            const stopRarity = GameController.sRarity;
-            const jumpRarity = GameController.jRarity;
-            const errorRarity = GameController.eRarity;
-            console.log("Percentage of effected aircraft: 100/"+amountOfAttack+". Half non-responive, half jumpy");
-            console.log("sRarity = "+stopRarity+", jRarity = "+jumpRarity+", eRarity = "+errorRarity);
-            /**
-            TODO:   1) Some kind of weighting system.
-                    2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
-                    3) Fixa 
+            var stopRarity = GameController.sRarity;
+            var jumpRarity = GameController.jRarity;
+            var errorRarity = GameController.eRarity;
 
-            Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
-            Detta blir användarens schema:
-            Steg 1) Välj viktning av olika TYPER av attacker.
-            Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan. 
-                    Så fort detta väljs körs denna metod tills alla flygplan har fått "hasGottenEngineNumber=true"
-            Steg 3) *Observera*
+            var sum = (stopRarity + jumpRarity + errorRarity) / 100
+            stopRarity = stopRarity / sum
+            jumpRarity = jumpRarity / sum
+            errorRarity = errorRarity / sum
 
-            Om användaren nu vill ändra fördelningen (weighten) av attacker kommer alla flygplan slumpas om genom Steg 1) och Steg 2)
-            Hur ofta flygplanen i sig hoppar är en bra variabel som vi kan ha kvar ändå! Denna kan vi ju ändra utan att behöva "slupma om attackflygplan".
-            */
-            
+            console.log("sR = "+stopRarity.toFixed(1)+"%, jR = "+jumpRarity.toFixed(1)+"%, eR = "+errorRarity.toFixed(1)+"%, At:  100/"+amountOfAttack);
+
             const random = Math.floor(Math.random() * amountOfAttack);
             if (random < 100){
-                if (random < 33){
-                    this.model.engines.number = 1337;
-                } else if (random >= 33 && random < 66){
-                    this.model.engines.number = 1338;
-                } else if (random >= 66)
-                    this.model.engines.number = 1339;
+                if (random < stopRarity){
+                    this.model.engines.number = 1337; GameController.jumpers++;
+                } else if (random >= stopRarity && random < stopRarity+jumpRarity){
+                    this.model.engines.number = 1338; GameController.stoppers++;
+                } else if (random >= stopRarity+jumpRarity)
+                    this.model.engines.number = 1339; GameController.errorers++;
             }
             this.hasGottenEngineNumber = true;
         }
 
         const freq = GameController.jFreq;
         if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % freq == 0) {
-            const jumpRarity = GameController.jRarity;
 
-            if (Math.floor(Math.random() * jumpRarity) == 1){
+            if (Math.floor(Math.random() * 5000) == 1){
                 const radius = GameController.jRadius;
                 const center = AirportController.airport_get().rangeRings.center;
                 const current = this.positionModel.gps;

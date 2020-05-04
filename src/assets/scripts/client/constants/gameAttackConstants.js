@@ -53,6 +53,93 @@ export const GAME_ATTACK_VALUES = [
         ]
     },
     {
+        name: 'stopRarity',
+        defaultValue: 'None',
+        description: 'Aircraft not responding to commands',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_STOP_RARITY,
+        optionList: [
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
+        ]
+    },
+    {
+        name: 'jumpFrequence',
+        defaultValue: 'None',
+        description: 'Aircraft changing postion',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_JUMP_RARITY,
+        optionList: [
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
+        ]
+    },
+    {
+        name: 'errorRarity',
+        defaultValue: 'None',
+        description: 'Aircraft showing false data weighting',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_ERROR_RARITY,
+        optionList: [
+          {
+              displayLabel: '1',
+              value: '1'
+          },
+          {
+              displayLabel: '2',
+              value: '2'
+          },
+          {
+              displayLabel: '3',
+              value: '3'
+          },
+          {
+              displayLabel: '4',
+              value: '4'
+          },
+          {
+              displayLabel: '5',
+              value: '5'
+          }
+        ]
+    },
+    {
         name: 'jumpRadius',
         defaultValue: 'Normal',
         description: 'Distance of jumps',
@@ -70,85 +157,6 @@ export const GAME_ATTACK_VALUES = [
           {
               displayLabel: 'Large radius',
               value: 'Large'
-          }
-        ]
-    },
-    {
-        name: 'jumpFrequence',
-        defaultValue: 'None',
-        description: 'Aircraft changing postion',
-        type: 'select',
-        onChangeEventHandler: EVENT.SET_JUMP_RARITY,
-        optionList: [
-            {
-                displayLabel: 'Zero probability',
-                value: 'None'
-            },
-            {
-                displayLabel: 'Rare probability',
-                value: 'Rare'
-            },
-            {
-                displayLabel: 'Moderate probability',
-                value: 'Normal'
-            },
-            {
-                displayLabel: 'High probability',
-                value: 'Often'
-            },
-            {
-                displayLabel: 'Very high probability',
-                value: 'Always'
-            }
-        ]
-    },
-    {
-        name: 'stopRarity',
-        defaultValue: 'None',
-        description: 'Aircraft not responding to commands',
-        type: 'select',
-        onChangeEventHandler: EVENT.SET_STOP_RARITY,
-        optionList: [
-          {
-              displayLabel: 'Zero probability',
-              value: 'None'
-          },
-          {
-              displayLabel: 'Low probability',
-              value: 'Low'
-          },
-          {
-              displayLabel: 'Moderate probability',
-              value: 'Normal'
-          },
-          {
-              displayLabel: 'High probability',
-              value: 'High'
-          }
-        ]
-    },
-    {
-        name: 'errorRarity',
-        defaultValue: 'None',
-        description: 'Aircraft showing false data',
-        type: 'select',
-        onChangeEventHandler: EVENT.SET_ERROR_RARITY,
-        optionList: [
-          {
-              displayLabel: 'Zero probability',
-              value: 'None'
-          },
-          {
-              displayLabel: 'Low probability',
-              value: 'Low'
-          },
-          {
-              displayLabel: 'Normal probability',
-              value: 'Normal'
-          },
-          {
-              displayLabel: 'High probability',
-              value: 'High'
           }
         ]
     }

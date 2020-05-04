@@ -12,6 +12,7 @@ import { SELECTORS } from '../constants/selectors';
 const UI_SETTINGS_MODAL_TEMPLATE = `
     <div class="option-dialog dialog">
         <p class="dialog-title">ADS-B Attacks</p>
+        <h2>Hello!</h2>
         <div class="dialog-body nice-scrollbar"></div>
     </div>`;
 
@@ -20,7 +21,7 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
  * @type {string}
  * @final
  */
-const UI_DIALOG_FOOTER_TEMPLATE = '<div class="dialog-footer"></div>';
+const UI_DIALOG_FOOTER_TEMPLATE = '<div class="dialog-footer">Attacks!</div>';
 
 /**
  * @property UI_OPTION_CONTAINER_TEMPLATE

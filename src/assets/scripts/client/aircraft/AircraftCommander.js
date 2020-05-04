@@ -150,12 +150,11 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
-        if (aircraft.model.engines.number !== 1337 || command === 'startListen') {
+        if (aircraft.model.engines.number !== 1337 || command === 'startListen' || command === 'showEngine') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];
             }
-            console.log(`sRarity: ${GameController.sRarity} .`)
             return this[functionName](aircraft, data);
         }
         console.log(`Command is : ${command}`);
@@ -834,7 +833,7 @@ export default class AircraftCommander {
     }
 
     runShowEngine(aircraft) {
-        console.log(aircraft.name +" is "+aircraft.model.engines.number+".");
+        console.log("Corrupted aircraft amount [Jumper, Stopper, Errorer]: " + GameController.jumpers+", "+GameController.stoppers+", "+GameController.errorers);
         return [true, 'I am '+aircraft.model.engines.number+"."];
     }
 
