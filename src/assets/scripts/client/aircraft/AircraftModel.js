@@ -2365,11 +2365,12 @@ export default class AircraftModel {
             
             const random = Math.floor(Math.random() * amountOfAttack);
             if (random < 100){
-                if (random < 50){
+                if (random < 33){
                     this.model.engines.number = 1337;
-                } else if (random >= 50){
+                } else if (random >= 33 && random < 66){
                     this.model.engines.number = 1338;
-                }
+                } else if (random >= 66)
+                    this.model.engines.number = 1339;
             }
             this.hasGottenEngineNumber = true;
         }
