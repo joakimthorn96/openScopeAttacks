@@ -98,6 +98,31 @@ export const GAME_ATTACK_VALUES = [
         ]
     },
     {
+        name: 'errorRarity',
+        defaultValue: 'None',
+        description: 'Aircraft showing false data',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_ERROR_RARITY,
+        optionList: [
+          {
+              displayLabel: 'None',
+              value: 'None'
+          },
+          {
+              displayLabel: 'Low',
+              value: 'Low'
+          },
+          {
+              displayLabel: 'Normal',
+              value: 'Normal'
+          },
+          {
+              displayLabel: 'High',
+              value: 'High'
+          }
+        ]
+    },
+    {
         name: 'attackRarity',
         defaultValue: 'None',
         description: 'Percentage of aircraft effected. Can only be chosen once currently.',
