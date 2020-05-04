@@ -153,7 +153,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
         this._eventBus.on(EVENT.SET_STOP_RARITY, this._setSRarity);
-        this._eventBus.on(EVENT_SET_ERROR_RARITY, this._setERarity);
+        this._eventBus.on(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.on(EVENT.SET_ATTACK_RARITY, this._setARarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
@@ -180,7 +180,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
         this._eventBus.off(EVENT.SET_STOP_RARITY, this._setSRarity);
-        this._eventBus.off(EVENT_SET_ERROR_RARITY, this._setERarity);
+        this._eventBus.off(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.off(EVENT.SET_ATTACK_RARITY, this._setARarity);
 
         return this.destroy();
