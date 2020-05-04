@@ -1,4 +1,5 @@
 import { EVENT } from './eventNames';
+import TrafficRateController from '../ui/TrafficRateController';
 
 /* eslint-disable max-len, import/prefer-default-export */
 /**
@@ -23,76 +24,105 @@ export const GAME_ATTACK_NAMES = {
  */
 export const GAME_ATTACK_VALUES = [
     {
-        name: 'jumpFrequence',
+        name: 'attackRarity',
         defaultValue: 'None',
-        description: 'What is the rarity that an aircraft will jump',
+        description: 'PERCENTAGE OF AIRCRAFT EFFECTED',
         type: 'select',
-        onChangeEventHandler: EVENT.SET_JUMP_RARITY,
+        onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
         optionList: [
-            {
-                displayLabel: 'None',
-                value: 'None'
-            },
-            {
-                displayLabel: 'Rare',
-                value: 'Rare'
-            },
-            {
-                displayLabel: 'Normal',
-                value: 'Normal'
-            },
-            {
-                displayLabel: 'Often',
-                value: 'Often'
-            },
-            {
-                displayLabel: 'All the time',
-                value: 'Always'
-            }
+          {
+              displayLabel: '0% of aircraft effected',
+              value: 'None'
+          },
+          {
+              displayLabel: '5% of aircraft effected',
+              value: 'Low'
+          },
+          {
+              displayLabel: '20% of aircraft effected',
+              value: 'Normal'
+          },
+          {
+              displayLabel: '50% of aircraft effected',
+              value: 'High'
+          },
+          {
+              displayLabel: '90% of aircraft effected',
+              value: 'VeryHigh'
+          }
         ]
     },
     {
         name: 'jumpRadius',
         defaultValue: 'Normal',
-        description: 'In how big area will aircrafts jump',
+        description: 'Distance of jumps',
         type: 'select',
         onChangeEventHandler: EVENT.SET_JUMP_RADIUS,
         optionList: [
           {
-              displayLabel: 'Small',
+              displayLabel: 'Small radius',
               value: 'Small'
           },
           {
-              displayLabel: 'Normal',
+              displayLabel: 'Moderate radius',
               value: 'Normal'
           },
           {
-              displayLabel: 'Large',
+              displayLabel: 'Large radius',
               value: 'Large'
           }
         ]
     },
     {
+        name: 'jumpFrequence',
+        defaultValue: 'None',
+        description: 'Aircraft changing postion',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_JUMP_RARITY,
+        optionList: [
+            {
+                displayLabel: 'Zero probability',
+                value: 'None'
+            },
+            {
+                displayLabel: 'Rare probability',
+                value: 'Rare'
+            },
+            {
+                displayLabel: 'Moderate probability',
+                value: 'Normal'
+            },
+            {
+                displayLabel: 'High probability',
+                value: 'Often'
+            },
+            {
+                displayLabel: 'Very high probability',
+                value: 'Always'
+            }
+        ]
+    },
+    {
         name: 'stopRarity',
         defaultValue: 'None',
-        description: 'Non-responsive aircraft weighting (work in progress)',
+        description: 'Aircraft not responding to commands',
         type: 'select',
         onChangeEventHandler: EVENT.SET_STOP_RARITY,
         optionList: [
           {
-              displayLabel: 'None',
+              displayLabel: 'Zero probability',
               value: 'None'
           },
           {
-              displayLabel: 'Low',
+              displayLabel: 'Low probability',
               value: 'Low'
           },
           {
-              displayLabel: 'Normal',
+              displayLabel: 'Moderate probability',
               value: 'Normal'
           },
           {
-              displayLabel: 'High',
+              displayLabel: 'High probability',
               value: 'High'
           }
         ]
@@ -105,50 +135,22 @@ export const GAME_ATTACK_VALUES = [
         onChangeEventHandler: EVENT.SET_ERROR_RARITY,
         optionList: [
           {
-              displayLabel: 'None',
+              displayLabel: 'Zero probability',
               value: 'None'
           },
           {
-              displayLabel: 'Low',
+              displayLabel: 'Low probability',
               value: 'Low'
           },
           {
-              displayLabel: 'Normal',
+              displayLabel: 'Normal probability',
               value: 'Normal'
           },
           {
-              displayLabel: 'High',
+              displayLabel: 'High probability',
               value: 'High'
-          }
-        ]
-    },
-    {
-        name: 'attackRarity',
-        defaultValue: 'None',
-        description: 'Percentage of aircraft effected. Can only be chosen once currently.',
-        type: 'select',
-        onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
-        optionList: [
-          {
-              displayLabel: '0%',
-              value: 'None'
-          },
-          {
-              displayLabel: '5%',
-              value: 'Low'
-          },
-          {
-              displayLabel: '20%',
-              value: 'Normal'
-          },
-          {
-              displayLabel: '50%',
-              value: 'High'
-          },
-          {
-              displayLabel: '90%',
-              value: 'VeryHigh'
           }
         ]
     }
+
 ];
