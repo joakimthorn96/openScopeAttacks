@@ -7,6 +7,8 @@ import EventBus from '../lib/EventBus';
 import GameController from '../game/GameController';
 import NavigationLibrary from '../navigationLibrary/NavigationLibrary';
 import UiController from '../ui/UiController';
+import TimeKeeper from '../engine/TimeKeeper';
+import {GAME_ATTACK_NAMES} from '../constants/gameAttackConstants';
 import { MCP_MODE } from './ModeControl/modeControlConstants';
 import {
     FLIGHT_PHASE
@@ -150,6 +152,8 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
+        var text = '(' + TimeKeeper.accumulatedDeltaTime.toFixed(1) + ' seconds): ' + aircraft.callsign + ', ' + command + ', ' + data + '. Attacktype is: '+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
+        GameController.log += text;
         if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showEngine') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {
@@ -158,7 +162,7 @@ export default class AircraftCommander {
             return this[functionName](aircraft, data);
         }
         console.log(`Command is : ${command}`);
-        console.log(`Will not obey command because attackType = ${aircraft.attackType} .`);
+        console.log(`Will not obey command because attackType = ${GAME_ATTACK_NAMES[aircraft.attackType]} .`);
 
         return [false, 'how about no'];
     }
@@ -835,7 +839,7 @@ export default class AircraftCommander {
 
     runShowEngine(aircraft) {
         console.log("Corrupted aircraft amount [Stopper, Jumper, Errorer]: " +GameController.stoppers+", "+GameController.jumpers+", "+GameController.errorers+" sumAtk: "+(GameController.jumpers+GameController.stoppers+GameController.errorers)+" TOT:"+GameController.aircraft);
-        return [true, 'I am type '+aircraft.attackType+"."];
+        return [true, 'I am type '+GAME_ATTACK_NAMES[aircraft.attackType]+"."];
     }
 
 

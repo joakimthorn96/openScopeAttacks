@@ -10,7 +10,10 @@ import TrafficRateController from '../ui/TrafficRateController';
  * @final
  */
 export const GAME_ATTACK_NAMES = {
-    CONTROL_METHOD: 'controlMethod'
+    0: 'Regular',
+    1: 'Non listen',
+    2: 'Jumping',
+    3: 'False information'
 };
 
 /**

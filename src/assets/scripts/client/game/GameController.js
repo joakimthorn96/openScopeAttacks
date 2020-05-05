@@ -107,6 +107,8 @@ class GameController {
         this.errorers = 0;
         this.aircraft = 0;
 
+        this.log = "";
+
         this._eventBus = EventBus;
     }
 
@@ -651,7 +653,7 @@ class GameController {
             this.sRarity = 5;
         }
     };
-    
+
     _setERarity = (themeName) => {
         console.log(themeName);
         if (themeName == '1'){
@@ -688,7 +690,7 @@ class GameController {
         } else if (themeName == 'VeryHigh'){
             this.aRarity = 110; //90 % of aircraft
         }
-        
+
     };
 
     /**
