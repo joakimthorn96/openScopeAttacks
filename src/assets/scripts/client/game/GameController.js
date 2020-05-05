@@ -696,6 +696,7 @@ class GameController {
         } else if (themeName == 'VeryHigh'){
             this.aRarity = 110; //90 % of aircraft
         }
+        
     };
 
     /**
