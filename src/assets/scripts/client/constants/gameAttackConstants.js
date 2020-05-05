@@ -56,6 +56,7 @@ export const GAME_ATTACK_VALUES = [
         name: 'stopRarity',
         defaultValue: 'None',
         description: 'Aircraft not responding to commands',
+        help: 'Simulates spoofed ADS-B data. These aircraft will not respond to any commands.',
         type: 'select',
         onChangeEventHandler: EVENT.SET_STOP_RARITY,
         optionList: [
@@ -85,6 +86,7 @@ export const GAME_ATTACK_VALUES = [
         name: 'jumpFrequence',
         defaultValue: 'None',
         description: 'Aircraft changing postion',
+        help: 'Changes the positional values of ADS-B data of aircraft',
         type: 'select',
         onChangeEventHandler: EVENT.SET_JUMP_RARITY,
         optionList: [
@@ -113,7 +115,8 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'errorRarity',
         defaultValue: 'None',
-        description: 'Aircraft showing false data weighting',
+        description: 'Aircraft showing false data',
+        help: 'Changes the alitude and velocity values of ADS-B data of aircraft',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ERROR_RARITY,
         optionList: [
@@ -143,6 +146,7 @@ export const GAME_ATTACK_VALUES = [
         name: 'jumpRadius',
         defaultValue: 'Normal',
         description: 'Distance of jumps',
+        help: 'The distance of a positional ADS-B data jump, when it occurs. ',
         type: 'select',
         onChangeEventHandler: EVENT.SET_JUMP_RADIUS,
         optionList: [
