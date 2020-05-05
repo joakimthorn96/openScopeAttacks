@@ -613,20 +613,14 @@ class GameController {
         console.log(themeName);
         if (themeName == '1'){
             this.jRarity = 1;
-            this.jFreq = 99999999999;
-        }
-        else if (themeName == '2'){
+        } else if (themeName == '2'){
             this.jRarity = 2;
-            this.jFreq = 15;
         } else if (themeName == '3'){
             this.jRarity = 3;
-            this.jFreq = 10;
         } else if (themeName == '4'){
             this.jRarity = 4;
-            this.jFreq = 5;
         } else if (themeName == '5'){
             this.jRarity = 5;
-            this.jFreq = 1;
         }
     };
 
