@@ -2356,9 +2356,9 @@ export default class AircraftModel {
         if (this.isTaxiing()) {
             return;
         }
-        const amountOfAttack = GameController.aRarity;
-
+        let amountOfAttack = GameController.aRarity;
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
+            
             var stopRarity = GameController.sRarity;
             var jumpRarity = GameController.jRarity;
             var errorRarity = GameController.eRarity;
@@ -2374,12 +2374,17 @@ export default class AircraftModel {
             if (random < 100){
                 if (random < stopRarity){
                     this.model.engines.number = 1337; GameController.jumpers++;
-                } else if (random >= stopRarity && random < stopRarity+jumpRarity){
-                    this.model.engines.number = 1338; GameController.stoppers++;
-                } else if (random >= stopRarity+jumpRarity)
+                } 
+                else if ((random >= stopRarity) && (random < stopRarity+jumpRarity)){
+                    this.model.engines.number = 1338; GameController.stoppers++;    
+                } 
+                else{
                     this.model.engines.number = 1339; GameController.errorers++;
+                }
             }
+            
             this.hasGottenEngineNumber = true;
+            GameController.aircraft++;
         }
 
         const freq = GameController.jFreq;

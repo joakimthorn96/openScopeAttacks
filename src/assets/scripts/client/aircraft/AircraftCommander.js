@@ -833,7 +833,7 @@ export default class AircraftCommander {
     }
 
     runShowEngine(aircraft) {
-        console.log("Corrupted aircraft amount [Jumper, Stopper, Errorer]: " + GameController.jumpers+", "+GameController.stoppers+", "+GameController.errorers);
+        console.log("Corrupted aircraft amount [Stopper, Jumper, Errorer]: " +GameController.stoppers+", "+GameController.jumpers+", "+GameController.errorers+" sumAtk: "+(GameController.jumpers+GameController.stoppers+GameController.errorers)+" TOT:"+GameController.aircraft);
         return [true, 'I am '+aircraft.model.engines.number+"."];
     }
 

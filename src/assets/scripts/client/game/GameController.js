@@ -105,6 +105,7 @@ class GameController {
         this.jumpers = 0;
         this.stoppers = 0;
         this.errorers = 0;
+        this.aircraft = 0;
 
         this._eventBus = EventBus;
     }
