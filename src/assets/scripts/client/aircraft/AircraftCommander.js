@@ -158,7 +158,7 @@ export default class AircraftCommander {
             return this[functionName](aircraft, data);
         }
         console.log(`Command is : ${command}`);
-        console.log(`Will not obey command because engines.number = ${aircraft.model.engines.number} .`);
+        console.log(`Will not obey command because attackType = ${aircraft.attackType} .`);
 
         return [false, 'how about no'];
     }
@@ -835,7 +835,7 @@ export default class AircraftCommander {
 
     runShowEngine(aircraft) {
         console.log("Corrupted aircraft amount [Stopper, Jumper, Errorer]: " +GameController.stoppers+", "+GameController.jumpers+", "+GameController.errorers+" sumAtk: "+(GameController.jumpers+GameController.stoppers+GameController.errorers)+" TOT:"+GameController.aircraft);
-        return [true, 'I am '+aircraft.model.engines.number+"."];
+        return [true, 'I am type '+aircraft.attackType+"."];
     }
 
 
