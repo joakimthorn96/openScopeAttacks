@@ -607,8 +607,6 @@ class GameController {
         TimeKeeper.setPause(false);
     }
 
-
-    //jRarity hög men jFreq låg
     _setjRarity = (themeName) => {
         console.log(themeName);
         if (themeName == '1'){
