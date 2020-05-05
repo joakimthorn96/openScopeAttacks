@@ -160,7 +160,7 @@ export default class AircraftCommander {
         console.log(`Command is : ${command}`);
         console.log(`Will not obey command because attackType = ${aircraft.attackType} .`);
 
-        return [false, 'how about no'];
+        return [false, '*no response*'];
     }
 
     /**

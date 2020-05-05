@@ -105,7 +105,9 @@ export default class AircraftModel {
         this.usedBefore = true;
         this.hasMadeJump = false;
         this.hasGottenEngineNumber = false;
-
+        this.timeToUpdate = false;
+        this.amountOfAttack = -1 //init
+        this.pastAmountofAttack = 9999999;
         this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
 
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
@@ -2360,13 +2362,20 @@ export default class AircraftModel {
      */
     updatePhysics() {
 
-
         if (this.isTaxiing()) {
             return;
         }
-        let amountOfAttack = GameController.aRarity;
-        if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
+        
+        this.pastAmountofAttack = this.amountOfAttack;
+        this.amountOfAttack = GameController.aRarity;
+        if(this.pastAmountofAttack != this.amountOfAttack){
+            this.hasGottenEngineNumber = false;
+            this.attackType = 0;
+            console.log("<-- antal! Förhoppningsvis all flygplan!")
+        }
 
+        if(!this.hasGottenEngineNumber){
+            
             var stopRarity = GameController.sRarity;
             var jumpRarity = GameController.jRarity;
             var errorRarity = GameController.eRarity;
@@ -2376,9 +2385,9 @@ export default class AircraftModel {
             jumpRarity = jumpRarity / sum
             errorRarity = errorRarity / sum
 
-            console.log("sR = "+stopRarity.toFixed(1)+"%, jR = "+jumpRarity.toFixed(1)+"%, eR = "+errorRarity.toFixed(1)+"%, At:  100/"+amountOfAttack);
+            console.log("sR = "+stopRarity.toFixed(1)+"%, jR = "+jumpRarity.toFixed(1)+"%, eR = "+errorRarity.toFixed(1)+"%, At:  100/"+this.amountOfAttack);
 
-            const random = Math.floor(Math.random() * amountOfAttack);
+            const random = Math.floor(Math.random() * this.amountOfAttack);
 
             if (random < 100){
                 if (random < stopRarity){
@@ -2394,13 +2403,11 @@ export default class AircraftModel {
                     GameController.errorers++;
                 }
             }
-
             this.hasGottenEngineNumber = true;
             GameController.aircraft++;
         }
 
-        const freq = GameController.jFreq;
-        if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % freq == 0) {
+        if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
 
             if (Math.floor(Math.random() * 5000) == 1){
                 const radius = GameController.jRadius;
