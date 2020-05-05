@@ -798,7 +798,7 @@ export default class AircraftCommander {
      * @return {array} [success of operation, meaning]
      */
     runStopListen(aircraft) {
-        aircraft.model.engines.number = 1337;
+        //aircraft.model.engines.number = 1337;
         return [true, 'will now not respond to future commands'];
     }
 
@@ -808,7 +808,7 @@ export default class AircraftCommander {
      * @return {array} [success of operation, meaning]
      */
     runStartListen(aircraft) {
-        aircraft.model.engines.number = 4;
+        //aircraft.model.engines.number = 4;
         return [true, 'will now respond to future commands'];
     }
 
@@ -817,8 +817,9 @@ export default class AircraftCommander {
      * @method runStopListen
      * @return {array} [success of operation, meaning]
      */
+
     runStartJump(aircraft) {
-        aircraft.model.engines.number = 1338;
+        //aircraft.model.engines.number = 1338;
         return [true, 'will now jump around map'];
     }
 
@@ -828,7 +829,7 @@ export default class AircraftCommander {
      * @return {array} [success of operation, meaning]
      */
     runStopJump(aircraft) {
-        aircraft.model.engines.number = 4;
+        //aircraft.model.engines.number = 4;
         return [true, 'will now behave normally'];
     }
 

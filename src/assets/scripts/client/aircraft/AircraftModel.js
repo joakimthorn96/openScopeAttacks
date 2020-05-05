@@ -2373,16 +2373,19 @@ export default class AircraftModel {
             const random = Math.floor(Math.random() * amountOfAttack);
             if (random < 100){
                 if (random < stopRarity){
-                    this.model.engines.number = 1337; GameController.jumpers++;
+                    this.model.engines.number = 1337; 
+                    GameController.stoppers++;
                 } 
                 else if ((random >= stopRarity) && (random < stopRarity+jumpRarity)){
-                    this.model.engines.number = 1338; GameController.stoppers++;    
+                    this.model.engines.number = 1338; 
+                    GameController.jumpers++;
                 } 
                 else{
-                    this.model.engines.number = 1339; GameController.errorers++;
+                    this.model.engines.number = 1339; 
+                    GameController.errorers++;
                 }
             }
-            
+
             this.hasGottenEngineNumber = true;
             GameController.aircraft++;
         }
@@ -2405,7 +2408,6 @@ export default class AircraftModel {
                 const dot = [r*cos(t),r*sin(t)];
                 const newPos = [center[0]+dot[0], center[1]+dot[1]];
                 const movement = [newPos[0]-current[0],newPos[1]-current[1]];
-
 
                 this.positionModel.setTrueCoordinates(movement[0],movement[1]);
                 this.usedBefore = false;
