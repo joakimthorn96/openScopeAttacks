@@ -105,10 +105,18 @@ export default class AircraftModel {
         this.usedBefore = true;
         this.hasMadeJump = false;
         this.hasGottenEngineNumber = false;
-        
+
         this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
 
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
+
+        /**
+        * 0 - regular
+        * 1 - no listen
+        * 2 - jumping
+        * 3 - wrong value
+        */
+        this.attackType = 0;
 
         /**
          * Unique id
@@ -2336,7 +2344,7 @@ export default class AircraftModel {
             Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
             Detta blir användarens schema:
             Steg 1) Välj viktning av olika TYPER av attacker.
-            Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan. 
+            Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan.
                     Så fort detta väljs körs denna metod tills alla flygplan har fått "hasGottenEngineNumber=true"
             Steg 3) *Observera*
 
@@ -2358,7 +2366,7 @@ export default class AircraftModel {
         }
         let amountOfAttack = GameController.aRarity;
         if( Math.floor(TimeKeeper.accumulatedDeltaTime) % 5 == 0 && !this.hasGottenEngineNumber && (amountOfAttack < 9999998)){
-            
+
             var stopRarity = GameController.sRarity;
             var jumpRarity = GameController.jRarity;
             var errorRarity = GameController.eRarity;
@@ -2371,17 +2379,18 @@ export default class AircraftModel {
             console.log("sR = "+stopRarity.toFixed(1)+"%, jR = "+jumpRarity.toFixed(1)+"%, eR = "+errorRarity.toFixed(1)+"%, At:  100/"+amountOfAttack);
 
             const random = Math.floor(Math.random() * amountOfAttack);
+
             if (random < 100){
                 if (random < stopRarity){
-                    this.model.engines.number = 1337; 
+                    this.attackType = 1;
                     GameController.stoppers++;
-                } 
+                }
                 else if ((random >= stopRarity) && (random < stopRarity+jumpRarity)){
-                    this.model.engines.number = 1338; 
+                    this.attackType = 2;
                     GameController.jumpers++;
-                } 
+                }
                 else{
-                    this.model.engines.number = 1339; 
+                    this.attackType = 3;
                     GameController.errorers++;
                 }
             }
@@ -2391,7 +2400,7 @@ export default class AircraftModel {
         }
 
         const freq = GameController.jFreq;
-        if (this.hasMadeJump && this.usedBefore && this.model.engines.number === 1338 && Math.floor(TimeKeeper.accumulatedDeltaTime) % freq == 0) {
+        if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % freq == 0) {
 
             if (Math.floor(Math.random() * 5000) == 1){
                 const radius = GameController.jRadius;

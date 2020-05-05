@@ -382,7 +382,7 @@ export default class RadarTargetModel {
     buildDataBlockRowTwoPrimaryInfo() {
         var aircraftAltitude = 0;
         var aircraftSpeed = 0;
-        if (this.aircraftModel.model.engines.number >= 1336 ) {
+        if (this.aircraftModel.attackType > 0 ) {
           //var aircraftAltitude = this.aircraftModel.fakeAltitude;
           //var aircraftSpeed = this.aircraftModel.fakeGroundSpeed;
           var aircraftAltitude = 999;

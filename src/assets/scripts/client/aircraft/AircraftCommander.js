@@ -150,7 +150,7 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
-        if (aircraft.model.engines.number !== 1337 || command === 'startListen' || command === 'showEngine') {
+        if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showEngine') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];
@@ -159,7 +159,7 @@ export default class AircraftCommander {
         }
         console.log(`Command is : ${command}`);
         console.log(`Will not obey command because engines.number = ${aircraft.model.engines.number} .`);
-        
+
         return [false, 'how about no'];
     }
 
@@ -798,7 +798,7 @@ export default class AircraftCommander {
      * @return {array} [success of operation, meaning]
      */
     runStopListen(aircraft) {
-        //aircraft.model.engines.number = 1337;
+        aircraft.attackType = 1;
         return [true, 'will now not respond to future commands'];
     }
 
@@ -808,7 +808,7 @@ export default class AircraftCommander {
      * @return {array} [success of operation, meaning]
      */
     runStartListen(aircraft) {
-        //aircraft.model.engines.number = 4;
+        aircraft.attackType = 0;
         return [true, 'will now respond to future commands'];
     }
 
@@ -819,7 +819,7 @@ export default class AircraftCommander {
      */
 
     runStartJump(aircraft) {
-        //aircraft.model.engines.number = 1338;
+        aircraft.attackType = 2;
         return [true, 'will now jump around map'];
     }
 
@@ -829,7 +829,7 @@ export default class AircraftCommander {
      * @return {array} [success of operation, meaning]
      */
     runStopJump(aircraft) {
-        //aircraft.model.engines.number = 4;
+        aircraft.attackType = 0;
         return [true, 'will now behave normally'];
     }
 

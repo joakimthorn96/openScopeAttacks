@@ -166,7 +166,7 @@ export default class AircraftConflict {
     }
 
     isAttackAircraft(aircraft) {
-      if(aircraft.model.engines.number == 1337 || aircraft.model.engines.number == 1338 || aircraft.model.engines.number == 1339){
+      if(aircraft.attackType == 1 || aircraft.attackType == 2 || aircraft.attackType == 3){
         return true;
       }
       return false;
