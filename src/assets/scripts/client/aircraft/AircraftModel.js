@@ -2338,21 +2338,21 @@ export default class AircraftModel {
         return Math.min(waypointMaximumSpeed, this.mcp.speed);
     }
 
-            /**
-            TODO:   1) Some kind of weighting system. KLAR
-                    2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
-                    3) Se till att 1339 plan verkligen ger falsk data.
+    /**
+    TODO:   1) Some kind of weighting system. KLAR
+            2) Function to reset all aircraft back to standard enginenumber and "hasGottenEngineNumber" = false.
+            3) Se till att 1339 plan verkligen ger falsk data. KLAR
 
-            Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
-            Detta blir användarens schema:
-            Steg 1) Välj viktning av olika TYPER av attacker.
-            Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan.
-                    Så fort detta väljs körs denna metod tills alla flygplan har fått "hasGottenEngineNumber=true"
-            Steg 3) *Observera*
+    Har tänkt igenom detta ett tag nu och jag tror dett kommer fungera bra.
+    Detta blir användarens schema:
+    Steg 1) Välj viktning av olika TYPER av attacker.
+    Steg 2) Välj hur stor procentsats av flygplan som kommer bli attackflygplan.
+            Så fort detta väljs körs denna metod tills alla flygplan har fått "hasGottenEngineNumber=true"
+    Steg 3) *Observera*
 
-            Om användaren nu vill ändra fördelningen (weighten) av attacker kommer alla flygplan slumpas om genom Steg 1) och Steg 2)
-            Hur ofta flygplanen i sig hoppar är en bra variabel som vi kan ha kvar ändå! Denna kan vi ju ändra utan att behöva "slupma om attackflygplan".
-            */
+    Om användaren nu vill ändra fördelningen (weighten) av attacker kommer alla flygplan slumpas om genom Steg 1) och Steg 2)
+    Hur ofta flygplanen i sig hoppar är en bra variabel som vi kan ha kvar ändå! Denna kan vi ju ändra utan att behöva "slupma om attackflygplan".
+    */
 
 
     // TODO: this method needs a lot of love. its much too long with waaay too many nested if/else ifs.
@@ -2370,8 +2370,15 @@ export default class AircraftModel {
         this.amountOfAttack = GameController.aRarity;
         if(this.pastAmountofAttack != this.amountOfAttack){
             this.hasGottenEngineNumber = false;
+            if(this.attackType == 1){
+                GameController.stoppers--;
+            } else if(this.attackType == 2){
+                GameController.jumpers--;
+            } else if(this.attackType == 3){
+                GameController.errorers--;
+            }
             this.attackType = 0;
-            console.log("<-- antal! Förhoppningsvis all flygplan!")
+            GameController.aircraft --;
         }
 
         if(!this.hasGottenEngineNumber){

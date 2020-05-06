@@ -154,7 +154,7 @@ export default class AircraftCommander {
     run(aircraft, command, data) {
         var text = '(' + TimeKeeper.accumulatedDeltaTime.toFixed(1) + ' seconds): ' + aircraft.callsign + ', ' + command + ', ' + data + '. Attacktype is: '+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
         GameController.log += text;
-        if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showEngine') {
+        if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];

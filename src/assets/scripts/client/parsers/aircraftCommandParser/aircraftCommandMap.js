@@ -229,8 +229,8 @@ export const AIRCRAFT_COMMAND_MAP = {
       functionName: 'runStopJump',
       isSystemCommand: false
     },
-    showEngine: {
-        aliases: ['showEngine', 'show', 's'],
+    showType: {
+        aliases: ['showType', 'show', 's'],
         functionName: 'runShowEngine',
         isSystemCommand: false
       },

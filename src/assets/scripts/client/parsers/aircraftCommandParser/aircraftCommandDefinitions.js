@@ -139,7 +139,7 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
         validate: zeroArgumentsValidator,
         parse: noop
     },
-    showEngine: {
+    showType: {
         validate: zeroArgumentsValidator,
         parse: noop
     }

@@ -12,8 +12,17 @@ import { SELECTORS } from '../constants/selectors';
 const UI_SETTINGS_MODAL_TEMPLATE = `
     <div class="option-dialog dialog">
         <p class="dialog-title">ADS-B Attacks</p>
-        <h2>Hello!</h2>
         <div class="dialog-body nice-scrollbar"></div>
+        <div class="dialog-subtitle"> Instructions </div>
+        <p class="dialog-text"> First select the weighting of each of the three types of attacks. <br> 
+        Secondly choose the global percentage of aircraft that will be effected by attacks. Remember this number
+        is not exact, more of an expected value. If you would like to change the distance of the jumping aircraft you
+        may change this value above at any time. Now play the simulator as you would normally. If you want to change 
+        the percentages of aircraft effected you may do that at any given time. <br> 
+        If you want to change the weight of different attacktypes you may choose the weights from 1 - 5.
+        Your weight changes will deploy on the aircraft as soon as you update the total percentages of aircraft effected. <br> <br>
+        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile".
+        </p>
     </div>`;
 
 /**
