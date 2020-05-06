@@ -96,11 +96,11 @@ class GameController {
         this.theme = THEME.DEFAULT;
 
         this.jRadius = 1;
-        this.jFreq = 20;
+        this.jProb = 2000;
         this.aRarity = 9999999;
-        this.jRarity = 1;
-        this.sRarity = 1;
-        this.eRarity = 1;
+        this.jRarity = 0;
+        this.sRarity = 0;
+        this.eRarity = 0;
 
         this.jumpers = 0;
         this.stoppers = 0;
@@ -163,6 +163,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_STOP_RARITY, this._setSRarity);
         this._eventBus.on(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.on(EVENT.SET_ATTACK_RARITY, this._setARarity);
+        this._eventBus.on(EVENT.SET_JUMP_PROB, this._setJProb);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -190,6 +191,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_STOP_RARITY, this._setSRarity);
         this._eventBus.off(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.off(EVENT.SET_ATTACK_RARITY, this._setARarity);
+        this._eventBus.off(EVENT.SET_JUMP_PROB, this._setJProb);
 
         return this.destroy();
     }
@@ -611,8 +613,10 @@ class GameController {
     }
 
     _setjRarity = (themeName) => {
-        console.log(themeName);
-        if (themeName == '1'){
+        console.log(themeName); 
+        if (themeName == '0'){
+            this.jRarity = 0;
+        } else if (themeName == '1'){
             this.jRarity = 1;
         } else if (themeName == '2'){
             this.jRarity = 2;
@@ -622,6 +626,21 @@ class GameController {
             this.jRarity = 4;
         } else if (themeName == '5'){
             this.jRarity = 5;
+        }
+    };
+
+    _setJProb = (probValue) => {
+        console.log(probValue);
+        if (probValue == '5000'){
+            this.jProb = 5000;
+        } else if(probValue == '1250'){
+            this.jProb = 1250;
+        } else if (probValue == '250'){
+            this.jProb = 250;
+        } else if (probValue == '50'){
+            this.jProb = 50;
+        } else if (probValue == '10'){
+            this.jProb = 10;
         }
     };
 
@@ -638,9 +657,10 @@ class GameController {
 
     _setSRarity = (themeName) => {
         console.log(themeName);
-        if (themeName == '1'){
+        if (themeName == '0'){
+            this.sRarity = 0;
+        } else if (themeName == '1'){
             this.sRarity = 1;
-
         } else if (themeName == '2'){
             this.sRarity = 2;
 
@@ -657,10 +677,11 @@ class GameController {
 
     _setERarity = (themeName) => {
         console.log(themeName);
-        if (themeName == '1'){
+        if (themeName == '0'){
+            this.eRarity = 0;
+        } else if(themeName == '1'){
             this.eRarity = 1;
-        }
-        else if (themeName == '2'){
+        } else if (themeName == '2'){
             this.eRarity = 2;
 
         } else if (themeName == '3'){

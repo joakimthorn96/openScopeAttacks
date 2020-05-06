@@ -2388,6 +2388,9 @@ export default class AircraftModel {
             var errorRarity = GameController.eRarity;
 
             var sum = (stopRarity + jumpRarity + errorRarity) / 100
+            if(sum == 0){
+                sum = 1;
+            }
             stopRarity = stopRarity / sum
             jumpRarity = jumpRarity / sum
             errorRarity = errorRarity / sum
@@ -2396,7 +2399,7 @@ export default class AircraftModel {
 
             const random = Math.floor(Math.random() * this.amountOfAttack);
 
-            if (random < 100){
+            if ((random < 100) && sum != 1){
                 if (random < stopRarity){
                     this.attackType = 1;
                     GameController.stoppers++;
@@ -2405,7 +2408,7 @@ export default class AircraftModel {
                     this.attackType = 2;
                     GameController.jumpers++;
                 }
-                else{
+                else {
                     this.attackType = 3;
                     GameController.errorers++;
                 }
@@ -2414,9 +2417,10 @@ export default class AircraftModel {
             GameController.aircraft++;
         }
 
-        if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 == 0) {
 
-            if (Math.floor(Math.random() * 5000) == 1){
+        if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 == 0) {
+            let prob = GameController.jProb * 12
+            if (Math.floor(Math.random() * prob) == 1){
                 const radius = GameController.jRadius;
                 const center = AirportController.airport_get().rangeRings.center;
                 const current = this.positionModel.gps;

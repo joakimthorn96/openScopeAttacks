@@ -57,12 +57,16 @@ export const GAME_ATTACK_VALUES = [
     },
     {
         name: 'stopRarity',
-        defaultValue: 'None',
+        defaultValue: '0',
         description: 'Aircraft not responding to commands',
         help: 'Simulates spoofed ADS-B data. These aircraft will not respond to any commands.',
         type: 'select',
         onChangeEventHandler: EVENT.SET_STOP_RARITY,
         optionList: [
+            {
+                displayLabel: '0',
+                value: '0'
+            },
             {
                 displayLabel: '1',
                 value: '1'
@@ -87,12 +91,16 @@ export const GAME_ATTACK_VALUES = [
     },
     {
         name: 'jumpFrequence',
-        defaultValue: 'None',
+        defaultValue: '0',
         description: 'Aircraft changing postion',
         help: 'Changes the positional values of ADS-B data of aircraft',
         type: 'select',
         onChangeEventHandler: EVENT.SET_JUMP_RARITY,
         optionList: [
+            {
+                displayLabel: '0',
+                value: '0'
+            },
             {
                 displayLabel: '1',
                 value: '1'
@@ -115,34 +123,69 @@ export const GAME_ATTACK_VALUES = [
             }
         ]
     },
+
     {
         name: 'errorRarity',
-        defaultValue: 'None',
+        defaultValue: '0',
         description: 'Aircraft showing false data',
         help: 'Changes the alitude and velocity values of ADS-B data of aircraft',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ERROR_RARITY,
         optionList: [
-          {
+        {
+                displayLabel: '0',
+                value: '0'
+        },
+        {
               displayLabel: '1',
               value: '1'
-          },
-          {
+        },
+        {
               displayLabel: '2',
               value: '2'
-          },
-          {
+        },
+        {
               displayLabel: '3',
               value: '3'
-          },
-          {
+        },
+        {
               displayLabel: '4',
               value: '4'
-          },
-          {
+        },
+        {
               displayLabel: '5',
               value: '5'
-          }
+        }
+        ]
+    },
+    {
+        name: 'jumpProbability',
+        defaultValue: '250',
+        description: 'Probability of jumps',
+        help: 'Probability of jumping aircraft to jump',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_JUMP_PROB,
+        optionList: [
+            {
+                displayLabel: 'Very Low',
+                value: '5000'
+            },
+            {
+                displayLabel: 'Low',
+                value: '1250'
+            },
+            {
+                displayLabel: 'Medium',
+                value: '250'
+            },
+            {
+                displayLabel: 'High',
+                value: '50'
+            },
+            {
+                displayLabel: 'Very high',
+                value: '10'
+            }
         ]
     },
     {
