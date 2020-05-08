@@ -9,7 +9,7 @@
 To get started playing the simulator with ADS-B attacks, please follow the instructions below to start the simulator locally on your computer.
 This extension was built by Anton Blåberg & Gustav Lindahl as a bachelor thesis work at Linköping University in 2020.
 
-Below text is from standard openscope repository.
+-------------------------------Below text is from standard openscope repository---------------------------
 
 Visit http://openscope.io to begin playing now!
 
