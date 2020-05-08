@@ -4,7 +4,12 @@
 [![Slack Status](http://slack.openscope.io/badge.svg)](http://slack.openscope.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
 
-# openScope Air Traffic Control Simulator
+# openScope Air Traffic Control Simulator with ADS-B Attacks
+
+To get started playing the simulator with ADS-B attacks, please follow the instructions below to start the simulator locally on your computer.
+This extension was built by Anton Blåberg & Gustav Lindahl as a bachelor thesis work at Linköping University in 2020.
+
+Below text is from standard openscope repository.
 
 Visit http://openscope.io to begin playing now!
 
