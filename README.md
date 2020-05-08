@@ -6,7 +6,7 @@
 
 # openScope Air Traffic Control Simulator with ADS-B Attacks
 
-To get started playing the simulator with ADS-B attacks, please follow the instructions below to start the simulator locally on your computer.
+To get started playing the simulator with ADS-B attacks, please follow the instructions called "Developer Quick Start" to start the simulator locally on your computer.
 This extension was built by Anton Blåberg & Gustav Lindahl as a bachelor thesis work at Linköping University in 2020.
 
 -------------------------------Below text is from standard openscope repository---------------------------
