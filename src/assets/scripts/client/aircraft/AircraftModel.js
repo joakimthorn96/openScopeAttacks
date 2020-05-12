@@ -2365,7 +2365,7 @@ export default class AircraftModel {
         if (this.isTaxiing()) {
             return;
         }
-        
+
         this.pastAmountofAttack = this.amountOfAttack;
         this.amountOfAttack = GameController.aRarity;
         if(this.pastAmountofAttack != this.amountOfAttack){
@@ -2382,7 +2382,7 @@ export default class AircraftModel {
         }
 
         if(!this.hasGottenEngineNumber){
-            
+
             var stopRarity = GameController.sRarity;
             var jumpRarity = GameController.jRarity;
             var errorRarity = GameController.eRarity;
@@ -2420,6 +2420,7 @@ export default class AircraftModel {
 
         if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 == 0) {
             let prob = GameController.jProb * 12
+            this.usedBefore = false;
             if (Math.floor(Math.random() * prob) == 1){
                 const radius = GameController.jRadius;
                 const center = AirportController.airport_get().rangeRings.center;
@@ -2437,10 +2438,9 @@ export default class AircraftModel {
                 const movement = [newPos[0]-current[0],newPos[1]-current[1]];
 
                 this.positionModel.setTrueCoordinates(movement[0],movement[1]);
-                this.usedBefore = false;
                 return;
-            }
-        } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 10 != 0){
+              }
+        } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 != 0){
             this.usedBefore = true;
         }
 
