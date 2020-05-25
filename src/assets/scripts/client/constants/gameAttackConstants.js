@@ -29,28 +29,28 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'attackRarity',
         defaultValue: 'None',
-        description: 'PERCENTAGE OF AIRCRAFT EFFECTED',
+        description: 'PERCENTAGE OF AIRCRAFT AFFECTED',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
         optionList: [
           {
-              displayLabel: '0% of aircraft effected',
+              displayLabel: '0% of aircraft affected',
               value: 'None'
           },
           {
-              displayLabel: '5% of aircraft effected',
+              displayLabel: '5% of aircraft affected',
               value: 'Low'
           },
           {
-              displayLabel: '20% of aircraft effected',
+              displayLabel: '20% of aircraft affected',
               value: 'Normal'
           },
           {
-              displayLabel: '50% of aircraft effected',
+              displayLabel: '50% of aircraft affected',
               value: 'High'
           },
           {
-              displayLabel: '90% of aircraft effected',
+              displayLabel: '90% of aircraft affected',
               value: 'VeryHigh'
           }
         ]

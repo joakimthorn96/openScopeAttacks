@@ -15,12 +15,12 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
         <div class="dialog-body nice-scrollbar"></div>
         <div class="dialog-subtitle"> Instructions </div>
         <p class="dialog-text"> First select the weighting of each of the three types of attacks. <br> 
-        Secondly choose the global percentage of aircraft that will be effected by attacks. Remember this number
+        Secondly choose the global percentage of aircraft that will be affected by attacks. Remember this number
         is not exact, more of an expected value. If you would like to change the distance of the jumping aircraft you
         may change this value above at any time. Now play the simulator as you would normally. If you want to change 
-        the percentages of aircraft effected you may do that at any given time. <br> 
+        the percentages of aircraft affected you may do that at any given time. <br> 
         If you want to change the weight of different attacktypes you may choose the weights from 1 - 5.
-        Your weight changes will deploy on the aircraft as soon as you update the total percentages of aircraft effected. <br> <br>
+        Your weight changes will deploy on the aircraft as soon as you update the total percentages of aircraft affected. <br> <br>
         To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile".
         </p>
     </div>`;
