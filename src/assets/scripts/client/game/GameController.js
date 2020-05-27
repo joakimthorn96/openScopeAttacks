@@ -108,7 +108,7 @@ class GameController {
         this.aircraft = 0;
         this.timeToUpdate = false;
 
-        this.log = "";
+        this.log = "Timestamp (s):Aircraft:Command:Attacktype\n";
 
         this._eventBus = EventBus;
     }
@@ -613,7 +613,7 @@ class GameController {
     }
 
     _setjRarity = (themeName) => {
-        console.log(themeName); 
+        console.log(themeName);
         if (themeName == '0'){
             this.jRarity = 0;
         } else if (themeName == '1'){

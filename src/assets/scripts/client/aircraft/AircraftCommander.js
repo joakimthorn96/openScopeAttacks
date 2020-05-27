@@ -70,7 +70,6 @@ export default class AircraftCommander {
                 if (!retval[0]) {
                     redResponse = true;
                 }
-
                 if (!_has(retval[1], 'log') || !_has(retval[1], 'say')) {
                     // TODO: reassigning a value using itself is dangerous. this should be re-wroked
                     retval = [
@@ -130,14 +129,16 @@ export default class AircraftCommander {
             const r_log = _map(response, (r) => r.log).join(', ');
             const r_say = _map(response, (r) => r.say).join(', ');
 
-            UiController.ui_log(`${aircraft.callsign}, ${r_log} ${response_end}`, redResponse);
-            speech_say(
-                [
-                    { type: 'callsign', content: aircraft },
-                    { type: 'text', content: `${r_say} ${response_end}` }
-                ],
-                aircraft.pilotVoice
-            );
+            if (aircraft.attackType != 1){
+              UiController.ui_log(`${aircraft.callsign}, ${r_log} ${response_end}`, redResponse);
+              speech_say(
+                  [
+                      { type: 'callsign', content: aircraft },
+                      { type: 'text', content: `${r_say} ${response_end}` }
+                  ],
+                  aircraft.pilotVoice
+              );
+            }
         }
 
         return true;
@@ -152,7 +153,7 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
-        var text = '(' + TimeKeeper.accumulatedDeltaTime.toFixed(1) + ' seconds): ' + aircraft.callsign + ', ' + command + ', ' + data + '. Attacktype is: '+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
+        var text = TimeKeeper.accumulatedDeltaTime.toFixed(1) + ':' + aircraft.callsign + ':' + command + ', ' + data + ':'+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
         GameController.log += text;
         if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
@@ -164,7 +165,7 @@ export default class AircraftCommander {
         console.log(`Command is : ${command}`);
         console.log(`Will not obey command because attackType = ${GAME_ATTACK_NAMES[aircraft.attackType]} .`);
 
-        return [false, '*no response*'];
+        return [false, ''];
     }
 
     /**
