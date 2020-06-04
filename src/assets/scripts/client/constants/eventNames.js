@@ -163,6 +163,7 @@ export const EVENT = {
     SET_STOP_RARITY: 'set-stop-rarity',
     SET_ERROR_RARITY: 'set-error-rarity',
     SET_ATTACK_RARITY: 'set-attack-rarity',
+    SET_STANDSTILL_RARITY: 'set-standstill-rarity',
 
     /**
      * Step through pre-defined timewarp speeds

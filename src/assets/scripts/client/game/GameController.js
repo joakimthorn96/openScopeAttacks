@@ -102,6 +102,25 @@ class GameController {
         this.sRarity = 0;
         this.eRarity = 0;
 
+        this.rarities = {
+          response : {
+            rate : 0,
+            attack : 1
+          },
+          jump : {
+            rate : 0,
+            attack : 2
+          },
+          falseInformation : {
+            rate : 0,
+            attack : 3
+          },
+          standStill : {
+            rate : 0,
+            attack : 4
+          }
+        };
+
         this.jumpers = 0;
         this.stoppers = 0;
         this.errorers = 0;
@@ -164,6 +183,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.on(EVENT.SET_ATTACK_RARITY, this._setARarity);
         this._eventBus.on(EVENT.SET_JUMP_PROB, this._setJProb);
+        this._eventBus.on(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -192,6 +212,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.off(EVENT.SET_ATTACK_RARITY, this._setARarity);
         this._eventBus.off(EVENT.SET_JUMP_PROB, this._setJProb);
+        this._eventBus.off(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
 
         return this.destroy();
     }
@@ -614,34 +635,33 @@ class GameController {
 
     _setjRarity = (themeName) => {
         console.log(themeName);
-        if (themeName == '0'){
-            this.jRarity = 0;
-        } else if (themeName == '1'){
-            this.jRarity = 1;
-        } else if (themeName == '2'){
-            this.jRarity = 2;
-        } else if (themeName == '3'){
-            this.jRarity = 3;
-        } else if (themeName == '4'){
-            this.jRarity = 4;
-        } else if (themeName == '5'){
-            this.jRarity = 5;
-        }
+        this.jRarity = parseInt(themeName);
+        this.rarities["jump"].rate = parseInt(themeName);
+    };
+
+    _setSRarity = (themeName) => {
+        console.log(themeName);
+        this.sRarity = parseInt(themeName);
+        this.rarities["response"].rate = parseInt(themeName);
+    };
+
+    _setERarity = (themeName) => {
+        console.log(themeName);
+        this.eRarity = parseInt(themeName);
+        this.rarities["falseInformation"].rate = parseInt(themeName);
+
+    };
+
+    _setSRarity = (themeName) => {
+        console.log(themeName);
+        this.eRarity = parseInt(themeName);
+        this.rarities["standStill"].rate = parseInt(themeName);
+
     };
 
     _setJProb = (probValue) => {
         console.log(probValue);
-        if (probValue == '5000'){
-            this.jProb = 5000;
-        } else if(probValue == '1250'){
-            this.jProb = 1250;
-        } else if (probValue == '250'){
-            this.jProb = 250;
-        } else if (probValue == '50'){
-            this.jProb = 50;
-        } else if (probValue == '10'){
-            this.jProb = 10;
-        }
+        this.jProb = parseInt(probValue);
     };
 
     _setjRadius = (themeName) => {
@@ -652,46 +672,6 @@ class GameController {
             this.jRadius = 1;
         } else if (themeName == 'Large'){
             this.jRadius = 2;
-        }
-    };
-
-    _setSRarity = (themeName) => {
-        console.log(themeName);
-        if (themeName == '0'){
-            this.sRarity = 0;
-        } else if (themeName == '1'){
-            this.sRarity = 1;
-        } else if (themeName == '2'){
-            this.sRarity = 2;
-
-        } else if (themeName == '3'){
-            this.sRarity = 3;
-
-        } else if (themeName == '4'){
-            this.sRarity = 4;
-
-        } else if (themeName == '5'){
-            this.sRarity = 5;
-        }
-    };
-
-    _setERarity = (themeName) => {
-        console.log(themeName);
-        if (themeName == '0'){
-            this.eRarity = 0;
-        } else if(themeName == '1'){
-            this.eRarity = 1;
-        } else if (themeName == '2'){
-            this.eRarity = 2;
-
-        } else if (themeName == '3'){
-            this.eRarity = 3;
-
-        } else if (themeName == '4'){
-            this.eRarity = 4;
-
-        } else if (themeName == '5'){
-            this.eRarity = 5;
         }
     };
 

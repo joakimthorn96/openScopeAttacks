@@ -2366,51 +2366,52 @@ export default class AircraftModel {
             return;
         }
 
-        this.pastAmountofAttack = this.amountOfAttack;
-        this.amountOfAttack = GameController.aRarity;
-        if(this.pastAmountofAttack != this.amountOfAttack){
-            this.hasGottenEngineNumber = false;
-            if(this.attackType == 1){
-                GameController.stoppers--;
-            } else if(this.attackType == 2){
-                GameController.jumpers--;
-            } else if(this.attackType == 3){
-                GameController.errorers--;
-            }
-            this.attackType = 0;
-            GameController.aircraft --;
-        }
+
 
         if(!this.hasGottenEngineNumber){
 
-            var stopRarity = GameController.sRarity;
-            var jumpRarity = GameController.jRarity;
-            var errorRarity = GameController.eRarity;
+            //var stopRarity = GameController.sRarity;
+            //var jumpRarity = GameController.jRarity;
+            // errorRarity = GameController.eRarity;
+            var rarities = GameController.rarities;
 
-            var sum = (stopRarity + jumpRarity + errorRarity) / 100
+            //var sum = (stopRarity + jumpRarity + errorRarity) / 100
+            var sum = 0;
+            for (var prop in rarities){
+              sum = sum + rarities[prop].rate;
+            }
+            sum = sum /100;
             if(sum == 0){
                 sum = 1;
             }
-            stopRarity = stopRarity / sum
-            jumpRarity = jumpRarity / sum
-            errorRarity = errorRarity / sum
+            //stopRarity = stopRarity / sum
+            //jumpRarity = jumpRarity / sum
+            //errorRarity = errorRarity / sum
 
-            console.log("sR = "+stopRarity.toFixed(1)+"%, jR = "+jumpRarity.toFixed(1)+"%, eR = "+errorRarity.toFixed(1)+"%, At:  100/"+this.amountOfAttack);
+            var rates = {};
+            for (var prop in rarities){
+              rates[prop] = rarities[prop].rate / sum;
+            }
+
+            console.log("sR = "+rates["response"].toFixed(1)+"%, jR = "+rates["jump"].toFixed(1)+"%, eR = "+rates["falseInformation"].toFixed(1)+"%, At:  100/"+this.amountOfAttack);
 
             const random = Math.floor(Math.random() * this.amountOfAttack);
 
             if ((random < 100) && sum != 1){
-                if (random < stopRarity){
-                    this.attackType = 1;
+                if (random < rates["response"]){ //non listener
+                    //this.attackType = 1;
+                    this.attackType = rarities["response"].attack;
                     GameController.stoppers++;
                 }
-                else if ((random >= stopRarity) && (random < stopRarity+jumpRarity)){
-                    this.attackType = 2;
+                else if ((random >= rates["response"]) && (random < rates["response"]+rates["jump"])){ //jumper
+                    this.attackType = rarities["jump"].attack;
                     GameController.jumpers++;
                 }
-                else {
-                    this.attackType = 3;
+                else if (random >= rates["response"]+rates["jump"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]){ //false information
+                    this.attackType = rarities["falseInformation"].attack;
                     GameController.errorers++;
+                } else {
+                  this.attackType = rarities["standStill"].attack;
                 }
             }
             this.hasGottenEngineNumber = true;
@@ -2802,10 +2803,28 @@ export default class AircraftModel {
      * @method update
      */
     update() {
+
+      this.pastAmountofAttack = this.amountOfAttack;
+      this.amountOfAttack = GameController.aRarity;
+      if(this.pastAmountofAttack != this.amountOfAttack){
+          this.hasGottenEngineNumber = false;
+          if(this.attackType == 1){
+              GameController.stoppers--;
+          } else if(this.attackType == 2){
+              GameController.jumpers--;
+          } else if(this.attackType == 3){
+              GameController.errorers--;
+          }
+          this.attackType = 0;
+          GameController.aircraft --;
+      }
+
+      if(this.attackType != 4){
         this.updateFlightPhase();
         this.updateTarget();
         this.updatePhysics();
         this._updateAircraftVisibility();
+      }
     }
 
     /**

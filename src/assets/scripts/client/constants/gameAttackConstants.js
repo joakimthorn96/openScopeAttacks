@@ -13,7 +13,8 @@ export const GAME_ATTACK_NAMES = {
     0: 'Regular',
     1: 'Non listen',
     2: 'Jumping',
-    3: 'False information'
+    3: 'False information',
+    4: 'Standing still'
 };
 
 /**
@@ -131,6 +132,41 @@ export const GAME_ATTACK_VALUES = [
         help: 'Changes the alitude and velocity values of ADS-B data of aircraft',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ERROR_RARITY,
+        optionList: [
+        {
+                displayLabel: '0',
+                value: '0'
+        },
+        {
+              displayLabel: '1',
+              value: '1'
+        },
+        {
+              displayLabel: '2',
+              value: '2'
+        },
+        {
+              displayLabel: '3',
+              value: '3'
+        },
+        {
+              displayLabel: '4',
+              value: '4'
+        },
+        {
+              displayLabel: '5',
+              value: '5'
+        }
+        ]
+    },
+
+    {
+        name: 'standStillRarity',
+        defaultValue: '0',
+        description: 'Aircraft will stand still',
+        help: 'Make aircraft stand still with velocity zero',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_STANDSTILL_RARITY,
         optionList: [
         {
                 displayLabel: '0',
