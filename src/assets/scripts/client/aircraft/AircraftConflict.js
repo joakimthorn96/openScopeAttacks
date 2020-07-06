@@ -166,7 +166,7 @@ export default class AircraftConflict {
     }
 
     isAttackAircraft(aircraft) {
-      if(aircraft.attackType == 1 || aircraft.attackType == 2 || aircraft.attackType == 3){
+      if(aircraft.attackType > 0){
         return true;
       }
       return false;

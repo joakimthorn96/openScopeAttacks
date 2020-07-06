@@ -117,6 +117,7 @@ export default class AircraftModel {
         * 1 - no listen
         * 2 - jumping
         * 3 - wrong value
+        * 4 - standing still
         */
         this.attackType = 0;
 
