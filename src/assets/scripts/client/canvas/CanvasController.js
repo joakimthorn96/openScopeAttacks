@@ -1475,6 +1475,9 @@ export default class CanvasController {
         cc.moveTo(...leaderStart);
         cc.lineTo(...leaderEnd);
         cc.strokeStyle = white;
+
+        //cc.strokeStyle = "red"; gör linjen röd
+
         cc.stroke();
 
         const dataBlockCenter = radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
@@ -1498,6 +1501,12 @@ export default class CanvasController {
             this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
 
         cc.fillStyle = fillStyle;
+        let attackType = aircraftModel.attackType;
+        if (attackType > 0){
+          var r = 255/4*attackType;
+          cc.fillStyle = 'rgb('+r+', 0, 0)';
+        }
+
 
         // Draw full datablock text
         cc.font = this.theme.DATA_BLOCK.TEXT_FONT;
