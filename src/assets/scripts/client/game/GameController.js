@@ -637,21 +637,18 @@ class GameController {
     }
 
     _setjRarity = (themeName) => {
-        console.log(themeName);
         this.jRarity = parseInt(themeName);
         this.rarities["jump"].rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
     };
 
     _setRRarity = (themeName) => {
-        console.log(themeName);
         this.RRarity = parseInt(themeName);
         this.rarities["response"].rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
     };
 
     _setERarity = (themeName) => {
-        console.log(themeName);
         this.eRarity = parseInt(themeName);
         this.rarities["falseInformation"].rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
@@ -659,7 +656,6 @@ class GameController {
     };
 
     _setSRarity = (themeName) => {
-        console.log(themeName);
         this.eRarity = parseInt(themeName);
         this.rarities["standStill"].rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
@@ -667,12 +663,10 @@ class GameController {
     };
 
     _setJProb = (probValue) => {
-        console.log(probValue);
         this.jProb = parseInt(probValue);
     };
 
     _setjRadius = (themeName) => {
-        console.log(themeName);
         if (themeName == 'Small'){
             this.jRadius = 0.5;
         } else if (themeName == 'Normal'){
@@ -680,11 +674,9 @@ class GameController {
         } else if (themeName == 'Large'){
             this.jRadius = 2;
         }
-        console.log("Do we need to update rates? "+this.needUpdateOfRates);
     };
 
     _setARarity = (themeName) => {
-        console.log(themeName);
         if (themeName == 'None'){
             this.aRarity = 9999999; //0 % of aircraft
 

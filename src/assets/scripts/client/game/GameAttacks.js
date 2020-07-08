@@ -68,9 +68,6 @@ export default class GameAttacks {
         this._attacks[attackProps.name] = attackProps;
         let attackValue = attackProps.defaultValue;
 
-        if (!_isNil(storedAttackValue)) {
-            attackValue = storedAttackValue;
-        }
 
         this[attackProps.name] = attackValue;
     }
