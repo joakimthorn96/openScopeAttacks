@@ -1500,11 +1500,17 @@ export default class CanvasController {
             this.theme.DATA_BLOCK.TEXT_IN_RANGE :
             this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
 
-        cc.fillStyle = fillStyle;
         let attackType = aircraftModel.attackType;
-        if (attackType > 0){
-          var r = 255/4*attackType;
-          cc.fillStyle = 'rgb('+r+', 0, 0)';
+        if (attackType == 0){
+          cc.fillStyle = fillStyle;
+        } else if(attackType == 1) {
+          cc.fillStyle = 'rgb(255,0,0)';
+        } else if(attackType == 2) {
+          cc.fillStyle = 'rgb(0,255,0)';
+        } else if(attackType == 3) {
+          cc.fillStyle = 'rgb(0,0,255)';
+        } else if(attackType == 4) {
+          cc.fillStyle = 'rgb(255,0,191)';
         }
 
 

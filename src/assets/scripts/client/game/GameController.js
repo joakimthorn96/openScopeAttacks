@@ -98,9 +98,12 @@ class GameController {
         this.jRadius = 1;
         this.jProb = 2000;
         this.aRarity = 9999999;
-        this.jRarity = 0;
-        this.sRarity = 0;
-        this.eRarity = 0;
+        this.jRarity = 0; //Jump
+        this.sRarity = 0; //Stand Still
+        this.eRarity = 0; //Error
+        this.RRarity = 0; //Response
+
+        this.needUpdateOfRates = 1;
 
         this.rarities = {
           response : {
@@ -121,11 +124,11 @@ class GameController {
           }
         };
 
+        this.responsers = 0;
         this.jumpers = 0;
         this.stoppers = 0;
         this.errorers = 0;
         this.aircraft = 0;
-        this.timeToUpdate = false;
 
         this.log = "Timestamp (s):Aircraft:Command:Attacktype\n";
 
@@ -179,7 +182,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_THEME, this._setTheme);
         this._eventBus.on(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.on(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.on(EVENT.SET_STOP_RARITY, this._setSRarity);
+        this._eventBus.on(EVENT.SET_STOP_RARITY, this._setRRarity);
         this._eventBus.on(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.on(EVENT.SET_ATTACK_RARITY, this._setARarity);
         this._eventBus.on(EVENT.SET_JUMP_PROB, this._setJProb);
@@ -208,7 +211,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_THEME, this._setTheme);
         this._eventBus.off(EVENT.SET_JUMP_RARITY, this._setjRarity);
         this._eventBus.off(EVENT.SET_JUMP_RADIUS, this._setjRadius);
-        this._eventBus.off(EVENT.SET_STOP_RARITY, this._setSRarity);
+        this._eventBus.off(EVENT.SET_STOP_RARITY, this._setRRarity);
         this._eventBus.off(EVENT.SET_ERROR_RARITY, this._setERarity);
         this._eventBus.off(EVENT.SET_ATTACK_RARITY, this._setARarity);
         this._eventBus.off(EVENT.SET_JUMP_PROB, this._setJProb);
@@ -637,18 +640,21 @@ class GameController {
         console.log(themeName);
         this.jRarity = parseInt(themeName);
         this.rarities["jump"].rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
     };
 
-    _setSRarity = (themeName) => {
+    _setRRarity = (themeName) => {
         console.log(themeName);
-        this.sRarity = parseInt(themeName);
+        this.RRarity = parseInt(themeName);
         this.rarities["response"].rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
     };
 
     _setERarity = (themeName) => {
         console.log(themeName);
         this.eRarity = parseInt(themeName);
         this.rarities["falseInformation"].rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
 
     };
 
@@ -656,6 +662,7 @@ class GameController {
         console.log(themeName);
         this.eRarity = parseInt(themeName);
         this.rarities["standStill"].rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
 
     };
 
@@ -673,6 +680,7 @@ class GameController {
         } else if (themeName == 'Large'){
             this.jRadius = 2;
         }
+        console.log("Do we need to update rates? "+this.needUpdateOfRates);
     };
 
     _setARarity = (themeName) => {
@@ -692,7 +700,6 @@ class GameController {
         } else if (themeName == 'VeryHigh'){
             this.aRarity = 110; //90 % of aircraft
         }
-
     };
 
     /**
