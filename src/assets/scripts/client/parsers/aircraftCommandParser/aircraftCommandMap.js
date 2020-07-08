@@ -234,6 +234,19 @@ export const AIRCRAFT_COMMAND_MAP = {
         functionName: 'runShowEngine',
         isSystemCommand: false
       },
+
+      
+    makeGuess: {
+        aliases: ['guess', 'g', 'isAttack'],
+        functionName: 'makeAttackcraftGuess',
+        isSystemCommand: false
+    },
+
+
+
+
+
+
     timewarp: {
         aliases: ['timewarp'],
         functionName: '',

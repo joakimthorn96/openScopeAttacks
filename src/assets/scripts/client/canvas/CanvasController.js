@@ -1474,7 +1474,18 @@ export default class CanvasController {
         cc.beginPath();
         cc.moveTo(...leaderStart);
         cc.lineTo(...leaderEnd);
-        cc.strokeStyle = white;
+
+        if(aircraftModel.guess == 0){
+          cc.strokeStyle = white;
+        } else if (aircraftModel.guess == 1){
+          cc.strokeStyle = "rgb(255,0,0)";
+        } else if (aircraftModel.guess == 2){
+          cc.strokeStyle = "rgb(0,255,0)";
+        } else if (aircraftModel.guess == 3){
+          cc.strokeStyle = "rgb(0,0,255)";
+        } else if (aircraftModel.guess == 4){
+          cc.strokeStyle = "rgb(255,0,191)";
+        }
 
         //cc.strokeStyle = "red"; gör linjen röd
 

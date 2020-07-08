@@ -843,6 +843,18 @@ export default class AircraftCommander {
         return [true, 'I am type '+GAME_ATTACK_NAMES[aircraft.attackType]+"."];
     }
 
+    makeAttackcraftGuess(aircraft, data) {
+        console.log(aircraft+" "+data);
+        if (!isNaN(data) && data < 5){
+            aircraft.guess = data;
+        } else {
+            aircraft.guess = 0;
+        }
+
+        return [true, "So you think "+aircraft.callsign+" is of type "+data+"?"];
+
+    }
+
 
 
 }

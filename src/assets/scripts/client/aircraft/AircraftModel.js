@@ -113,6 +113,8 @@ export default class AircraftModel {
 
         GameController.aircraft++;
 
+        this.guess = 0;
+
         /**
         * 0 - regular
         * 1 - no listen

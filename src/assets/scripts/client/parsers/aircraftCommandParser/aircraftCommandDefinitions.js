@@ -161,6 +161,11 @@ const SINGLE_ARG_AIRCRAFT_COMMANDS = {
         // return an array here
         parse: (args) => [convertStringToNumber(args)]
     },
+
+    makeGuess: {
+        validate: singleArgumentValidator,
+        parse: noop
+    },
     airport: {
         validate: singleArgumentValidator,
         parse: noop
