@@ -1513,7 +1513,7 @@ export default class CanvasController {
 
         const { attackType } = aircraftModel;
         
-        if (GameController.showAttackAircraftVisibility) {
+        if (GameController.showAttackAircraftVisibility == 'true') {
             if (attackType == 0) {
                 cc.fillStyle = fillStyle;
             } else if (attackType == 1) {
@@ -1526,7 +1526,7 @@ export default class CanvasController {
                 cc.fillStyle = 'rgb(255,0,191)';
             }
         } else {
-            cc.fillstyle = 'rgb(255,255,255)';
+            cc.fillStyle = 'rgb(255,255,255)';
         }
 
         // Draw full datablock text
