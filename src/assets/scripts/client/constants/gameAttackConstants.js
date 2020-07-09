@@ -34,26 +34,26 @@ export const GAME_ATTACK_VALUES = [
         type: 'select',
         onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
         optionList: [
-          {
-              displayLabel: '0% of aircraft affected',
-              value: 'None'
-          },
-          {
-              displayLabel: '5% of aircraft affected',
-              value: 'Low'
-          },
-          {
-              displayLabel: '20% of aircraft affected',
-              value: 'Normal'
-          },
-          {
-              displayLabel: '50% of aircraft affected',
-              value: 'High'
-          },
-          {
-              displayLabel: '90% of aircraft affected',
-              value: 'VeryHigh'
-          }
+            {
+                displayLabel: '0% of aircraft affected',
+                value: 'None'
+            },
+            {
+                displayLabel: '5% of aircraft affected',
+                value: 'Low'
+            },
+            {
+                displayLabel: '20% of aircraft affected',
+                value: 'Normal'
+            },
+            {
+                displayLabel: '50% of aircraft affected',
+                value: 'High'
+            },
+            {
+                displayLabel: '90% of aircraft affected',
+                value: 'VeryHigh'
+            }
         ]
     },
     {
@@ -133,30 +133,30 @@ export const GAME_ATTACK_VALUES = [
         type: 'select',
         onChangeEventHandler: EVENT.SET_ERROR_RARITY,
         optionList: [
-        {
+            {
                 displayLabel: '0',
                 value: '0'
-        },
-        {
-              displayLabel: '1',
-              value: '1'
-        },
-        {
-              displayLabel: '2',
-              value: '2'
-        },
-        {
-              displayLabel: '3',
-              value: '3'
-        },
-        {
-              displayLabel: '4',
-              value: '4'
-        },
-        {
-              displayLabel: '5',
-              value: '5'
-        }
+            },
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
         ]
     },
 
@@ -168,30 +168,30 @@ export const GAME_ATTACK_VALUES = [
         type: 'select',
         onChangeEventHandler: EVENT.SET_STANDSTILL_RARITY,
         optionList: [
-        {
+            {
                 displayLabel: '0',
                 value: '0'
-        },
-        {
-              displayLabel: '1',
-              value: '1'
-        },
-        {
-              displayLabel: '2',
-              value: '2'
-        },
-        {
-              displayLabel: '3',
-              value: '3'
-        },
-        {
-              displayLabel: '4',
-              value: '4'
-        },
-        {
-              displayLabel: '5',
-              value: '5'
-        }
+            },
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
         ]
     },
     {
@@ -232,18 +232,37 @@ export const GAME_ATTACK_VALUES = [
         type: 'select',
         onChangeEventHandler: EVENT.SET_JUMP_RADIUS,
         optionList: [
-          {
-              displayLabel: 'Small radius',
-              value: 'Small'
-          },
-          {
-              displayLabel: 'Moderate radius',
-              value: 'Normal'
-          },
-          {
-              displayLabel: 'Large radius',
-              value: 'Large'
-          }
+            {
+                displayLabel: 'Small radius',
+                value: 'Small'
+            },
+            {
+                displayLabel: 'Moderate radius',
+                value: 'Normal'
+            },
+            {
+                displayLabel: 'Large radius',
+                value: 'Large'
+            }
+        ]
+    },
+
+    {
+        name: 'showAttackAircraftVisibility',
+        defaultValue: 'false',
+        description: 'Distinguish attack aircraft',
+        help: 'Toggles the visibility of the attacking aircraft.',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY,
+        optionList: [
+            {
+                displayLabel: 'Yes',
+                value: 'true'
+            },
+            {
+                displayLabel: 'No',
+                value: 'false'
+            }
         ]
     }
 

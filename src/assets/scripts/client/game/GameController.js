@@ -98,30 +98,31 @@ class GameController {
         this.jRadius = 1;
         this.jProb = 2000;
         this.aRarity = 9999999;
-        this.jRarity = 0; //Jump
-        this.sRarity = 0; //Stand Still
-        this.eRarity = 0; //Error
-        this.RRarity = 0; //Response
+        this.jRarity = 0; // Jump
+        this.sRarity = 0; // Stand Still
+        this.eRarity = 0; // Error
+        this.RRarity = 0; // Response
+        this.showAttackAircraftVisibility = false;
 
         this.needUpdateOfRates = 1;
 
         this.rarities = {
-          response : {
-            rate : 0,
-            attack : 1
-          },
-          jump : {
-            rate : 0,
-            attack : 2
-          },
-          falseInformation : {
-            rate : 0,
-            attack : 3
-          },
-          standStill : {
-            rate : 0,
-            attack : 4
-          }
+            response: {
+                rate: 0,
+                attack: 1
+            },
+            jump: {
+                rate: 0,
+                attack: 2
+            },
+            falseInformation: {
+                rate: 0,
+                attack: 3
+            },
+            standStill: {
+                rate: 0,
+                attack: 4
+            }
         };
 
         this.responsers = 0;
@@ -130,7 +131,7 @@ class GameController {
         this.errorers = 0;
         this.aircraft = 0;
 
-        this.log = "Timestamp (s):Aircraft:Command:Attacktype\n";
+        this.log = 'Timestamp (s):Aircraft:Command:Attacktype\n';
 
         this._eventBus = EventBus;
     }
@@ -187,6 +188,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_ATTACK_RARITY, this._setARarity);
         this._eventBus.on(EVENT.SET_JUMP_PROB, this._setJProb);
         this._eventBus.on(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
+        this._eventBus.on(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -216,6 +218,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_ATTACK_RARITY, this._setARarity);
         this._eventBus.off(EVENT.SET_JUMP_PROB, this._setJProb);
         this._eventBus.off(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
+        this._eventBus.off(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
 
         return this.destroy();
     }
@@ -638,28 +641,26 @@ class GameController {
 
     _setjRarity = (themeName) => {
         this.jRarity = parseInt(themeName);
-        this.rarities["jump"].rate = parseInt(themeName);
+        this.rarities.jump.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
     };
 
     _setRRarity = (themeName) => {
         this.RRarity = parseInt(themeName);
-        this.rarities["response"].rate = parseInt(themeName);
+        this.rarities.response.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
     };
 
     _setERarity = (themeName) => {
         this.eRarity = parseInt(themeName);
-        this.rarities["falseInformation"].rate = parseInt(themeName);
+        this.rarities.falseInformation.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
-
     };
 
     _setSRarity = (themeName) => {
         this.eRarity = parseInt(themeName);
-        this.rarities["standStill"].rate = parseInt(themeName);
+        this.rarities.standStill.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
-
     };
 
     _setJProb = (probValue) => {
@@ -667,31 +668,32 @@ class GameController {
     };
 
     _setjRadius = (themeName) => {
-        if (themeName == 'Small'){
+        if (themeName == 'Small') {
             this.jRadius = 0.5;
-        } else if (themeName == 'Normal'){
+        } else if (themeName == 'Normal') {
             this.jRadius = 1;
-        } else if (themeName == 'Large'){
+        } else if (themeName == 'Large') {
             this.jRadius = 2;
         }
     };
 
     _setARarity = (themeName) => {
-        if (themeName == 'None'){
-            this.aRarity = 9999999; //0 % of aircraft
-
-        }else if (themeName == 'Low'){
-            this.aRarity = 2000; //5% of aircraft
-
-        } else if (themeName == 'Normal'){
-            this.aRarity = 500; //20 % of aircraft
-
-        } else if (themeName == 'High'){
-            this.aRarity = 200; //50 % of aircraft
-
-        } else if (themeName == 'VeryHigh'){
-            this.aRarity = 110; //90 % of aircraft
+        if (themeName == 'None') {
+            this.aRarity = 9999999; // 0 % of aircraft
+        } else if (themeName == 'Low') {
+            this.aRarity = 2000; // 5% of aircraft
+        } else if (themeName == 'Normal') {
+            this.aRarity = 500; // 20 % of aircraft
+        } else if (themeName == 'High') {
+            this.aRarity = 200; // 50 % of aircraft
+        } else if (themeName == 'VeryHigh') {
+            this.aRarity = 110; // 90 % of aircraft
         }
+    };
+
+    _setAttackVisibility = (probValue) => {
+        this.showAttackAircraftVisibility = probValue;
+        console.log(`probValue set in _setAttackVisibility: ${probValue}`);
     };
 
     /**

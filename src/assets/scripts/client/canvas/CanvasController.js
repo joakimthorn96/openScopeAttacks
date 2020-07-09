@@ -1475,19 +1475,19 @@ export default class CanvasController {
         cc.moveTo(...leaderStart);
         cc.lineTo(...leaderEnd);
 
-        if(aircraftModel.guess == 0){
-          cc.strokeStyle = white;
-        } else if (aircraftModel.guess == 1){
-          cc.strokeStyle = "rgb(255,0,0)";
-        } else if (aircraftModel.guess == 2){
-          cc.strokeStyle = "rgb(0,255,0)";
-        } else if (aircraftModel.guess == 3){
-          cc.strokeStyle = "rgb(0,0,255)";
-        } else if (aircraftModel.guess == 4){
-          cc.strokeStyle = "rgb(255,0,191)";
+        if (aircraftModel.guess == 0) {
+            cc.strokeStyle = white;
+        } else if (aircraftModel.guess == 1) {
+            cc.strokeStyle = 'rgb(255,0,0)';
+        } else if (aircraftModel.guess == 2) {
+            cc.strokeStyle = 'rgb(0,255,0)';
+        } else if (aircraftModel.guess == 3) {
+            cc.strokeStyle = 'rgb(0,0,255)';
+        } else if (aircraftModel.guess == 4) {
+            cc.strokeStyle = 'rgb(255,0,191)';
         }
 
-        //cc.strokeStyle = "red"; gör linjen röd
+        // cc.strokeStyle = "red"; gör linjen röd
 
         cc.stroke();
 
@@ -1511,19 +1511,23 @@ export default class CanvasController {
             this.theme.DATA_BLOCK.TEXT_IN_RANGE :
             this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
 
-        let attackType = aircraftModel.attackType;
-        if (attackType == 0){
-          cc.fillStyle = fillStyle;
-        } else if(attackType == 1) {
-          cc.fillStyle = 'rgb(255,0,0)';
-        } else if(attackType == 2) {
-          cc.fillStyle = 'rgb(0,255,0)';
-        } else if(attackType == 3) {
-          cc.fillStyle = 'rgb(0,0,255)';
-        } else if(attackType == 4) {
-          cc.fillStyle = 'rgb(255,0,191)';
+        const { attackType } = aircraftModel;
+        
+        if (GameController.showAttackAircraftVisibility) {
+            if (attackType == 0) {
+                cc.fillStyle = fillStyle;
+            } else if (attackType == 1) {
+                cc.fillStyle = 'rgb(255,0,0)';
+            } else if (attackType == 2) {
+                cc.fillStyle = 'rgb(0,255,0)';
+            } else if (attackType == 3) {
+                cc.fillStyle = 'rgb(0,0,255)';
+            } else if (attackType == 4) {
+                cc.fillStyle = 'rgb(255,0,191)';
+            }
+        } else {
+            cc.fillstyle = 'rgb(255,255,255)';
         }
-
 
         // Draw full datablock text
         cc.font = this.theme.DATA_BLOCK.TEXT_FONT;
