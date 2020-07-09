@@ -13,6 +13,7 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
     <div class="option-dialog dialog">
         <p class="dialog-title">ADS-B Attacks</p>
         <div class="dialog-body nice-scrollbar"></div>
+        <img src="assets/images/colorExplain.png" style="width:528px; height:110px" class="center"> </img>
         <div class="dialog-subtitle"> Instructions </div>
         <p class="dialog-text"> First select the weighting of each of the three types of attacks. <br> 
         Secondly choose the global percentage of aircraft that will be affected by attacks. Remember this number

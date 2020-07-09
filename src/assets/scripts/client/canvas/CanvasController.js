@@ -1478,13 +1478,13 @@ export default class CanvasController {
         if (aircraftModel.guess == 0) {
             cc.strokeStyle = white;
         } else if (aircraftModel.guess == 1) {
-            cc.strokeStyle = 'rgb(255,0,0)';
+            cc.strokeStyle = 'ff1616';
         } else if (aircraftModel.guess == 2) {
-            cc.strokeStyle = 'rgb(0,255,0)';
+            cc.strokeStyle = '#ffde59';
         } else if (aircraftModel.guess == 3) {
-            cc.strokeStyle = 'rgb(0,0,255)';
+            cc.strokeStyle = '38b6ff';
         } else if (aircraftModel.guess == 4) {
-            cc.strokeStyle = 'rgb(255,0,191)';
+            cc.strokeStyle = 'cb6ce6';
         }
 
         // cc.strokeStyle = "red"; gör linjen röd
@@ -1517,16 +1517,16 @@ export default class CanvasController {
             if (attackType == 0) {
                 cc.fillStyle = fillStyle;
             } else if (attackType == 1) {
-                cc.fillStyle = 'rgb(255,0,0)';
+                cc.fillStyle = '#ff1616';
             } else if (attackType == 2) {
-                cc.fillStyle = 'rgb(0,255,0)';
+                cc.fillStyle = '#ffde59';
             } else if (attackType == 3) {
-                cc.fillStyle = 'rgb(0,0,255)';
+                cc.fillStyle = '#38b6ff';
             } else if (attackType == 4) {
-                cc.fillStyle = 'rgb(255,0,191)';
+                cc.fillStyle = '#cb6ce6';
             }
         } else {
-            cc.fillStyle = 'rgb(255,255,255)';
+            cc.fillStyle = fillStyle;
         }
 
         // Draw full datablock text
