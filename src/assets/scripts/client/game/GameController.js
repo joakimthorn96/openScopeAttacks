@@ -133,6 +133,8 @@ class GameController {
 
         this.log = 'Timestamp (s):Aircraft:Command:Attacktype\n';
 
+        this.optionUpdate = 'Changes made through the game\nTimestamp (s): Changes made\n';
+
         this._eventBus = EventBus;
     }
 
@@ -639,61 +641,90 @@ class GameController {
         TimeKeeper.setPause(false);
     }
 
-    _setjRarity = (themeName) => {
-        this.jRarity = parseInt(themeName);
-        this.rarities.jump.rate = parseInt(themeName);
-        this.needUpdateOfRates *= -1;
-    };
-
     _setRRarity = (themeName) => {
         this.RRarity = parseInt(themeName);
         this.rarities.response.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed non-responsive weight to "+themeName+"\n";
+    };
+
+    _setjRarity = (themeName) => {
+        this.jRarity = parseInt(themeName);
+        this.rarities.jump.rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed jumping weight to "+themeName+"\n";
     };
 
     _setERarity = (themeName) => {
         this.eRarity = parseInt(themeName);
         this.rarities.falseInformation.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed false information weight to "+themeName+"\n";
     };
 
     _setSRarity = (themeName) => {
         this.eRarity = parseInt(themeName);
         this.rarities.standStill.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed non-moving weight to "+themeName+"\n";
     };
 
     _setJProb = (probValue) => {
         this.jProb = parseInt(probValue);
+        var temp = "";
+        if (probValue == "5000"){
+          temp = "Very Low";
+        } else if (probValue == "1250"){
+          temp = "Low";
+        } else if (probValue == "250"){
+          temp = "Medium";
+        } else if (probValue == "50"){
+          temp = "High";
+        } else if (probValue == "10"){
+          temp = "Very High";
+        }
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed jumping probabilty to "+temp+"\n";
     };
 
     _setjRadius = (themeName) => {
         if (themeName == 'Small') {
             this.jRadius = 0.5;
-        } else if (themeName == 'Normal') {
+        } else if (themeName == 'Moderate') {
             this.jRadius = 1;
         } else if (themeName == 'Large') {
             this.jRadius = 2;
         }
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed jumping radius to "+themeName+" radius\n";
     };
 
     _setARarity = (themeName) => {
+        var per = "";
         if (themeName == 'None') {
             this.aRarity = 9999999; // 0 % of aircraft
+            per = "0%";
         } else if (themeName == 'Low') {
             this.aRarity = 2000; // 5% of aircraft
+            per = "5%";
         } else if (themeName == 'Normal') {
             this.aRarity = 500; // 20 % of aircraft
+            per = "20%";
         } else if (themeName == 'High') {
             this.aRarity = 200; // 50 % of aircraft
+            per = "50%";
         } else if (themeName == 'VeryHigh') {
             this.aRarity = 110; // 90 % of aircraft
+            per = "90%";
         }
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed percentage of affected aircraft to "+per+"\n";
     };
 
     _setAttackVisibility = (probValue) => {
         this.showAttackAircraftVisibility = probValue;
-        console.log(`probValue set in _setAttackVisibility: ${probValue}`);
+        if (probValue){
+          this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed attack aircraft visibility to \"Yes\"\n";
+        } else {
+          this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed attack aircraft visibility to \"No\"\n";
+        }
     };
 
     /**

@@ -12,6 +12,7 @@ import { speech_toggle } from '../speech';
 import { EVENT } from '../constants/eventNames';
 import { SELECTORS } from '../constants/selectors';
 import { TRACKABLE_EVENT } from '../constants/trackableEvents';
+import { GAME_ATTACK_VALUES } from '../constants/gameAttackConstants';
 
 /**
  * Listens for events that occur in the UI and delegates work to the correct place
@@ -345,8 +346,26 @@ class UiController {
     }
 
     download() {
+      var startText = "Starting Settings: \n";
+      for (let i = 0; i < GAME_ATTACK_VALUES.length; i++){
+        var displayLab = "";
+        var optionsA = GAME_ATTACK_VALUES[i].optionList
+        for (let j = 0; j < optionsA.length; j++){
+          if (optionsA[j].value === GAME_ATTACK_VALUES[i].defaultValue){
+            displayLab = optionsA[j].displayLabel;
+            break;
+          }
+        }
+        startText += GAME_ATTACK_VALUES[i].description+": "+displayLab+"\n";
+      }
+      startText += "\n\n\n"
+      console.log(startText);
+      console.log(GameController.optionUpdate);
+
+
+      var finalText = startText + GameController.optionUpdate + "\n\n\n" + GameController.log;
       var element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(GameController.log));
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(finalText));
       element.setAttribute('download', "log.txt");
 
       element.style.display = 'none';

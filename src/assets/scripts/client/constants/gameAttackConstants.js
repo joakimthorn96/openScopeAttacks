@@ -30,7 +30,7 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'attackRarity',
         defaultValue: 'None',
-        description: 'PERCENTAGE OF AIRCRAFT AFFECTED',
+        description: 'Percentage of aircraft affected',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
         optionList: [
@@ -226,7 +226,7 @@ export const GAME_ATTACK_VALUES = [
     },
     {
         name: 'jumpRadius',
-        defaultValue: 'Normal',
+        defaultValue: 'Moderate',
         description: 'Distance of jumps',
         help: 'The distance of a positional ADS-B data jump, when it occurs. ',
         type: 'select',
@@ -238,7 +238,7 @@ export const GAME_ATTACK_VALUES = [
             },
             {
                 displayLabel: 'Moderate radius',
-                value: 'Normal'
+                value: 'Moderate'
             },
             {
                 displayLabel: 'Large radius',

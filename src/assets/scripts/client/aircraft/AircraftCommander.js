@@ -129,7 +129,8 @@ export default class AircraftCommander {
             const r_log = _map(response, (r) => r.log).join(', ');
             const r_say = _map(response, (r) => r.say).join(', ');
 
-            if (aircraft.attackType != 1){
+
+            if (aircraft.attackType != 1 || (commands[0][0] != "makeGuess" || commands[0][0] != "showType")){
               UiController.ui_log(`${aircraft.callsign}, ${r_log} ${response_end}`, redResponse);
               speech_say(
                   [
@@ -155,7 +156,7 @@ export default class AircraftCommander {
     run(aircraft, command, data) {
         var text = TimeKeeper.accumulatedDeltaTime.toFixed(1) + ':' + aircraft.callsign + ':' + command + ', ' + data + ':'+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
         GameController.log += text;
-        if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType') {
+        if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType' || command === 'makeGuess') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {
                 return [false, 'say again?'];
@@ -844,7 +845,6 @@ export default class AircraftCommander {
     }
 
     makeAttackcraftGuess(aircraft, data) {
-        console.log(aircraft+" "+data);
         if (!isNaN(data) && data < 5){
             aircraft.guess = data;
         } else {
