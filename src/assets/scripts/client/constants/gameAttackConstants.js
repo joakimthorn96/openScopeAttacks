@@ -250,7 +250,7 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'showAttackAircraftVisibility',
         defaultValue: 'false',
-        description: 'Distinguish attack aircraft',
+        description: 'Color code attack aircraft',
         help: 'Toggles the visibility of the attacking aircraft.',
         type: 'select',
         onChangeEventHandler: EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY,
