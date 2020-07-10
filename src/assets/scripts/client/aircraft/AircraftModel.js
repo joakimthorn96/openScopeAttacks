@@ -108,6 +108,8 @@ export default class AircraftModel {
         this.needUpdate = 1;
         this.pastAmountofAttack = -1;
         this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
+        this.timePassed = 0;                        //Used for switching between fakeAltitude and realAltitude. Starting value
+        this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
 
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
 

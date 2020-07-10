@@ -382,14 +382,20 @@ export default class RadarTargetModel {
     buildDataBlockRowTwoPrimaryInfo() {
         var aircraftAltitude = 0;
         var aircraftSpeed = 0;
-        if (this.aircraftModel.attackType === 3 ) {
+        this.aircraftModel.timePassed++;
+        //Timepassed 0-10 --> Standard values.      Timepassed 10-20 --> Fake Values
+        if (this.aircraftModel.attackType === 3 && (this.aircraftModel.timePassed % this.aircraftModel.switchingTime) < (this.aircraftModel.switchingTime/2)) {
           var aircraftAltitude = this.aircraftModel.fakeAltitude;
           var aircraftSpeed = this.aircraftModel.fakeGroundSpeed;
+          
+
         } else {
           var aircraftAltitude = round(this.aircraftModel.altitude / 100);
           var aircraftSpeed = round(this.aircraftModel.groundSpeed / 10);
         }
-
+        if(this.aircraftModel.timePassed1 > 10000){
+            this.aircraftModel.timePassed1 = 0;             //resets the value. So it does not count forever.
+        }
 
 
         return `${leftPad(aircraftAltitude, 3)} ${leftPad(aircraftSpeed, 2)}`;
