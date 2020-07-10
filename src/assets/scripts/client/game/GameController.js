@@ -131,9 +131,9 @@ class GameController {
         this.errorers = 0;
         this.aircraft = 0;
 
-        this.log = 'Timestamp (s):Aircraft:Command:Attacktype\n';
+        this.log = 'Commands used while playing\nTimestamp (s):Aircraft:Command:Attacktype:\n';
 
-        this.optionUpdate = 'Changes made through the game\nTimestamp (s): Changes made\n';
+        this.optionUpdate = 'Changes made through the game\nTimestamp (s): Changes made:\n';
 
         this._eventBus = EventBus;
     }
