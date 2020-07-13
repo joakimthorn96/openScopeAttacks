@@ -2418,7 +2418,7 @@ export default class AircraftModel {
     }
 
     calculateJump() {
-      let prob = GameController.jProb * 12
+      let prob = GameController.jProb * 3   //var 12 nyss!
       this.usedBefore = false;
       if (Math.floor(Math.random() * prob) == 1){
           const radius = GameController.jRadius;
@@ -2437,6 +2437,10 @@ export default class AircraftModel {
           const movement = [newPos[0]-current[0],newPos[1]-current[1]];
 
           this.positionModel.setTrueCoordinates(movement[0],movement[1]);
+          console.log("JUMP!: "+this.altitude)
+
+          //slumpar altituden från 0% till 400% av föregående värde
+          this.altitude = this.altitude * Math.pow(2 * Math.random(),2);
           return;
         }
     }
