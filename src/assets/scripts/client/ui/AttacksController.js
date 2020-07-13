@@ -13,16 +13,16 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
     <div class="option-dialog dialog">
         <p class="dialog-title">ADS-B Attacks</p>
         <div class="dialog-body nice-scrollbar"></div>
-        <img src="assets/images/colorExplain.png" style="width:528px; height:110px" class="center"> </img>
-        <div class="dialog-subtitle"> Instructions </div>
-        <p class="dialog-text"> First select the weighting of each of the three types of attacks. <br> 
-        Secondly choose the global percentage of aircraft that will be affected by attacks. Remember this number
-        is not exact, more of an expected value. If you would like to change the distance of the jumping aircraft you
-        may change this value above at any time. Now play the simulator as you would normally. If you want to change 
-        the percentages of aircraft affected you may do that at any given time. <br> 
-        If you want to change the weight of different attacktypes you may choose the weights from 1 - 5.
-        Your weight changes will deploy on the aircraft as soon as you update the total percentages of aircraft affected. <br> <br>
-        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile".
+        <img src="assets/images/colorExplain.png" style="width:566.08px; height:116px" class="image-center-rounded" </img>
+        <div class="dialog-subtitle"> Information </div>
+        <p class="dialog-text"> 
+        Welcome to openScope simulator with cyberattacks from ADS-B. <br> 
+        Use the parameters above to choose a specific scenario.
+        You may also toggle the visibility of attacking aircraft by the color code below. <br> 
+        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile". <br> <br> 
+        These types of attacks originated from the current weaknesses of ADS-B.<br> 
+        <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755">
+        Please see our paper regarding this simulator and the weaknesses of ADS-B for more information.</a>
         </p>
     </div>`;
 
