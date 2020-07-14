@@ -1512,7 +1512,7 @@ export default class CanvasController {
             this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
 
         const { attackType } = aircraftModel;
-        
+
         if (GameController.showAttackAircraftVisibility == 'true') {
             if (attackType == 0) {
                 cc.fillStyle = fillStyle;
@@ -1527,6 +1527,10 @@ export default class CanvasController {
             }
         } else {
             cc.fillStyle = fillStyle;
+        }
+
+        if (aircraftModel.isFlooding){
+          cc.fillStyle = 'rgb(255,0,0)';
         }
 
         // Draw full datablock text

@@ -106,6 +106,8 @@ class GameController {
 
         this.needUpdateOfRates = 1;
 
+        this.numberOfFlooding = 0;
+
         this.rarities = {
             response: {
                 rate: 0,
@@ -191,6 +193,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_JUMP_PROB, this._setJProb);
         this._eventBus.on(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
         this._eventBus.on(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
+        this._eventBus.on(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -221,6 +224,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_JUMP_PROB, this._setJProb);
         this._eventBus.off(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
         this._eventBus.off(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
+        this._eventBus.off(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
 
         return this.destroy();
     }
@@ -725,6 +729,11 @@ class GameController {
         } else {
           this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed attack aircraft visibility to \"No\"\n";
         }
+    };
+
+    _setFlooding = (numberOfAircraft) => {
+        this.numberOfFlooding = parseInt(numberOfAircraft);
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Created "+this.numberOfFlooding+" new non-responsive aircraft\n";
     };
 
     /**
