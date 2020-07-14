@@ -124,4 +124,8 @@ export default class AirlineController {
     _isActiveFlightNumber(flightNumber) {
         return this.flightNumbers.indexOf(flightNumber) !== INVALID_INDEX;
     }
+
+    getAirline(){
+      return this.airlineCollection.getAirline();
+    }
 }

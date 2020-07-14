@@ -2807,7 +2807,7 @@ export default class AircraftModel {
       const tempNeedUpdate = this.needUpdate;
       this.needUpdate = GameController.needUpdateOfRates;
 
-      if(this.pastAmountofAttack != this.amountOfAttack || tempNeedUpdate != this.needUpdate){
+      if((this.pastAmountofAttack != this.amountOfAttack || tempNeedUpdate != this.needUpdate) && !this.isFlooding){
           if(this.attackType == 1){
               GameController.responsers--;
           } else if(this.attackType == 2){

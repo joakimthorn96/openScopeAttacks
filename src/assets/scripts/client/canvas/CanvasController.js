@@ -1529,9 +1529,6 @@ export default class CanvasController {
             cc.fillStyle = fillStyle;
         }
 
-        if (aircraftModel.isFlooding){
-          cc.fillStyle = 'rgb(255,0,0)';
-        }
 
         // Draw full datablock text
         cc.font = this.theme.DATA_BLOCK.TEXT_FONT;

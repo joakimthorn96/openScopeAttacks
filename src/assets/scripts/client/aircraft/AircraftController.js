@@ -123,6 +123,8 @@ export default class AircraftController {
          */
         this._stripViewController = new StripViewController();
 
+        this.tRoute = "";
+
         return this.init()
             ._setupHandlers()
             .enable();
@@ -598,6 +600,8 @@ export default class AircraftController {
         const dynamicPositionModel = convertStaticPositionToDynamic(spawnPatternModel.positionModel);
         const transponderCode = this._generateUniqueTransponderCode(AirportController.airport_get().icao);
 
+        this.tRoute = spawnPatternModel.routeString;
+
         return {
             fleet,
             altitude,
@@ -856,32 +860,35 @@ export default class AircraftController {
     }
 
     _buildOwnAircraftProps (value) {
-      const { name, fleet } = airlineNameAndFleetHelper(["cpz"]);
-      let airlineModel = this._airlineController.findAirlineById(name);
-      const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId("cpz", airlineModel)
+      const airlineList = this._airlineController.getAirline();
+      const airlineIndex = Math.floor(Math.random()*airlineList.length)
+      const airline = airlineList[airlineIndex];
 
-      const spawnDiff = 4;
+      const { name, fleet } = airlineNameAndFleetHelper([airline.icao]);
+      let airlineModel = this._airlineController.findAirlineById(name);
+      const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId(airline.icao, airlineModel)
+
+      const spawnDiff = 3;
       const aLat = AirportController.airport_get().positionModel.latitude;
       const aLon = AirportController.airport_get().positionModel.longitude;
 
 
       return {
-          airline: "cpz",
-          airlineCallsign: "Compass",
-          altitude: 20000,
+          airline: airline.icao,
+          airlineCallsign: airline.radioName,
           altitude: Math.round(Math.floor(Math.random() * (40000-5000) + 5000)/1000) * 1000,
           attackType: 1,
-          callsign: value+"",
+          callsign: Math.floor(Math.random()*(value+1200))+"",
           category: "arrival",
-          destination: "ksea",
+          destination: AirportController.airport_get().icao,
           fleet: "default",
-          heading: 4.5265+value*10,
-          icao: "e170",
+          heading: Math.random()*360+value*10,
+          icao: airline.fleets.default[Math.floor(Math.random()*airline.fleets.default.length)][0],
           isFlooding: true,
           model: aircraftTypeDefinition,
           origin: "",
           positionModel: new DynamicPositionModel([aLat+Math.random()*spawnDiff-spawnDiff/2, aLon+Math.random()*spawnDiff-spawnDiff/2], AirportController.airport_get().positionModel, Math.random()),
-          routeString: "YVR.MARNR7.KSEA16R",
+          routeString: this.tRoute,
           speed: Math.floor(Math.random() * (60-28) + 28),
           transponderCode: "4135",
       };

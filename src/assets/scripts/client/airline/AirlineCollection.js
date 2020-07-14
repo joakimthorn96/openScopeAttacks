@@ -112,6 +112,10 @@ export default class AirlineCollection extends BaseCollection {
         return _find(this._items, { icao: airlineId });
     }
 
+    getAirline(){
+      return this._items;
+    }
+
     /**
      * Reset each `AirlineModel` within the collection
      *
