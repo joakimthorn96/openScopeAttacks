@@ -22,6 +22,7 @@ import { isEmptyOrNotArray } from '../utilities/validatorUtilities';
 import { FLIGHT_CATEGORY } from '../constants/aircraftConstants';
 import { EVENT, AIRCRAFT_EVENT } from '../constants/eventNames';
 import { INVALID_INDEX } from '../constants/globalConstants';
+import DynamicPositionModel from '../base/DynamicPositionModel';
 
 // Temporary const declaration here to attach to the window AND use as internal property
 const aircraft = {};
@@ -50,6 +51,8 @@ export default class AircraftController {
         if (!_isObject(airlineController)) {
             throw new TypeError('Invalid parameters. Expected airlineCollection to be defined');
         }
+
+        this.floodingValue = -1;
 
         /**
          * Reference to an `AirlineController` instance
@@ -324,6 +327,15 @@ export default class AircraftController {
         if (this.aircraft.list.length === 0) {
             return;
         }
+
+        var tempForFlood = this.floodingValue;
+        this.floodingValue = GameController.numberOfFlooding;
+
+        if(this.floodingValue != tempForFlood){
+          this.removeFloodingAircraft();
+          this.createNewFloodAircraft(this.floodingValue);
+        }
+
 
         // TODO: this is getting better, but still needs more simplification
         for (let i = 0; i < this.aircraft.list.length; i++) {
@@ -602,8 +614,8 @@ export default class AircraftController {
             icao: aircraftTypeDefinition.icao,
             model: aircraftTypeDefinition,
             routeString: spawnPatternModel.routeString,
-            // TODO: this may not be needed anymore
-            waypoints: _get(spawnPatternModel, 'waypoints', [])
+            isFlooding: false,
+            attackType: 0,
         };
     }
 
@@ -840,6 +852,54 @@ export default class AircraftController {
         // Clean up the screen from aircraft that are too far
         if (!this.isAircraftVisible(aircraftModel, 2) && !aircraftModel.isControllable && aircraftModel.isRemovable) {
             this.aircraft_remove(aircraftModel);
+        }
+    }
+
+    _buildOwnAircraftProps (value) {
+      const { name, fleet } = airlineNameAndFleetHelper(["cpz"]);
+      let airlineModel = this._airlineController.findAirlineById(name);
+      const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId("cpz", airlineModel)
+
+      const spawnDiff = 4;
+      const aLat = AirportController.airport_get().positionModel.latitude;
+      const aLon = AirportController.airport_get().positionModel.longitude;
+
+
+      return {
+          airline: "cpz",
+          airlineCallsign: "Compass",
+          altitude: 20000,
+          altitude: Math.round(Math.floor(Math.random() * (40000-5000) + 5000)/1000) * 1000,
+          attackType: 1,
+          callsign: value+"",
+          category: "arrival",
+          destination: "ksea",
+          fleet: "default",
+          heading: 4.5265+value*10,
+          icao: "e170",
+          isFlooding: true,
+          model: aircraftTypeDefinition,
+          origin: "",
+          positionModel: new DynamicPositionModel([aLat+Math.random()*spawnDiff-spawnDiff/2, aLon+Math.random()*spawnDiff-spawnDiff/2], AirportController.airport_get().positionModel, Math.random()),
+          routeString: "YVR.MARNR7.KSEA16R",
+          speed: Math.floor(Math.random() * (60-28) + 28),
+          transponderCode: "4135",
+      };
+    }
+
+    removeFloodingAircraft(){
+      for(let i = this.aircraft.list.length -1; i >= 0; i--){
+        var air = this.aircraft.list[i];
+        if (air.isFlooding){
+          this.aircraft_remove(air);
+        }
+      }
+    }
+
+    createNewFloodAircraft (newFlooding) {
+        for(let j = 1; j <= newFlooding; j++){
+          var initializationProps = this._buildOwnAircraftProps(j);
+          this._createAircraftWithInitializationProps(initializationProps);
         }
     }
 }
