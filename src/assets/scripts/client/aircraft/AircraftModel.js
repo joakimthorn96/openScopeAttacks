@@ -114,6 +114,7 @@ export default class AircraftModel {
         GameController.aircraft++;
 
         this.guess = 0;
+        this.isFlooding = null;
 
         /**
         * 0 - regular
@@ -716,6 +717,10 @@ export default class AircraftModel {
 
         // This assumes and arrival spawns outside the airspace
         this.isControllable = data.category === FLIGHT_CATEGORY.DEPARTURE;
+
+
+        this.isFlooding = data.isFlooding;
+        this.attackType = data.attackType;
     }
 
     /**
