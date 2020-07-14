@@ -2468,7 +2468,7 @@ export default class AircraftModel {
 
       const random = Math.floor(Math.random() * this.amountOfAttack);
 
-      if ((random < 100) && sum != 1){
+      if ((random < 100) && sum != 1 && this.amountOfAttack != 9999999){
           if (random < rates["response"]){ //non listener
               this.attackType = rarities["response"].attack;
               GameController.responsers++;

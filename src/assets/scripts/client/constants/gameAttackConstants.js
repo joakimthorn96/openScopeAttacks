@@ -35,23 +35,23 @@ export const GAME_ATTACK_VALUES = [
         onChangeEventHandler: EVENT.SET_ATTACK_RARITY,
         optionList: [
             {
-                displayLabel: '0% of aircraft affected',
+                displayLabel: 'No aircraft affected',
                 value: 'None'
             },
             {
-                displayLabel: '5% of aircraft affected',
+                displayLabel: 'A few aircraft affected',
                 value: 'Low'
             },
             {
-                displayLabel: '20% of aircraft affected',
+                displayLabel: 'A normal amount of aircraft affected',
                 value: 'Normal'
             },
             {
-                displayLabel: '50% of aircraft affected',
+                displayLabel: 'Many aircraft affected',
                 value: 'High'
             },
             {
-                displayLabel: '90% of aircraft affected',
+                displayLabel: 'Almost all aircraft affected',
                 value: 'VeryHigh'
             }
         ]
@@ -198,8 +198,8 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'addFloodingOfNonResponsive',
         defaultValue: '0',
-        description: 'Add non-responsive aircraft to the map.',
-        help: 'Creates new aircraft and gives them the non-responsive tag.',
+        description: 'Add non-responsive aircraft to the map',
+        help: 'Creates new aircraft and gives them the non-responsive tag',
         type: 'select',
         onChangeEventHandler: EVENT.SET_FLOODING_NON_RESPONSIVE,
         optionList: [
