@@ -1478,13 +1478,13 @@ export default class CanvasController {
         if (aircraftModel.guess == 0) {
             cc.strokeStyle = white;
         } else if (aircraftModel.guess == 1) {
-            cc.strokeStyle = 'ff1616';
+            cc.strokeStyle = '#ff1616';
         } else if (aircraftModel.guess == 2) {
             cc.strokeStyle = '#ffde59';
         } else if (aircraftModel.guess == 3) {
-            cc.strokeStyle = '38b6ff';
+            cc.strokeStyle = '#38b6ff';
         } else if (aircraftModel.guess == 4) {
-            cc.strokeStyle = 'cb6ce6';
+            cc.strokeStyle = '#cb6ce6';
         }
 
         // cc.strokeStyle = "red"; gör linjen röd
