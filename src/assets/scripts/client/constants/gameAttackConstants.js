@@ -198,8 +198,8 @@ export const GAME_ATTACK_VALUES = [
     {
         name: 'addFloodingOfNonResponsive',
         defaultValue: '0',
-        description: 'Add non-responsive aircraft to the map',
-        help: 'Creates new aircraft and gives them the non-responsive tag',
+        description: 'Flooding of non-responsive aircraft',
+        help: 'Creates a new aircraft and gives them the non-responsive tag.',
         type: 'select',
         onChangeEventHandler: EVENT.SET_FLOODING_NON_RESPONSIVE,
         optionList: [
@@ -216,7 +216,7 @@ export const GAME_ATTACK_VALUES = [
                 value: '10'
             },
             {
-                displayLabel: 'Moderate',
+                displayLabel: 'Medium',
                 value: '15'
             },
             {
