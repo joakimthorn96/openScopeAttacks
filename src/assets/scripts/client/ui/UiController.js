@@ -6,6 +6,7 @@ import EventTracker from '../EventTracker';
 import GameController from '../game/GameController';
 import SettingsController from './SettingsController';
 import AttacksController from './AttacksController';
+import AttacksInformationController from './AttacksInformationController';
 import TrafficRateController from './TrafficRateController';
 import TutorialView from './TutorialView';
 import { speech_toggle } from '../speech';
@@ -57,6 +58,15 @@ class UiController {
          * @default null
          */
         this.attacksController = null;
+
+        /**
+         * @for UiController
+         * @property attacksInformationController
+         * @type {AttacksInformationController}
+         * @default null
+         */
+        this.attacksInformationController = null;
+
 
         /**
          * Element of the airport selection dialog
@@ -220,6 +230,16 @@ class UiController {
         this.$toggleAttacks = null;
 
         /**
+         * Footer button element used to toggle the attacks menu on/off
+         *
+         * @for UiController
+         * @property $toggleAttacksInformation
+         * @type {Jquery|Element}
+         * @default null
+         */
+        this.$toggleAttacksInformation = null;
+
+        /**
          * Footer button element used to toggle restricted areas on/off
          *
          * @for UiController
@@ -314,6 +334,7 @@ class UiController {
         this.tutorialView = new TutorialView($element);
         this.settingsController = new SettingsController($element);
         this.attacksController = new AttacksController($element);
+        this.attacksInformationController = new AttacksInformationController($element);
         this.trafficRateController = new TrafficRateController($element);
 
         this.$element = $element;
@@ -331,6 +352,7 @@ class UiController {
         this.$toggleLabels = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_LABELS);
         this.$toggleOptions = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_OPTIONS);
         this.$toggleAttacks = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_ATTACKS);
+        this.$toggleAttacksInformation = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_ATTACKS_INFORMATION);
         this.$togglePause = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_PAUSE);
         this.$toggleRestrictedAreas = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_RESTRICTED_AREAS);
         this.$toggleSids = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_SIDS);
@@ -411,6 +433,7 @@ class UiController {
         this.$toggleTutorial.on('click', (event) => this.onToggleTutorial(event));
         this.$toggleOptions.on('click', (event) => this.onToggleOptions(event));
         this.$toggleAttacks.on('click', (event) => this.onToggleAttacks(event));
+        this.$toggleAttacksInformation.on('click', (event) => this.onToggleAttacksInformation(event));
         this.$toggleVideoMap.on('click', (event) => this.onToggleVideoMap(event));
         this.$toggleTraffic.on('click', (event) => this.onToggleTraffic(event));
 
@@ -440,6 +463,7 @@ class UiController {
         this.$toggleTutorial.off('click', (event) => this.onToggleTutorial(event));
         this.$toggleOptions.off('click', (event) => this.onToggleOptions(event));
         this.$toggleAttacks.off('click', (event) => this.onToggleAttacks(event));
+        this.$toggleAttacksInformation.off('click', (event) => this.onToggleAttacksInformation(event));
         this.$toggleVideoMap.off('click', (event) => this.onToggleVideoMap(event));
         this.$toggleTraffic.off('click', (event) => this.onToggleTraffic(event));
 
@@ -457,7 +481,7 @@ class UiController {
         this.tutorialView = null;
         this.settingsController = null;
         this.attacksController = null;
-
+        this.attacksInformationController = null;
         this.$element = null;
         this.$airportDialog = null;
         this.$airportDialogBody = null;
@@ -473,6 +497,7 @@ class UiController {
         this.$toggleLabels = null;
         this.$toggleOptions = null;
         this.$toggleAttacks = null;
+        this.$toggleAttacksInformation = null;
         this.$togglePause = null;
         this.$toggleRestrictedAreas = null;
         this.$toggleSids = null;
@@ -511,6 +536,10 @@ class UiController {
         }
 
         if (this.attacksController.isDialogOpen()) {
+            this.onToggleOptions();
+        }
+
+        if (this.attacksInformationController.isDialogOpen()) {
             this.onToggleOptions();
         }
 
@@ -824,13 +853,27 @@ class UiController {
     */
     onToggleAttacks() {
         EventTracker.recordEvent(
-            TRACKABLE_EVENT.SETTINGS,
+            TRACKABLE_EVENT.SETTINGS, //TODO ANTON kanske ska stå .ATTACKS här istället för .SETTINGS
             'toggle-dialog',
             `${this.$toggleAttacks.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
         );
         this.$toggleAttacks.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
         this.attacksController.toggleDialog();
     }
+
+    /**
+    * @for UiController
+    * @method onToggleAttacksInformation
+    */
+   onToggleAttacksInformation() {
+    EventTracker.recordEvent(
+        TRACKABLE_EVENT.SETTINGS,
+        'toggle-dialog',
+        `${this.$toggleAttacksInformation.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
+    );
+    this.$toggleAttacksInformation.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
+    this.attacksInformationController.toggleDialog();
+}
 
     /**
      * @for UiController

@@ -11,9 +11,16 @@ import { SELECTORS } from '../constants/selectors';
  */
 const UI_SETTINGS_MODAL_TEMPLATE = `
     <div class="option-dialog dialog">
-        <p class="dialog-title">ADS-B Attacks</p>
-        <div class="dialog-body nice-scrollbar"></div>
-        <p class="dialog-text">For more information about attacks please hover "?" and press information.
+        <p class="dialog-title">ADS-B Attacks Information</p>
+        <img src="assets/images/colorExplain.png" style="width:566.08px; height:116px" class="image-center-rounded" </img>
+        <p class="dialog-text"> 
+        Welcome to openScope simulator with cyberattacks from ADS-B. <br> 
+        Use the parameters in the attacks settings menu to choose a specific scenario.
+        You may also toggle the visibility of attacking aircraft by the color code above. <br> 
+        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile". <br> <br> 
+        These types of attacks originated from the current weaknesses of ADS-B.<br> 
+        <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755">
+        Please see our paper regarding this simulator and the weaknesses of ADS-B for more information.</a>
         </p>
     </div>`;
 
@@ -54,9 +61,9 @@ const UI_OPTION_SELECTOR_TEMPLATE = '<span class="form-type-select"></span>';
 const UI_STATIC_TEXT_TEMPLATE = '<span class="option-static-text"></span>';
 
 /**
- * @class AttacksController
+ * @class AttacksInformationController
  */
-export default class AttacksController {
+export default class AttacksInformationController {
     constructor($element) {
         /**
          * Root DOM element
@@ -90,7 +97,7 @@ export default class AttacksController {
 
     /**
      *
-     * @for AttacksController
+     * @for AttacksInformationController
      * @method init
      * @chainable
      */
@@ -120,7 +127,7 @@ export default class AttacksController {
     /**
      * Returns whether the airport selection dialog is open
      *
-     * @for AttacksController
+     * @for AttacksInformationController
      * @method isDialogOpen
      * @return {boolean}
      */
@@ -129,7 +136,7 @@ export default class AttacksController {
     }
 
     /**
-    * @for AttacksController
+    * @for AttacksInformationController
     * @method toggleDialog
     */
     toggleDialog() {
@@ -139,7 +146,7 @@ export default class AttacksController {
     /**
      * Build the html for a game option and its corresponding value elements.
      *
-     * @for AttacksController
+     * @for AttacksInformationController
      * @method _buildOptionTemplate
      * @param option {object}
      * @return $container {jquery Element}
@@ -178,7 +185,7 @@ export default class AttacksController {
     /**
      * Build the html for a select option.
      *
-     * @for AttacksController
+     * @for AttacksInformationController
      * @method _buildOptionTemplate
      * @param optionData {array<string>}
      * @param selectedOption {string}
@@ -207,7 +214,7 @@ export default class AttacksController {
      *
      * `Text text text         Value value value`
      *
-     * @for AttacksController
+     * @for AttacksInformationController
      * @method _buildStaticTemplate
      * @param {string} label
      * @param {string} value (optional)
@@ -229,7 +236,7 @@ export default class AttacksController {
     /**
      * Build the html for the simulator version psuedo-option.
      *
-     * @for AttacksController
+     * @for AttacksInformationController
      * @method _buildVersionTemplate
      * @return {JQuery|HTML element}
      */

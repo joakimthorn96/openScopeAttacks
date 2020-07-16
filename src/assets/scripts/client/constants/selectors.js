@@ -111,6 +111,7 @@ export const IDS = {
     PAUSED: 'paused',
     TOGGLE_OPTIONS: 'toggle-options',
     TOGGLE_ATTACKS: 'toggle-attacks',
+    TOGGLE_ATTACKS_INFORMATION: 'toggle-attacks-information',
     TUTORIAL: 'tutorial',
     GITHUB_EXTERNAL_LINK: 'js-github-external-link',
     SCORE: 'score',
