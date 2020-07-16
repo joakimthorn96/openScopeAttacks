@@ -352,7 +352,6 @@ export default class RadarTargetModel {
      */
     buildDataBlockRowOne() {
         let dataBlockRowOne = this.aircraftModel.callsign;
-        dataBlockRowOne += this.aircraftModel.textForLabel;
 
         // NOTE: using empty space before the letter on purpose so this gets rendered
         // appropriately within a canvas
@@ -369,6 +368,8 @@ export default class RadarTargetModel {
 
                 break;
         }
+
+        dataBlockRowOne += this.aircraftModel.textForLabel;
 
         return dataBlockRowOne;
     }
@@ -388,7 +389,7 @@ export default class RadarTargetModel {
         if (this.aircraftModel.attackType === 3 && (this.aircraftModel.timePassed % this.aircraftModel.switchingTime) < (this.aircraftModel.switchingTime/2)) {
           var aircraftAltitude = this.aircraftModel.fakeAltitude;
           var aircraftSpeed = this.aircraftModel.fakeGroundSpeed;
-          
+
 
         } else {
           var aircraftAltitude = round(this.aircraftModel.altitude / 100);

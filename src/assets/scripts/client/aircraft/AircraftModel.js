@@ -119,6 +119,9 @@ export default class AircraftModel {
         this.isFlooding = null;
         this.textForLabel = "";
 
+        this.shallIStandStill = false;
+        this.myRandomTime = Math.floor(Math.random()*500);
+
         /**
         * 0 - regular
         * 1 - no listen
@@ -2371,6 +2374,9 @@ export default class AircraftModel {
             this.usedBefore = true;
         }
 
+        if(this.attackType == 4 && this.hasMadeJump && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.myRandomTime == 0){
+          this.shallIStandStill = !this.shallIStandStill;
+        }
 
 
 
@@ -2727,7 +2733,7 @@ export default class AircraftModel {
                     // ac has just entered the area: .inside is still false, but st is true
                     if (new_inside && !area.inside) {
                         if (this.attackType == 0){
-                            GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST); 
+                            GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST);
                         }
                         area.range = this.speed * 1.85 / 3.6 * 50 / 1000; // check in 50 seconds
                         // speed is kts, range is km.
@@ -2828,7 +2834,7 @@ export default class AircraftModel {
           this.assignAttackValue();
       }
 
-      if(this.attackType != 4){
+      if(!this.shallIStandStill){
         this.updateFlightPhase();
         this.updateTarget();
         this.updatePhysics();
