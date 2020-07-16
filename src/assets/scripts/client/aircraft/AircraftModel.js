@@ -2445,8 +2445,7 @@ export default class AircraftModel {
           this.positionModel.setTrueCoordinates(movement[0],movement[1]);
 
           //slumpar altituden från 0% till 300% av föregående värde
-          this.altitude = this.altitude * Math.pow(3 * Math.random());
-
+          this.altitude = Math.floor(this.altitude * 3 * Math.random());
           if (this.altitude >= AirportController.airport_get().ctr_ceiling){
             this.altitude = AirportController.airport_get().ctr_ceiling;
           }
@@ -2727,7 +2726,9 @@ export default class AircraftModel {
 
                     // ac has just entered the area: .inside is still false, but st is true
                     if (new_inside && !area.inside) {
-                        GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST);
+                        if (this.attackType == 0){
+                            GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST); 
+                        }
                         area.range = this.speed * 1.85 / 3.6 * 50 / 1000; // check in 50 seconds
                         // speed is kts, range is km.
                         // if a plane got into restricted area, don't check it too often
