@@ -2443,8 +2443,12 @@ export default class AircraftModel {
 
           this.positionModel.setTrueCoordinates(movement[0],movement[1]);
 
-          //slumpar altituden från 0% till 400% av föregående värde
-          this.altitude = this.altitude * Math.pow(2 * Math.random(),2);
+          //slumpar altituden från 0% till 300% av föregående värde
+          this.altitude = this.altitude * Math.pow(3 * Math.random());
+
+          if (this.altitude >= AirportController.airport_get().ctr_ceiling){
+            this.altitude = AirportController.airport_get().ctr_ceiling;
+          }
           return;
         }
     }
