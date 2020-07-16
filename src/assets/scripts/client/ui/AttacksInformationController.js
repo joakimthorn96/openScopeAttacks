@@ -15,12 +15,15 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
         <img src="assets/images/colorExplain.png" style="width:566.08px; height:116px" class="image-center-rounded" </img>
         <p class="dialog-text"> 
         Welcome to openScope simulator with cyberattacks from ADS-B. <br> 
-        Use the parameters in the attacks settings menu to choose a specific scenario.
-        You may also toggle the visibility of attacking aircraft by the color code above. <br> 
+        In the settings menu, you may also toggle the visibility of attacking aircraft by the color code above. <br>
+        If you want to add a note to an aircraft use the command "at" for AddText. This note has a maximum size of 20 letters. <br> 
+        Example: 'SBI654 at prob fake'. To remove: 'SBI654 at' <br>
+        You can also guess the color of an aircraft yourself, when you think you know what attack type it is. To guess an aircraft's attack type please use the "g" command for Guess. <br>
+        Example: 'SBI654 g 1' (for attack type 1). To remove: 'SBI654 g 0' <br> <br> 
         To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile". <br> <br> 
         These types of attacks originated from the current weaknesses of ADS-B.<br> 
-        <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755">
-        Please see our paper regarding this simulator and the weaknesses of ADS-B for more information.</a>
+        <a target="_blank" style="color:orange" href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755">
+        Please see our paper regarding this simulator and the weaknesses of ADS-B for more information. (click here to open in new window)</a>
         </p>
     </div>`;
 
