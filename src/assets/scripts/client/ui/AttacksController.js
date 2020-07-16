@@ -15,13 +15,13 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
         <div class="dialog-body nice-scrollbar"></div>
         <img src="assets/images/colorExplain.png" style="width:566.08px; height:116px" class="image-center-rounded" </img>
         <div class="dialog-subtitle"> Information </div>
-        <p class="dialog-text"> 
-        Welcome to openScope simulator with cyberattacks from ADS-B. <br> 
+        <p class="dialog-text">
+        Welcome to openScope simulator with cyberattacks from ADS-B. <br>
         Use the parameters above to choose a specific scenario.
-        You may also toggle the visibility of attacking aircraft by the color code below. <br> 
-        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile". <br> <br> 
-        These types of attacks originated from the current weaknesses of ADS-B.<br> 
-        <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755">
+        You may also toggle the visibility of attacking aircraft by the color code below. <br>
+        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile". <br> <br>
+        These types of attacks originated from the current weaknesses of ADS-B.<br>
+        <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755" target="_blank" style="color:orange">
         Please see our paper regarding this simulator and the weaknesses of ADS-B for more information.</a>
         </p>
     </div>`;
