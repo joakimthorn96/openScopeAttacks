@@ -138,8 +138,10 @@ export default class ScoreController {
      * @private
      */
     _onAirspaceExitForArrival(aircraftModel) {
-        aircraftModel.radioCall('leaving radar coverage as arrival', AIRPORT_CONTROL_POSITION_NAME.APPROACH, true);
-        GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST);
+        if(aircraftModel.attackType == 0) {
+            aircraftModel.radioCall('leaving radar coverage as arrival', AIRPORT_CONTROL_POSITION_NAME.APPROACH, true);
+            GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST);
+        }
     }
 
     /**
