@@ -117,6 +117,7 @@ export default class AircraftModel {
 
         this.guess = 0;
         this.isFlooding = null;
+        this.textForLabel = "";
 
         /**
         * 0 - regular

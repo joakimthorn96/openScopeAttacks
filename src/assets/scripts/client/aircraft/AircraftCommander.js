@@ -855,6 +855,17 @@ export default class AircraftCommander {
 
     }
 
+    addTextToAircraftLabel(aircraft, data) {
+      data = data.join(" ");
+      if (data.length > 1){
+        aircraft.textForLabel = " | "+data;
+      } else {
+        aircraft.textForLabel = "";
+      }
+
+      return [true, "Added "+data+" to "+aircraft.callsign+"s label"];
+    }
+
 
 
 }

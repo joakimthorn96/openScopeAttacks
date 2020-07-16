@@ -20,7 +20,8 @@ import {
     holdValidator,
     squawkValidator,
     optionalAltitudeValidator,
-    crossingValidator
+    crossingValidator,
+    textValidator
 } from './argumentValidators';
 import {
     altitudeParser,
@@ -243,6 +244,10 @@ const CUSTOM_ARG_AIRCRAFT_COMMANDS = {
 
     // these commands have specific argument requirements and may need to be parsed
     // into the correct type (sting -> number)
+    addText: {
+        validate: textValidator,
+        parse: noop
+    },
     altitude: {
         validate: altitudeValidator,
         parse: altitudeParser

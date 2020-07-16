@@ -352,6 +352,7 @@ export default class RadarTargetModel {
      */
     buildDataBlockRowOne() {
         let dataBlockRowOne = this.aircraftModel.callsign;
+        dataBlockRowOne += this.aircraftModel.textForLabel;
 
         // NOTE: using empty space before the letter on purpose so this gets rendered
         // appropriately within a canvas

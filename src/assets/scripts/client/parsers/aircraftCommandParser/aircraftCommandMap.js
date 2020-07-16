@@ -235,10 +235,16 @@ export const AIRCRAFT_COMMAND_MAP = {
         isSystemCommand: false
       },
 
-      
+
     makeGuess: {
         aliases: ['guess', 'g', 'isAttack'],
         functionName: 'makeAttackcraftGuess',
+        isSystemCommand: false
+    },
+
+    addText: {
+        aliases: ['addText', 'at', 'updateText', 'ut'],
+        functionName: 'addTextToAircraftLabel',
         isSystemCommand: false
     },
 

@@ -119,6 +119,12 @@ export const altitudeValidator = (args = []) => {
     }
 };
 
+export const textValidator = (args = []) => {
+    if (args.join("").length > 20){
+      return ERROR_MESSAGE.TEXT_MUST_BE_UNDER_TWENTY;
+    }
+}
+
 /**
  * Checks that there is exactly zero or one value and the data is of the correct type
  *
