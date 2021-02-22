@@ -100,6 +100,37 @@ export default class AircraftModel {
      * @param options {object}
      */
     constructor(options = {}) {
+
+
+        this.usedBefore = true;
+        this.hasMadeJump = false;
+        this.amountOfAttack = -1; //init
+        this.needUpdate = 1;
+        this.pastAmountofAttack = -1;
+        this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
+        this.timePassed = 0;                        //Used for switching between fakeAltitude and realAltitude. Starting value
+        this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
+
+        this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
+
+        GameController.aircraft++;
+
+        this.guess = 0;
+        this.isFlooding = null;
+        this.textForLabel = "";
+
+        this.shallIStandStill = false;
+        this.myRandomTime = Math.floor(Math.random()*500);
+
+        /**
+        * 0 - regular
+        * 1 - no listen
+        * 2 - jumping
+        * 3 - wrong value
+        * 4 - standing still
+        */
+        this.attackType = 0;
+
         /**
          * Unique id
          *
@@ -682,6 +713,10 @@ export default class AircraftModel {
 
         // This assumes and arrival spawns outside the airspace
         this.isControllable = data.category === FLIGHT_CATEGORY.DEPARTURE;
+
+
+        this.isFlooding = data.isFlooding;
+        this.attackType = data.attackType;
     }
 
     /**
@@ -1239,11 +1274,12 @@ export default class AircraftModel {
         if (this.isArrival()) {
             const altdiff = this.altitude - this.mcp.altitude;
             const alt = digits_decimal(this.altitude, -2);
-
+            this.hasMadeJump = true;
             if (Math.abs(altdiff) > 200) {
                 if (altdiff > 0) {
                     alt_log = `descending through ${alt} for ${this.mcp.altitude}`;
                     alt_say = `descending through ${radio_altitude(alt)} for ${radio_altitude(this.mcp.altitude)}`;
+
                 } else if (altdiff < 0) {
                     alt_log = `climbing through ${alt} for ${this.mcp.altitude}`;
                     alt_say = `climbing through ${radio_altitude(alt)} for ${radio_altitude(this.mcp.altitude)}`;
@@ -2307,15 +2343,32 @@ export default class AircraftModel {
         return Math.min(waypointMaximumSpeed, this.mcp.speed);
     }
 
+
+
     // TODO: this method needs a lot of love. its much too long with waaay too many nested if/else ifs.
     /**
      * @for AircraftModel
      * @method updatePhysics
      */
     updatePhysics() {
+
         if (this.isTaxiing()) {
             return;
         }
+
+
+        //Caluclate jump for attackType 2
+        if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 == 0) {
+            this.calculateJump();
+        } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 != 0){
+            this.usedBefore = true;
+        }
+
+        if(this.attackType == 4 && this.hasMadeJump && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.myRandomTime == 0){
+          this.shallIStandStill = !this.shallIStandStill;
+        }
+
+
 
         if (this.hit) {
             // 90fps fall rate?...
@@ -2366,6 +2419,77 @@ export default class AircraftModel {
 
         this.distance = vlen(this.positionModel.relativePosition);
         this.radial = radians_normalize(vradial(this.positionModel.relativePosition));
+    }
+
+    calculateJump() {
+      let prob = GameController.jProb * 3   //var 12 nyss!
+      this.usedBefore = false;
+      if (Math.floor(Math.random() * prob) == 1){
+          const radius = GameController.jRadius;
+          const center = AirportController.airport_get().rangeRings.center;
+          const current = this.positionModel.gps;
+          const t = 2*Math.PI*Math.random();
+          const u = radius*(Math.random()+Math.random());
+          var r = 0;
+          if (u > radius) {
+            r = 2*radius-u;
+          } else {
+            r = u
+          }
+          const dot = [r*cos(t),r*sin(t)];
+          const newPos = [center[0]+dot[0], center[1]+dot[1]];
+          const movement = [newPos[0]-current[0],newPos[1]-current[1]];
+
+          this.positionModel.setTrueCoordinates(movement[0],movement[1]);
+
+          //slumpar altituden från 0% till 300% av föregående värde
+          this.altitude = Math.floor(this.altitude * 3 * Math.random());
+          if (this.altitude >= AirportController.airport_get().ctr_ceiling){
+            this.altitude = AirportController.airport_get().ctr_ceiling;
+          }
+          return;
+        }
+    }
+
+    assignAttackValue() {
+      var rarities = GameController.rarities;
+      var sum = 0;
+      for (var prop in rarities){
+        sum = sum + rarities[prop].rate;
+      }
+      sum = sum /100;
+      if(sum == 0){
+          sum = 1;
+      }
+      var rates = {};
+      for (var prop in rarities){
+        rates[prop] = rarities[prop].rate / sum;
+      }
+
+      console.log("no Response = "+rates["response"].toFixed(1)+"%,\n jumping = "+rates["jump"].toFixed(1)+"%,\n error = "+rates["falseInformation"].toFixed(1)+"%,\n stand still = "+rates["standStill"].toFixed(1)+"%\n  At:  100/"+this.amountOfAttack);
+
+      const random = Math.floor(Math.random() * this.amountOfAttack);
+
+      if ((random < 100) && sum != 1 && this.amountOfAttack != 9999999){
+          if (random < rates["response"]){ //non listener
+              this.attackType = rarities["response"].attack;
+              GameController.responsers++;
+          }
+          else if ((random >= rates["response"]) && (random < rates["response"]+rates["jump"])){ //jumper
+              this.attackType = rarities["jump"].attack;
+              GameController.jumpers++;
+          }
+          else if (random >= rates["response"]+rates["jump"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]){ //false information
+              this.attackType = rarities["falseInformation"].attack;
+              GameController.errorers++;
+          } else { //stopper
+            this.attackType = rarities["standStill"].attack;
+            GameController.stoppers++;
+          }
+      } else {
+        this.attackType = 0;
+      }
+      GameController.aircraft++;
     }
 
     /**
@@ -2600,7 +2724,9 @@ export default class AircraftModel {
 
                     // ac has just entered the area: .inside is still false, but st is true
                     if (new_inside && !area.inside) {
-                        GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST);
+                        if (this.attackType == 0){
+                            GameController.events_recordNew(GAME_EVENTS.AIRSPACE_BUST);
+                        }
                         area.range = this.speed * 1.85 / 3.6 * 50 / 1000; // check in 50 seconds
                         // speed is kts, range is km.
                         // if a plane got into restricted area, don't check it too often
@@ -2677,10 +2803,35 @@ export default class AircraftModel {
      * @method update
      */
     update() {
+
+
+      this.pastAmountofAttack = this.amountOfAttack;
+      this.amountOfAttack = GameController.aRarity;
+
+      const tempNeedUpdate = this.needUpdate;
+      this.needUpdate = GameController.needUpdateOfRates;
+
+      if((this.pastAmountofAttack != this.amountOfAttack || tempNeedUpdate != this.needUpdate) && !this.isFlooding){
+          if(this.attackType == 1){
+              GameController.responsers--;
+          } else if(this.attackType == 2){
+              GameController.jumpers--;
+          } else if(this.attackType == 3){
+              GameController.errorers--;
+          } else if(this.attackType == 4){
+              GameController.stoppers--;
+          }
+          this.attackType = 0;
+          GameController.aircraft --;
+          this.assignAttackValue();
+      }
+
+      if(!this.shallIStandStill){
         this.updateFlightPhase();
         this.updateTarget();
         this.updatePhysics();
         this._updateAircraftVisibility();
+      }
     }
 
     /**
@@ -2759,6 +2910,7 @@ export default class AircraftModel {
         }
 
         this.setIsRemovable();
+        this.hasMadeJump = false;
         EventBus.trigger(AIRCRAFT_EVENT.AIRSPACE_EXIT, this);
     }
 

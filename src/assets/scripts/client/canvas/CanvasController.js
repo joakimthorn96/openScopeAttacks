@@ -1598,7 +1598,21 @@ export default class CanvasController {
         cc.beginPath();
         cc.moveTo(...leaderStart);
         cc.lineTo(...leaderEnd);
-        cc.strokeStyle = white;
+
+        if (aircraftModel.guess == 0) {
+            cc.strokeStyle = white;
+        } else if (aircraftModel.guess == 1) {
+            cc.strokeStyle = '#ff1616';
+        } else if (aircraftModel.guess == 2) {
+            cc.strokeStyle = '#ffde59';
+        } else if (aircraftModel.guess == 3) {
+            cc.strokeStyle = '#38b6ff';
+        } else if (aircraftModel.guess == 4) {
+            cc.strokeStyle = '#cb6ce6';
+        }
+
+        // cc.strokeStyle = "red"; gör linjen röd
+
         cc.stroke();
 
         const dataBlockCenterCanvasPosition = radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
@@ -1621,7 +1635,24 @@ export default class CanvasController {
             this.theme.DATA_BLOCK.TEXT_IN_RANGE :
             this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
 
-        cc.fillStyle = fillStyle;
+        const { attackType } = aircraftModel;
+
+        if (GameController.showAttackAircraftVisibility == 'true') {
+            if (attackType == 0) {
+                cc.fillStyle = fillStyle;
+            } else if (attackType == 1) {
+                cc.fillStyle = '#ff1616';
+            } else if (attackType == 2) {
+                cc.fillStyle = '#ffde59';
+            } else if (attackType == 3) {
+                cc.fillStyle = '#38b6ff';
+            } else if (attackType == 4) {
+                cc.fillStyle = '#cb6ce6';
+            }
+        } else {
+            cc.fillStyle = fillStyle;
+        }
+
 
         // Draw full datablock text
         cc.font = this.theme.DATA_BLOCK.TEXT_FONT;

@@ -10,9 +10,21 @@ import { SELECTORS } from '../constants/selectors';
  * @final
  */
 const UI_SETTINGS_MODAL_TEMPLATE = `
-    <div class="option-dialog dialog notSelectable">
-        <p class="dialog-title">Settings</p>
-        <div class="dialog-body nice-scrollbar"></div>
+    <div class="option-dialog dialog">
+        <p class="dialog-title">ADS-B Attacks Information</p>
+        <img src="assets/images/colorExplain.png" style="width:566.08px; height:116px" class="image-center-rounded" </img>
+        <p class="dialog-text"> 
+        Welcome to openScope simulator with cyberattacks from ADS-B. <br> 
+        In the settings menu, you may also toggle the visibility of attacking aircraft by the color code above. <br>
+        If you want to add a note to an aircraft use the command "at" for AddText. This note has a maximum size of 20 letters. <br> 
+        Example: 'SBI654 at prob fake'. To remove: 'SBI654 at' <br>
+        You can also guess the color of an aircraft yourself, when you think you know what attack type it is. To guess an aircraft's attack type please use the "g" command for Guess. <br>
+        Example: 'SBI654 g 1' (for attack type 1). To remove: 'SBI654 g 0' <br> <br> 
+        To save your actions from this session, please hover the "?" button in the bottom right corner and press "Download logfile". <br> <br> 
+        These types of attacks originated from the current weaknesses of ADS-B.<br> 
+        <a target="_blank" style="color:orange" href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1452531&dswid=5755">
+        Please see our paper regarding this simulator and the weaknesses of ADS-B for more information. (click here to open in new window)</a>
+        </p>
     </div>`;
 
 /**
@@ -20,7 +32,7 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
  * @type {string}
  * @final
  */
-const UI_DIALOG_FOOTER_TEMPLATE = '<div class="dialog-footer"></div>';
+const UI_DIALOG_FOOTER_TEMPLATE = '<div class="dialog-footer">Attacks!</div>';
 
 /**
  * @property UI_OPTION_CONTAINER_TEMPLATE
@@ -52,9 +64,9 @@ const UI_OPTION_SELECTOR_TEMPLATE = '<span class="form-type-select"></span>';
 const UI_STATIC_TEXT_TEMPLATE = '<span class="option-static-text"></span>';
 
 /**
- * @class SettingsController
+ * @class AttacksInformationController
  */
-export default class SettingsController {
+export default class AttacksInformationController {
     constructor($element) {
         /**
          * Root DOM element
@@ -88,14 +100,14 @@ export default class SettingsController {
 
     /**
      *
-     * @for SettingsController
+     * @for AttacksInformationController
      * @method init
      * @chainable
      */
     init() {
         this.$dialog = $(UI_SETTINGS_MODAL_TEMPLATE);
         this.$dialogBody = this.$dialog.find(SELECTORS.DOM_SELECTORS.DIALOG_BODY);
-        const descriptions = GameController.game.option.getDescriptions();
+        const descriptions = GameController.game.attack.getDescriptions();
 
         _forEach(descriptions, (opt) => {
             if (opt.type !== 'select') {
@@ -118,7 +130,7 @@ export default class SettingsController {
     /**
      * Returns whether the airport selection dialog is open
      *
-     * @for SettingsController
+     * @for AttacksInformationController
      * @method isDialogOpen
      * @return {boolean}
      */
@@ -127,7 +139,7 @@ export default class SettingsController {
     }
 
     /**
-    * @for SettingsController
+    * @for AttacksInformationController
     * @method toggleDialog
     */
     toggleDialog() {
@@ -137,7 +149,7 @@ export default class SettingsController {
     /**
      * Build the html for a game option and its corresponding value elements.
      *
-     * @for SettingsController
+     * @for AttacksInformationController
      * @method _buildOptionTemplate
      * @param option {object}
      * @return $container {jquery Element}
@@ -148,7 +160,7 @@ export default class SettingsController {
         const $label = $(UI_OPTION_LABEL_TEMPLATE);
         const $optionSelector = $(UI_OPTION_SELECTOR_TEMPLATE);
         const $selector = $(`<select name="${option.name}"></select>`);
-        const selectedOption = GameController.game.option.getOptionByName(option.name);
+        const selectedOption = GameController.game.attack.getAttackByName(option.name);
 
         $container.append($label);
         $label.text(option.description);
@@ -164,7 +176,7 @@ export default class SettingsController {
         $selector.change((event) => {
             const $currentTarget = $(event.currentTarget);
 
-            GameController.game.option.setOptionByName($currentTarget.attr('name'), $currentTarget.val());
+            GameController.game.attack.setAttackByName($currentTarget.attr('name'), $currentTarget.val());
         });
 
         $optionSelector.append($selector);
@@ -176,7 +188,7 @@ export default class SettingsController {
     /**
      * Build the html for a select option.
      *
-     * @for SettingsController
+     * @for AttacksInformationController
      * @method _buildOptionTemplate
      * @param optionData {array<string>}
      * @param selectedOption {string}
@@ -184,7 +196,13 @@ export default class SettingsController {
      * @private
      */
     _buildOptionSelectTemplate(optionData, selectedOption) {
-        if (optionData.value === selectedOption) {
+        // the `selectedOption` coming in to this method will always be a string (due to existing api) but
+        // could contain valid numbers. here we test for valid number and build `parsedSelectedOption` accordingly.
+        const parsedSelectedOption = !_isNaN(parseFloat(selectedOption)) ?
+            parseFloat(selectedOption) :
+            selectedOption;
+
+        if (optionData.value === parsedSelectedOption) {
             return `<option value="${optionData.value}" selected>${optionData.displayLabel}</option>`;
         }
 
@@ -199,7 +217,7 @@ export default class SettingsController {
      *
      * `Text text text         Value value value`
      *
-     * @for SettingsController
+     * @for AttacksInformationController
      * @method _buildStaticTemplate
      * @param {string} label
      * @param {string} value (optional)
@@ -221,7 +239,7 @@ export default class SettingsController {
     /**
      * Build the html for the simulator version psuedo-option.
      *
-     * @for SettingsController
+     * @for AttacksInformationController
      * @method _buildVersionTemplate
      * @return {JQuery|HTML element}
      */
@@ -229,7 +247,7 @@ export default class SettingsController {
         const simulatorVersion = window.GLOBAL.VERSION;
         const $container = $(UI_DIALOG_FOOTER_TEMPLATE);
 
-        $container.text(`openScope Threat Simulator by Gustav and Anton`);
+        $container.text(`openScope: ADS-B Attacks by Gustav Lindahl and Anton Blåberg`);
 
         return $container;
     }

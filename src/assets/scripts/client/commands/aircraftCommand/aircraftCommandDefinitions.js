@@ -132,7 +132,31 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
     sayRoute: {
         validate: zeroArgumentsValidator,
         parse: noop
+    },
+    
+    stopListen: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
+    
+    startListen: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
+    stopJump: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
+    startJump: {
+        validate: zeroArgumentsValidator,
+        parse: noop
+    },
+    showType: {
+        validate: zeroArgumentsValidator,
+        parse: noop
     }
+
+  
 };
 
 /**
@@ -145,6 +169,19 @@ const ZERO_ARG_AIRCRAFT_COMMANDS = {
  * @final
  */
 const SINGLE_ARG_AIRCRAFT_COMMANDS = {
+    /** 
+    '`': {
+        validate: singleArgumentValidator,
+        // calling method is expecting an array with values that will get spread later, thus we purposly
+        // return an array here
+        parse: (args) => [convertStringToNumber(args)]
+    },
+
+    makeGuess: {
+        validate: singleArgumentValidator,
+        parse: noop
+    },
+    */
     airport: {
         validate: singleArgumentValidator,
         parse: noop
@@ -221,6 +258,10 @@ const CUSTOM_ARG_AIRCRAFT_COMMANDS = {
 
     // these commands have specific argument requirements and may need to be parsed
     // into the correct type (sting -> number)
+    addText: {
+        validate: textValidator,
+        parse: noop
+    },
     altitude: {
         validate: altitudeValidator,
         parse: altitudeParser

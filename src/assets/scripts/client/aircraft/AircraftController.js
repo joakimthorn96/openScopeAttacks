@@ -24,6 +24,7 @@ import { isEmptyOrNotArray } from '../utilities/validatorUtilities';
 import { FLIGHT_CATEGORY } from '../constants/aircraftConstants';
 import { EVENT, AIRCRAFT_EVENT } from '../constants/eventNames';
 import { INVALID_INDEX } from '../constants/globalConstants';
+import DynamicPositionModel from '../base/DynamicPositionModel';
 
 // Temporary const declaration here to attach to the window AND use as internal property
 const aircraft = {};
@@ -62,6 +63,8 @@ export default class AircraftController {
             throw new TypeError('Invalid scopeModel passed to AircraftController constructor. ' +
                 `Expected instance of ScopeModel, but received ${typeof scopeModel}`);
         }
+
+        this.floodingValue = -1;
 
         /**
          * Reference to an `AirlineController` instance
@@ -131,6 +134,8 @@ export default class AircraftController {
          * @private
          */
         this._stripViewController = new StripViewController();
+
+        this.tRoute = "";
 
         return this.init()
             ._setupHandlers()
@@ -338,6 +343,15 @@ export default class AircraftController {
         if (this.aircraft.list.length === 0) {
             return;
         }
+
+        var tempForFlood = this.floodingValue;
+        this.floodingValue = GameController.numberOfFlooding;
+
+        if(this.floodingValue != tempForFlood){
+          this.removeFloodingAircraft();
+          this.createNewFloodAircraft(this.floodingValue);
+        }
+
 
         // TODO: this is getting better, but still needs more simplification
         for (let i = 0; i < this.aircraft.list.length; i++) {
@@ -589,6 +603,8 @@ export default class AircraftController {
         const dynamicPositionModel = convertStaticPositionToDynamic(spawnPatternModel.positionModel);
         const transponderCode = this._generateUniqueTransponderCode(AirportController.airport_get().icao);
 
+        this.tRoute = spawnPatternModel.routeString;
+
         return {
             fleet,
             altitude,
@@ -605,8 +621,8 @@ export default class AircraftController {
             icao: aircraftTypeDefinition.icao,
             model: aircraftTypeDefinition,
             routeString: spawnPatternModel.routeString,
-            // TODO: this may not be needed anymore
-            waypoints: _get(spawnPatternModel, 'waypoints', [])
+            isFlooding: false,
+            attackType: 0,
         };
     }
 
@@ -858,6 +874,57 @@ export default class AircraftController {
         // Clean up the screen from aircraft that are too far
         if (!this.isAircraftVisible(aircraftModel, 2) && !aircraftModel.isControllable && aircraftModel.isRemovable) {
             this.aircraft_remove(aircraftModel);
+        }
+    }
+
+    _buildOwnAircraftProps (value) {
+      const airlineList = this._airlineController.getAirline();
+      const airlineIndex = Math.floor(Math.random()*airlineList.length)
+      const airline = airlineList[airlineIndex];
+
+      const { name, fleet } = airlineNameAndFleetHelper([airline.icao]);
+      let airlineModel = this._airlineController.findAirlineById(name);
+      const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId(airline.icao, airlineModel)
+
+      const spawnDiff = 3;
+      const aLat = AirportController.airport_get().positionModel.latitude;
+      const aLon = AirportController.airport_get().positionModel.longitude;
+
+
+      return {
+          airline: airline.icao,
+          airlineCallsign: airline.radioName,
+          altitude: Math.round(Math.floor(Math.random() * (40000-5000) + 5000)/1000) * 1000,
+          attackType: 1,
+          callsign: Math.floor(Math.random()*(value+1200))+"",
+          category: "arrival",
+          destination: AirportController.airport_get().icao,
+          fleet: "default",
+          heading: Math.random()*360+value*10,
+          icao: airline.fleets.default[Math.floor(Math.random()*airline.fleets.default.length)][0],
+          isFlooding: true,
+          model: aircraftTypeDefinition,
+          origin: "",
+          positionModel: new DynamicPositionModel([aLat+Math.random()*spawnDiff-spawnDiff/2, aLon+Math.random()*spawnDiff-spawnDiff/2], AirportController.airport_get().positionModel, Math.random()),
+          routeString: this.tRoute,
+          speed: Math.floor(Math.random() * (60-28) + 28),
+          transponderCode: "4135",
+      };
+    }
+
+    removeFloodingAircraft(){
+      for(let i = this.aircraft.list.length -1; i >= 0; i--){
+        var air = this.aircraft.list[i];
+        if (air.isFlooding){
+          this.aircraft_remove(air);
+        }
+      }
+    }
+
+    createNewFloodAircraft (newFlooding) {
+        for(let j = 1; j <= newFlooding; j++){
+          var initializationProps = this._buildOwnAircraftProps(j);
+          this._createAircraftWithInitializationProps(initializationProps);
         }
     }
 }

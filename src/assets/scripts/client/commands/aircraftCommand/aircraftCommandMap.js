@@ -209,6 +209,50 @@ export const AIRCRAFT_COMMAND_MAP = {
         functionName: 'runTaxi',
         isSystemCommand: false
     },
+    stopListen: {
+        aliases: ['stoplisten', 'stop'],
+        functionName: 'runStopListen',
+        isSystemCommand: false
+    },
+    startListen: {
+        aliases: ['startlisten', 'start'],
+        functionName: 'runStartListen',
+        isSystemCommand: false
+    },
+    startJump: {
+      aliases: ['startJump', 'sj'],
+      functionName: 'runStartJump',
+      isSystemCommand: false
+    },
+    stopJump: {
+      aliases: ['stopJump', 'stj'],
+      functionName: 'runStopJump',
+      isSystemCommand: false
+    },
+    showType: {
+        aliases: ['showType', 'show', 's'],
+        functionName: 'runShowEngine',
+        isSystemCommand: false
+      },
+
+
+    makeGuess: {
+        aliases: ['guess', 'g', 'isAttack'],
+        functionName: 'makeAttackcraftGuess',
+        isSystemCommand: false
+    },
+
+    addText: {
+        aliases: ['addText', 'at', 'updateText', 'ut'],
+        functionName: 'addTextToAircraftLabel',
+        isSystemCommand: false
+    },
+
+
+
+
+
+
     timewarp: {
         aliases: ['timewarp', 'tw'],
         functionName: '',

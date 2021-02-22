@@ -10,9 +10,11 @@ import { SELECTORS } from '../constants/selectors';
  * @final
  */
 const UI_SETTINGS_MODAL_TEMPLATE = `
-    <div class="option-dialog dialog notSelectable">
-        <p class="dialog-title">Settings</p>
+    <div class="option-dialog dialog">
+        <p class="dialog-title">ADS-B Attacks</p>
         <div class="dialog-body nice-scrollbar"></div>
+        <p class="dialog-text">For more information about attacks please hover "?" and press information.
+        </p>
     </div>`;
 
 /**
@@ -20,7 +22,7 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
  * @type {string}
  * @final
  */
-const UI_DIALOG_FOOTER_TEMPLATE = '<div class="dialog-footer"></div>';
+const UI_DIALOG_FOOTER_TEMPLATE = '<div class="dialog-footer">Attacks!</div>';
 
 /**
  * @property UI_OPTION_CONTAINER_TEMPLATE
@@ -52,9 +54,9 @@ const UI_OPTION_SELECTOR_TEMPLATE = '<span class="form-type-select"></span>';
 const UI_STATIC_TEXT_TEMPLATE = '<span class="option-static-text"></span>';
 
 /**
- * @class SettingsController
+ * @class AttacksController
  */
-export default class SettingsController {
+export default class AttacksController {
     constructor($element) {
         /**
          * Root DOM element
@@ -88,14 +90,14 @@ export default class SettingsController {
 
     /**
      *
-     * @for SettingsController
+     * @for AttacksController
      * @method init
      * @chainable
      */
     init() {
         this.$dialog = $(UI_SETTINGS_MODAL_TEMPLATE);
         this.$dialogBody = this.$dialog.find(SELECTORS.DOM_SELECTORS.DIALOG_BODY);
-        const descriptions = GameController.game.option.getDescriptions();
+        const descriptions = GameController.game.attack.getDescriptions();
 
         _forEach(descriptions, (opt) => {
             if (opt.type !== 'select') {
@@ -118,7 +120,7 @@ export default class SettingsController {
     /**
      * Returns whether the airport selection dialog is open
      *
-     * @for SettingsController
+     * @for AttacksController
      * @method isDialogOpen
      * @return {boolean}
      */
@@ -127,7 +129,7 @@ export default class SettingsController {
     }
 
     /**
-    * @for SettingsController
+    * @for AttacksController
     * @method toggleDialog
     */
     toggleDialog() {
@@ -137,7 +139,7 @@ export default class SettingsController {
     /**
      * Build the html for a game option and its corresponding value elements.
      *
-     * @for SettingsController
+     * @for AttacksController
      * @method _buildOptionTemplate
      * @param option {object}
      * @return $container {jquery Element}
@@ -148,7 +150,7 @@ export default class SettingsController {
         const $label = $(UI_OPTION_LABEL_TEMPLATE);
         const $optionSelector = $(UI_OPTION_SELECTOR_TEMPLATE);
         const $selector = $(`<select name="${option.name}"></select>`);
-        const selectedOption = GameController.game.option.getOptionByName(option.name);
+        const selectedOption = GameController.game.attack.getAttackByName(option.name);
 
         $container.append($label);
         $label.text(option.description);
@@ -164,7 +166,7 @@ export default class SettingsController {
         $selector.change((event) => {
             const $currentTarget = $(event.currentTarget);
 
-            GameController.game.option.setOptionByName($currentTarget.attr('name'), $currentTarget.val());
+            GameController.game.attack.setAttackByName($currentTarget.attr('name'), $currentTarget.val());
         });
 
         $optionSelector.append($selector);
@@ -176,7 +178,7 @@ export default class SettingsController {
     /**
      * Build the html for a select option.
      *
-     * @for SettingsController
+     * @for AttacksController
      * @method _buildOptionTemplate
      * @param optionData {array<string>}
      * @param selectedOption {string}
@@ -184,7 +186,13 @@ export default class SettingsController {
      * @private
      */
     _buildOptionSelectTemplate(optionData, selectedOption) {
-        if (optionData.value === selectedOption) {
+        // the `selectedOption` coming in to this method will always be a string (due to existing api) but
+        // could contain valid numbers. here we test for valid number and build `parsedSelectedOption` accordingly.
+        const parsedSelectedOption = !_isNaN(parseFloat(selectedOption)) ?
+            parseFloat(selectedOption) :
+            selectedOption;
+
+        if (optionData.value === parsedSelectedOption) {
             return `<option value="${optionData.value}" selected>${optionData.displayLabel}</option>`;
         }
 
@@ -199,7 +207,7 @@ export default class SettingsController {
      *
      * `Text text text         Value value value`
      *
-     * @for SettingsController
+     * @for AttacksController
      * @method _buildStaticTemplate
      * @param {string} label
      * @param {string} value (optional)
@@ -221,7 +229,7 @@ export default class SettingsController {
     /**
      * Build the html for the simulator version psuedo-option.
      *
-     * @for SettingsController
+     * @for AttacksController
      * @method _buildVersionTemplate
      * @return {JQuery|HTML element}
      */
@@ -229,7 +237,7 @@ export default class SettingsController {
         const simulatorVersion = window.GLOBAL.VERSION;
         const $container = $(UI_DIALOG_FOOTER_TEMPLATE);
 
-        $container.text(`openScope Threat Simulator by Gustav and Anton`);
+        $container.text(`openScope: ADS-B Attacks by Gustav Lindahl and Anton Blåberg`);
 
         return $container;
     }

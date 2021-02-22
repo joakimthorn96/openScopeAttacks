@@ -34,7 +34,7 @@ export const GAME_OPTION_VALUES = [
     {
         name: GAME_OPTION_NAMES.THEME,
         defaultValue: 'DEFAULT',
-        description: 'Scope Theme',
+        description: 'Style Theme',
         type: 'select',
         onChangeEventHandler: EVENT.SET_THEME,
         optionList: [
@@ -157,7 +157,7 @@ export const GAME_OPTION_VALUES = [
     },
     {
         name: GAME_OPTION_NAMES.MOUSE_CLICK_DRAG,
-        defaultValue: 'right',
+        defaultValue: 'left',
         description: 'Panning Button',
         help: 'Which mouse button (left or right) should drag the canvas when held',
         type: 'select',

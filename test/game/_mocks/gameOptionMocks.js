@@ -2,7 +2,7 @@ export const GAME_OPTION_LIST_MOCK = [
     {
         name: 'threeve',
         defaultValue: '$texas',
-        description: 'Scope Theme',
+        description: '',
         type: 'select',
         onChangeEventHandler: 'set-theme',
         optionList: [

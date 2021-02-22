@@ -5,12 +5,15 @@ import EventBus from '../lib/EventBus';
 import EventTracker from '../EventTracker';
 import GameController from '../game/GameController';
 import SettingsController from './SettingsController';
+import AttacksController from './AttacksController';
+import AttacksInformationController from './AttacksInformationController';
 import TrafficRateController from './TrafficRateController';
 import TutorialView from './TutorialView';
 import { speech_toggle } from '../speech';
 import { EVENT } from '../constants/eventNames';
 import { SELECTORS } from '../constants/selectors';
 import { TRACKABLE_EVENT } from '../constants/trackableEvents';
+import { GAME_ATTACK_VALUES } from '../constants/gameAttackConstants';
 
 /**
  * Listens for events that occur in the UI and delegates work to the correct place
@@ -65,6 +68,23 @@ class UiController {
          * @default null
          */
         this.$element = null;
+
+        /**
+         * @for UiController
+         * @property attacksController
+         * @type {AttacksController}
+         * @default null
+         */
+        this.attacksController = null;
+
+        /**
+         * @for UiController
+         * @property attacksInformationController
+         * @type {AttacksInformationController}
+         * @default null
+         */
+        this.attacksInformationController = null;
+
 
         /**
          * Element of the airport selection dialog
@@ -206,6 +226,27 @@ class UiController {
          */
         this.$toggleOptions = null;
 
+
+        /**
+         * Footer button element used to toggle the attacks menu on/off
+         *
+         * @for UiController
+         * @property $toggleAttacks
+         * @type {Jquery|Element}
+         * @default null
+         */
+        this.$toggleAttacks = null;
+
+        /**
+         * Footer button element used to toggle the attacks menu on/off
+         *
+         * @for UiController
+         * @property $toggleAttacksInformation
+         * @type {Jquery|Element}
+         * @default null
+         */
+        this.$toggleAttacksInformation = null;
+
         /**
          * Footer button element used to pause when the sim is running
          *
@@ -320,6 +361,8 @@ class UiController {
         this._eventBus = EventBus;
         this.tutorialView = new TutorialView($element);
         this.settingsController = new SettingsController($element);
+        this.attacksController = new AttacksController($element);
+        this.attacksInformationController = new AttacksInformationController($element);
         this.trafficRateController = new TrafficRateController($element);
 
         this.$element = $element;
@@ -337,6 +380,8 @@ class UiController {
         this.$toggleChangelog = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_CHANGELOG);
         this.$toggleLabels = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_LABELS);
         this.$toggleOptions = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_OPTIONS);
+        this.$toggleAttacks = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_ATTACKS);
+        this.$toggleAttacksInformation = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_ATTACKS_INFORMATION);
         this.$togglePause = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_PAUSE);
         this.$toggleRestrictedAreas = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_RESTRICTED_AREAS);
         this.$toggleSids = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_SIDS);
@@ -348,8 +393,41 @@ class UiController {
         this.$toggleVideoMap = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_VIDEO_MAP);
         this.$tutorialDialog = this.$element.find(SELECTORS.DOM_SELECTORS.TUTORIAL);
 
+        this.$toggleTraffic = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_TRAFFIC);
+        document.getElementById("dwn-btn").addEventListener("click",this.download, false);
         return this.setupHandlers()
             .enable();
+    }
+
+    download() {
+      var startText = "Starting Settings: \n";
+      for (let i = 0; i < GAME_ATTACK_VALUES.length; i++){
+        var displayLab = "";
+        var optionsA = GAME_ATTACK_VALUES[i].optionList
+        for (let j = 0; j < optionsA.length; j++){
+          if (optionsA[j].value === GAME_ATTACK_VALUES[i].defaultValue){
+            displayLab = optionsA[j].displayLabel;
+            break;
+          }
+        }
+        startText += GAME_ATTACK_VALUES[i].description+": "+displayLab+"\n";
+      }
+      startText += "\n\n\n"
+      console.log(startText);
+      console.log(GameController.optionUpdate);
+
+
+      var finalText = startText + GameController.optionUpdate + "\n\n\n" + GameController.log;
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(finalText));
+      element.setAttribute('download', "log.txt");
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     }
 
     /**
@@ -392,6 +470,9 @@ class UiController {
         this.$toggleTerrain.on('click', (event) => this.onToggleTerrain(event));
         this.$toggleTraffic.on('click', (event) => this.onToggleTraffic(event));
         this.$toggleTutorial.on('click', (event) => this.onToggleTutorial(event));
+        this.$toggleOptions.on('click', (event) => this.onToggleOptions(event));
+        this.$toggleAttacks.on('click', (event) => this.onToggleAttacks(event));
+        this.$toggleAttacksInformation.on('click', (event) => this.onToggleAttacksInformation(event));
         this.$toggleVideoMap.on('click', (event) => this.onToggleVideoMap(event));
 
         return this;
@@ -423,6 +504,8 @@ class UiController {
         this.$toggleTerrain.off('click', (event) => this.onToggleTerrain(event));
         this.$toggleTraffic.off('click', (event) => this.onToggleTraffic(event));
         this.$toggleTutorial.off('click', (event) => this.onToggleTutorial(event));
+        this.$toggleAttacks.off('click', (event) => this.onToggleAttacks(event));
+        this.$toggleAttacksInformation.off('click', (event) => this.onToggleAttacksInformation(event));
         this.$toggleVideoMap.off('click', (event) => this.onToggleVideoMap(event));
 
         return this.destroy();
@@ -440,6 +523,8 @@ class UiController {
         this.settingsController = null;
         this.trafficRateController = null;
 
+        this.attacksController = null;
+        this.attacksInformationController = null;
         this.$element = null;
         this.$airportDialog = null;
         this.$airportDialogBody = null;
@@ -455,6 +540,8 @@ class UiController {
         this.$toggleChangelog = null;
         this.$toggleLabels = null;
         this.$toggleOptions = null;
+        this.$toggleAttacks = null;
+        this.$toggleAttacksInformation = null;
         this.$togglePause = null;
         this.$toggleRestrictedAreas = null;
         this.$toggleSids = null;
@@ -535,6 +622,18 @@ class UiController {
 
         if (this.isChangelogDialogOpen()) {
             this.onToggleChangelog();
+        }
+        
+        if (this.attacksController.isDialogOpen()) {
+            this.onToggleOptions();
+        }
+
+        if (this.attacksInformationController.isDialogOpen()) {
+            this.onToggleOptions();
+        }
+
+        if (this.trafficRateController.isDialogOpen()) {
+            this.onToggleTraffic();
         }
 
         if (this.settingsController.isDialogOpen()) {
@@ -807,6 +906,34 @@ class UiController {
         );
         this.settingsController.toggleDialog();
     }
+
+    /**
+    * @for UiController
+    * @method onToggleAttacks
+    */
+    onToggleAttacks() {
+        EventTracker.recordEvent(
+            TRACKABLE_EVENT.SETTINGS, //TODO ANTON kanske ska stå .ATTACKS här istället för .SETTINGS
+            'toggle-dialog',
+            `${this.$toggleAttacks.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
+        );
+        this.$toggleAttacks.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
+        this.attacksController.toggleDialog();
+    }
+
+    /**
+    * @for UiController
+    * @method onToggleAttacksInformation
+    */
+   onToggleAttacksInformation() {
+    EventTracker.recordEvent(
+        TRACKABLE_EVENT.SETTINGS,
+        'toggle-dialog',
+        `${this.$toggleAttacksInformation.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
+    );
+    this.$toggleAttacksInformation.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
+    this.attacksInformationController.toggleDialog();
+}
 
     /**
      * @for UiController

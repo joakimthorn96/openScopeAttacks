@@ -7,6 +7,8 @@ import EventBus from '../lib/EventBus';
 import GameController from '../game/GameController';
 import NavigationLibrary from '../navigationLibrary/NavigationLibrary';
 import UiController from '../ui/UiController';
+import TimeKeeper from '../engine/TimeKeeper';
+import {GAME_ATTACK_NAMES} from '../constants/gameAttackConstants';
 import { MCP_MODE } from './ModeControl/modeControlConstants';
 import {
     FLIGHT_PHASE
@@ -68,7 +70,6 @@ export default class AircraftCommander {
                 if (!retval[0]) {
                     redResponse = true;
                 }
-
                 if (!_has(retval[1], 'log') || !_has(retval[1], 'say')) {
                     // TODO: reassigning a value using itself is dangerous. this should be re-wroked
                     retval = [
@@ -128,14 +129,17 @@ export default class AircraftCommander {
             const r_log = _map(response, (r) => r.log).join(', ');
             const r_say = _map(response, (r) => r.say).join(', ');
 
-            UiController.ui_log(`${aircraft.callsign}, ${r_log} ${response_end}`, redResponse);
-            speech_say(
-                [
-                    { type: 'callsign', content: aircraft },
-                    { type: 'text', content: `${r_say} ${response_end}` }
-                ],
-                aircraft.pilotVoice
-            );
+
+            if (aircraft.attackType != 1 || (commands[0][0] != "makeGuess" || commands[0][0] != "showType")){
+              UiController.ui_log(`${aircraft.callsign}, ${r_log} ${response_end}`, redResponse);
+              speech_say(
+                  [
+                      { type: 'callsign', content: aircraft },
+                      { type: 'text', content: `${r_say} ${response_end}` }
+                  ],
+                  aircraft.pilotVoice
+              );
+            }
         }
 
         return true;
@@ -150,13 +154,19 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
-        const { functionName } = AIRCRAFT_COMMAND_MAP[command];
-
-        if (typeof functionName === 'undefined') {
-            return [false, 'say again?'];
+        var text = TimeKeeper.accumulatedDeltaTime.toFixed(1) + ':' + aircraft.callsign + ':' + command + ', ' + data + ':'+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
+        GameController.log += text;
+        if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType' || command === 'makeGuess') {
+            const { functionName } = AIRCRAFT_COMMAND_MAP[command];
+            if (typeof functionName === 'undefined') {
+                return [false, 'say again?'];
+            }
+            return this[functionName](aircraft, data);
         }
+        console.log(`Command is : ${command}`);
+        console.log(`Will not obey command because attackType = ${GAME_ATTACK_NAMES[aircraft.attackType]} .`);
 
-        return this[functionName](aircraft, data);
+        return [false, ''];
     }
 
     /**
@@ -283,7 +293,6 @@ export default class AircraftCommander {
      */
     runSpeed(aircraft, data) {
         const nextSpeed = data[0];
-
         return aircraft.pilot.maintainSpeed(nextSpeed, aircraft);
     }
 
@@ -795,4 +804,75 @@ export default class AircraftCommander {
             isWarning
         );
     }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStopListen(aircraft) {
+        aircraft.attackType = 1;
+        return [true, 'will now not respond to future commands'];
+    }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStartListen(aircraft) {
+        aircraft.attackType = 0;
+        return [true, 'will now respond to future commands'];
+    }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+
+    runStartJump(aircraft) {
+        aircraft.attackType = 2;
+        return [true, 'will now jump around map'];
+    }
+
+    /**
+     * @for AircraftCommander
+     * @method runStopListen
+     * @return {array} [success of operation, meaning]
+     */
+    runStopJump(aircraft) {
+        aircraft.attackType = 0;
+        return [true, 'will now behave normally'];
+    }
+
+    runShowEngine(aircraft) {
+        console.log("Corrupted aircraft amount [Responser, Jumper, Errorer, Stopper]: " +GameController.responsers+", "+GameController.jumpers+", "+GameController.errorers+", "+GameController.stoppers+" sumAtk: "+(GameController.jumpers+GameController.stoppers+GameController.errorers+GameController.responsers)+" TOT:"+GameController.aircraft);
+        return [true, 'I am type '+GAME_ATTACK_NAMES[aircraft.attackType]+"."];
+    }
+
+    makeAttackcraftGuess(aircraft, data) {
+        if (!isNaN(data) && data < 5){
+            aircraft.guess = data;
+        } else {
+            aircraft.guess = 0;
+        }
+
+        return [true, "So you think "+aircraft.callsign+" is of type "+data+"?"];
+
+    }
+
+    addTextToAircraftLabel(aircraft, data) {
+      data = data.join(" ");
+      if (data.length > 1){
+        aircraft.textForLabel = " | "+data;
+      } else {
+        aircraft.textForLabel = "";
+      }
+
+      return [true, "Added "+data+" to "+aircraft.callsign+"s label"];
+    }
+
+
+
 }

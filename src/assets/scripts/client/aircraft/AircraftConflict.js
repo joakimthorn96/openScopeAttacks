@@ -148,7 +148,8 @@ export default class AircraftConflict {
 
         if (
             ((this.distance < 0.05) && (this.altitude < 160)) &&
-            (this.aircraft[0].isInsideAirspace(airport) && this.aircraft[1].isInsideAirspace(airport))
+            (this.aircraft[0].isInsideAirspace(airport) && this.aircraft[1].isInsideAirspace(airport)
+            && !this.isAttackAircraft(this.aircraft[0]) && !this.isAttackAircraft(this.aircraft[1]))
         ) {
             this.collided = true;
             const isWarning = true;
@@ -162,6 +163,13 @@ export default class AircraftConflict {
             this.aircraft[0].hit = true;
             this.aircraft[1].hit = true;
         }
+    }
+
+    isAttackAircraft(aircraft) {
+      if(aircraft.attackType > 0){
+        return true;
+      }
+      return false;
     }
 
     // TODO: this method is ripe for refactor. lots of logic that can be pulled out to
