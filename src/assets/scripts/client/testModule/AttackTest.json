@@ -1,0 +1,8 @@
+{
+    "test":{
+        "initparams":{
+            "RRarity":5,
+            "ARarity":"High"
+        }
+    }
+}
