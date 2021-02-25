@@ -267,6 +267,15 @@ export const EVENT = {
      */
     TOGGLE_TUTORIAL: 'toggle-tutorial',
 
+     /**
+     * Open/close the tests modal
+     *SS
+     * @memberof EVENT
+     * @property TOGGLE_TESTS
+     * @type {string}
+     */
+    TOGGLE_TESTS: 'toggle-tests',
+
     /**
      * @memberof EVENT
      * @property TOGGLE_VIDEO_MAP

@@ -50,6 +50,7 @@ options -> starts -> toggle -> v
 options -> terrain -> toggle -> v
 options -> restricted -> toggle -> v
 options -> tutorial -> toggle -> v
+options -> tests -> toggle -> v
 options -> video-map -> toggle -> v
 options -> timewarp -> v
 options -> timewarp-manual-entry -> v
@@ -57,6 +58,7 @@ options -> pause -> v
 options -> speech -> v
 options -> traffic -> v
 options -> tutorial -> v
+options -> tests -> v
 ```
 
 ### Traffic
@@ -75,6 +77,15 @@ This is how new users start out, we want to make sure this is getting used and i
 ```text
 tutorial -> next -> v
 tutorial -> prev -> v
+```
+
+### Tests
+
+This is how new users start out, we want to make sure this is getting used and it's valuable.  The `v` here indicates the tutorial step (index) a user has moved to with each event action explaining the direction.
+
+```text
+tests -> next -> v
+tests -> prev -> v
 ```
 
 ### Settings

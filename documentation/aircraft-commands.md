@@ -57,7 +57,7 @@
 - [Pause](#pause)
 - [Timewarp](#timewarp)
 - [Tutorial](#tutorial)
-
+- [Tests](#tests)
 ---
 
 ## Departure Commands
@@ -488,3 +488,9 @@ _Syntax -_ `timewarp [rate]`
 _Information -_ Opens the tutorial.
 
 _Syntax -_ `tutorial`
+
+### Tests
+
+_Information -_ Opens the tutorial.
+
+_Syntax -_ `tests`

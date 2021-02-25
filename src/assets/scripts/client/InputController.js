@@ -893,7 +893,13 @@ export default class InputController {
                 UiController.onToggleTutorial();
 
                 return true;
-
+            case PARSED_COMMAND_NAME.TESTS:
+                //unresponsive test
+                GameController._setRRarity(5);
+                GameController._setARarity('High');
+                //GameController._setFlooding(20);
+                //UiController.onToggleTutorial();
+                return true;
             case PARSED_COMMAND_NAME.AUTO:
                 // TODO: does this function exist anywhere?
                 // aircraft_toggle_auto();

@@ -151,5 +151,6 @@ export const PARSED_COMMAND_NAME = {
     RATE: 'rate',
     TIMEWARP: 'timewarp',
     TRANSMIT: 'transmit',
-    TUTORIAL: 'tutorial'
+    TUTORIAL: 'tutorial',
+    TESTS: 'tests'
 };
