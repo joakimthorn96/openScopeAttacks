@@ -26,6 +26,7 @@ import {
 } from './constants/inputConstants';
 import { SELECTORS, CLASSNAMES } from './constants/selectors';
 import { TRACKABLE_EVENT } from './constants/trackableEvents';
+import TestController from './testModule/TestController';
 
 // Temporary const declaration here to attach to the window AND use as internal propert
 const input = {};
@@ -895,8 +896,9 @@ export default class InputController {
                 return true;
             case PARSED_COMMAND_NAME.TESTS:
                 //unresponsive test
-                GameController._setRRarity(5);
-                GameController._setARarity('High');
+                TestController._initTest();
+                //GameController._setRRarity(5);
+                //GameController._setARarity('High');
                 //GameController._setFlooding(20);
                 //UiController.onToggleTutorial();
                 return true;

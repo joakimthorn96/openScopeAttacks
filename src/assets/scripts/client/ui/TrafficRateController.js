@@ -301,6 +301,14 @@ export default class TrafficRateController {
         this._updateRate(spawnPattern, $output);
     }
 
+    /*
+        ChangeSpawnPatternRate*(nextRate, (rateKey?)){
+            const spawnPattern = rateKey;
+            this.rates[spawnPattern.id] = nextRate;
+            this._updateRate(spawnPattern, $output);
+        }
+     */
+
     /**
      * Recalculate the rate for a spawn pattern
      *
