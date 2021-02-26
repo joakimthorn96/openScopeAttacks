@@ -40,10 +40,6 @@ class TestController{
         console.log(this.testCompletionTime.toFixed(0));
     }
 
-    _partOne(){
-
-    }
-
     update(){
         const currentTime = TimeKeeper.accumulatedDeltaTime;
         const timeOut = this.timeOut;
@@ -57,6 +53,7 @@ class TestController{
                 this.testDone();
             }
         
+            this.changeAttackSettings(updateIndex);
             console.log(currentTime.toFixed(0));
             
             this.nextUpdateIndex++;
@@ -69,24 +66,63 @@ class TestController{
 
         }
 
-        /*
-        if(this.testData.testExecutableSchema[0].timestamp == currentTime){
-            GameController._setRRarity(this.testData.test.initparams.RRarity);
-            GameController._setARarity(this.testData.test.initparams.ARarity);
-        }*/
     }
 
     testDone(){
         this.testIsActive = false;
         console.log("Test Done!!!!! At :");
         console.log(this.testCompletionTime.toFixed(0));
+
+        this.nextUpdateIndex = 0;
     }
 
     isTestActive(){
         return this.testIsActive;
     }
 
+    initAttackSetting(){
 
+    }
+
+    changeAttackSettings(updateIndex){
+        if(this.testData.test.updateSchema[updateIndex].aRarity != null){
+
+        }
+
+        if(this.testData.test.updateSchema[updateIndex].RRarity != null){
+            
+        }
+
+        if(this.testData.test.updateSchema[updateIndex].jRarity != null){
+            
+        }
+
+
+        if(this.testData.test.updateSchema[updateIndex].eRarity != null){
+            
+        }
+
+
+        if(this.testData.test.updateSchema[updateIndex].sRarity != null){
+            
+        }
+
+        if(this.testData.test.updateSchema[updateIndex].numberOfFlooding != null){
+            
+        }
+
+        if(this.testData.test.updateSchema[updateIndex].jProb != null){
+            
+        }
+
+        if(this.testData.test.updateSchema[updateIndex].jRadius != null){
+            
+        }
+
+        if(this.testData.test.updateSchema[updateIndex].showAttackAircraftVisibility != null){
+            
+        }
+    }
     
 
 }
