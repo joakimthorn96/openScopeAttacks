@@ -1,8 +1,42 @@
 {
     "test":{
         "initparams":{
+            "duration":20,
             "RRarity":5,
             "ARarity":"High"
-        }
+        },
+
+        "updateSchema":[
+           {   
+                "timestamp":5,
+                "RRarity":2,
+                "ARarity":"High"
+            },           {   
+                "timestamp":8,
+                "RRarity":2,
+                "ARarity":"High"
+            }
+            ,           {   
+                "timestamp":9,
+                "RRarity":2,
+                "ARarity":"High"
+            }
+            ,           {   
+                "timestamp":15,
+                "RRarity":2,
+                "ARarity":"High"
+            }
+            ,           {   
+                "timestamp":16,
+                "RRarity":2,
+                "ARarity":"High"
+            }
+            ,           {   
+                "timestamp":19,
+                "RRarity":2,
+                "ARarity":"High"
+            }
+
+        ]
     }
 }

@@ -1,5 +1,6 @@
 import { extrapolate_range_clamp } from '../math/core';
 import { TIME } from '../constants/globalConstants';
+import TestController from '../testModule/TestController';
 
 /**
  * Value used as `#_frameDeltaTime` when performing future track
@@ -391,6 +392,12 @@ class TimeKeeper {
         }
 
         const currentTime = this.gameTimeSeconds;
+
+        // Executes test
+        if(TestController.isTestActive()){
+            TestController.update();
+        }
+        //----------------
 
         this._incrementFrame();
         this._calculateNextDeltaTime(currentTime);
