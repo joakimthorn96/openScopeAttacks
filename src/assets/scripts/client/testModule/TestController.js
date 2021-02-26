@@ -52,21 +52,30 @@ class TestController{
 
             if(currentTime > this.testCompletionTime){
                 this.testDone();
+                return;
             }
         
+<<<<<<< HEAD
             //this.changeAttackSettings(updateIndex);
             console.log(currentTime.toFixed(0));
+=======
+            this.changeAttackSettings(updateIndex);
+>>>>>>> e95f08dc6b73888fa032d8eb6c78deeb8edb0503
             
-            this.nextUpdateIndex++;
-            if(this.nextUpdateIndex < this.numbOfUpdates){
-                this.timeOut = this.timeAtTestStart + this.testData.test.updateSchema[this.nextUpdateIndex].timestamp;
-            } else {
-              this.timeOut = this.testCompletionTime;
-            }
+            this.updateIndexAndTimeout();
 
-
+            console.log(currentTime.toFixed(0));
         }
 
+    }
+
+    updateIndexAndTimeout(){
+        this.nextUpdateIndex++;
+        if(this.nextUpdateIndex < this.numbOfUpdates){
+            this.timeOut = this.timeAtTestStart + this.testData.test.updateSchema[this.nextUpdateIndex].timestamp;
+        } else {
+          this.timeOut = this.testCompletionTime;
+        }
     }
 
     testDone(){
@@ -102,42 +111,47 @@ class TestController{
     }
 
     changeAttackSettings(updateIndex){
-        if(this.testData.test.updateSchema[updateIndex].aRarity != null){
-
-        }
-
-        if(this.testData.test.updateSchema[updateIndex].RRarity != null){
-            
-        }
-
-        if(this.testData.test.updateSchema[updateIndex].jRarity != null){
-            
+        const settings = this.testData.test.updateSchema[updateIndex];
+        
+        if(settings.aRarity != null){
+            GameController._setARarity(settings.aRarity);
         }
 
 
-        if(this.testData.test.updateSchema[updateIndex].eRarity != null){
-            
+        if(settings.RRarity != null){
+            GameController._setRRarity(settings.RRarity);
         }
 
 
-        if(this.testData.test.updateSchema[updateIndex].sRarity != null){
-            
+        if(settings.jRarity != null){
+            GameController._setjRarity(settings.jRarity);
         }
 
-        if(this.testData.test.updateSchema[updateIndex].numberOfFlooding != null){
-            
+
+        if(settings.eRarity != null){
+            GameController._setERarity(settings.eRarity);
         }
 
-        if(this.testData.test.updateSchema[updateIndex].jProb != null){
-            
+
+        if(settings.sRarity != null){
+            GameController._setSRarity(settings.sRarity);    
         }
 
-        if(this.testData.test.updateSchema[updateIndex].jRadius != null){
-            
+
+        if(settings.numberOfFlooding != null){
+            GameController._setFlooding(settings.numberOfFlooding);
         }
 
-        if(this.testData.test.updateSchema[updateIndex].showAttackAircraftVisibility != null){
-            
+        if(settings.jProb != null){
+            GameController._setJProb(settings.jProb);
+        }
+
+        if(settings.jRadius != null){
+            GameController._setjRadius(settings.jRadius);
+        }
+
+        if(settings.showAttackAircraftVisibility != null){
+            GameController._setAttackVisibility(settings.showAttackAircraftVisibility)
         }
     }
     

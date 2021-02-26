@@ -2,77 +2,89 @@
     "test":{
         "initparams":{
             "duration":20,
-            "aRarity":"High",
+            "aRarity":"None",
             "RRarity":0,
             "jRarity":0,
             "eRarity":0,
             "sRarity":0,
             "numberOfFlooding":0,
-            "jProb":2000,
-            "jRadius":1,
+            "jProb":"5000",
+            "jRadius":"Moderate",
             "showAttackAircraftVisibility":false
         },
 
         "updateSchema":[
-           {   
+            {   
                 "timestamp":5,
-                "aRarity":"High",
-                "RRarity":0,
+                "aRarity":"None",
+                "RRarity":1,
                 "jRarity":0,
                 "eRarity":0,
                 "sRarity":0,
                 "numberOfFlooding":0,
-                "jProb":2000,
-                "jRadius":1,
+                "jProb":"5000",
+                "jRadius":"Moderate",
                 "showAttackAircraftVisibility":false
             },
             {   
                 "timestamp":8,
-                "aRarity":"High",
-                "RRarity":0,
+                "aRarity":"None",
+                "RRarity":5,
                 "jRarity":0,
                 "eRarity":0,
                 "sRarity":0,
                 "numberOfFlooding":0,
-                "jProb":2000,
-                "jRadius":1,
-                "showAttackAircraftVisibility":false
+                "jProb":"5000",
+                "jRadius":"Moderate",
+                "showAttackAircraftVisibility":true
+            },
+            {   
+                "timestamp":10,
+                "aRarity":"None",
+                "RRarity":0,
+                "jRarity":5,
+                "eRarity":0,
+                "sRarity":0,
+                "numberOfFlooding":0,
+                "jProb":"5000",
+                "jRadius":"Moderate",
+                "showAttackAircraftVisibility":true
             },
             {   
                 "timestamp":12,
-                "aRarity":"High",
+                "aRarity":"None",
                 "RRarity":0,
                 "jRarity":0,
-                "eRarity":0,
+                "eRarity":5,
                 "sRarity":0,
                 "numberOfFlooding":0,
-                "jProb":2000,
-                "jRadius":1,
-                "showAttackAircraftVisibility":false
+                "jProb":"5000",
+                "jRadius":"Moderate",
+                "showAttackAircraftVisibility":true
             },
             {   
                 "timestamp":15,
-                "aRarity":"High",
+                "aRarity":"None",
                 "RRarity":0,
-                "jRarity":0,
+                "jRarity":2,
                 "eRarity":0,
                 "sRarity":0,
-                "numberOfFlooding":0,
-                "jProb":2000,
-                "jRadius":1,
-                "showAttackAircraftVisibility":false
+                "numberOfFlooding":50,
+                "jProb":"5000",
+                "jRadius":"Moderate",
+                "showAttackAircraftVisibility":true
             },
             {   
                 "timestamp":18,
-                "aRarity":"High",
-                "RRarity":0,
-                "jRarity":0,
-                "eRarity":0,
-                "sRarity":0,
-                "numberOfFlooding":0,
-                "jProb":2000,
-                "jRadius":1,
-                "showAttackAircraftVisibility":false
+                "aRarity":"None",
+                "RRarity":4,
+                "jRarity":4,
+                "eRarity":4,
+                "sRarity":4,
+                "numberOfFlooding":20,
+                "jProb":"10",
+                "jRadius":"Moderate",
+                "showAttackAircraftVisibility":true
             }
 
         ]
