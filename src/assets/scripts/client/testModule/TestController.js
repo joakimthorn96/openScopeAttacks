@@ -60,7 +60,7 @@ class TestController{
             console.log(currentTime.toFixed(0));
             
             this.nextUpdateIndex++;
-            if(this.nextUpdateIndex != this.numbOfUpdates){
+            if(this.nextUpdateIndex < this.numbOfUpdates){
                 this.timeOut = this.timeAtTestStart + this.testData.test.updateSchema[this.nextUpdateIndex].timestamp;
             } else {
               this.timeOut = this.testCompletionTime;
