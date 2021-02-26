@@ -6,6 +6,7 @@ class TestController{
 
     constructor(){
         this.testData = require('./AttackTest.json');
+        
         console.log(this.testData);
 
         this.testIsActive = false;
@@ -18,6 +19,7 @@ class TestController{
         console.log(this.numbOfUpdates);
         this.testCompletionTime = 0;
         this.timeAtTestStart = 0;
+        
     }
     
     _parseTestJSON(){
@@ -25,8 +27,7 @@ class TestController{
     }
 
     _initTest(){
-        GameController._setRRarity(this.testData.test.initparams.RRarity);
-        GameController._setARarity(this.testData.test.initparams.ARarity);
+        this.loadInitParams();
         this.testIsActive = true;
 
         this.timeAtTestStart = TimeKeeper.accumulatedDeltaTime;
@@ -35,7 +36,7 @@ class TestController{
 
         this.timeOut = this.timeAtTestStart + this.testData.test.updateSchema[this.nextUpdateIndex].timestamp;
         this.testCompletionTime = this.timeAtTestStart+this.testData.test.initparams.duration;
-
+        
         console.log(this.timeOut.toFixed(0));
         console.log(this.testCompletionTime.toFixed(0));
     }
@@ -53,7 +54,7 @@ class TestController{
                 this.testDone();
             }
         
-            this.changeAttackSettings(updateIndex);
+            //this.changeAttackSettings(updateIndex);
             console.log(currentTime.toFixed(0));
             
             this.nextUpdateIndex++;
@@ -80,8 +81,24 @@ class TestController{
         return this.testIsActive;
     }
 
-    initAttackSetting(){
-
+    loadInitParams(){
+        GameController._setARarity(this.testData.test.initparams.aRarity);
+        GameController._setRRarity(this.testData.test.initparams.RRarity);
+        GameController._setjRarity(this.testData.test.initparams.jRarity);
+        GameController._setERarity(this.testData.test.initparams.eRarity);
+        GameController._setSRarity(this.testData.test.initparams.sRarity);
+        GameController._setFlooding(this.testData.test.initparams.numberOfFlooding);
+        GameController._setJProb(this.testData.test.initparams.jProb);
+        GameController._setjRadius(this.testData.test.initparams.jRadius);
+        GameController._setAttackVisibility(this.testData.test.initparams.showAttackAircraftVisibility);
+        console.log(GameController.aRarity);
+        console.log(GameController.RRarity);
+        console.log(GameController.jRarity);
+        console.log(GameController.eRarity);
+        console.log(GameController.numberOfFlooding);
+        console.log(GameController.jProb);
+        console.log(GameController.jRadius);
+        console.log(GameController.showAttackAircraftVisibility);
     }
 
     changeAttackSettings(updateIndex){
