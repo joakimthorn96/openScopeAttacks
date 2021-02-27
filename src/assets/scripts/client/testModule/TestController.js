@@ -2,6 +2,9 @@ import GameController from '../game/GameController';
 import { TIME } from '../constants/globalConstants';
 import TimeKeeper from '../engine/TimeKeeper';
 
+
+
+
 class TestController{
 
     constructor(){
@@ -20,11 +23,12 @@ class TestController{
         this.testCompletionTime = 0;
         this.timeAtTestStart = 0;
         
-    }
-    
-    _parseTestJSON(){
+        this.TEST_LOG = {
+            GAME_EVENT_LOG: []
+        };
 
     }
+    
 
     _initTest(){
         this.loadInitParams();
@@ -55,6 +59,10 @@ class TestController{
                 return;
             }
         
+<<<<<<< HEAD
+=======
+            console.log(currentTime.toFixed(0));
+>>>>>>> 2c0ed75dd08150821f92f57a7b7bd75dc4774c2e
             this.changeAttackSettings(updateIndex);
             
             this.updateIndexAndTimeout();
@@ -79,12 +87,23 @@ class TestController{
         console.log(this.testCompletionTime.toFixed(0));
 
         this.nextUpdateIndex = 0;
+        
+        // Does not work implement alternative log file download option
+        /*
+        var fs = require('fs');
+        fs.writeFile("JSON_Log.json", JSON.stringify(this.LOG_New_Game, null, 1), function(err){
+            if (err) throw err;
+            console.log('complete');
+        });
+        */
+
     }
 
     isTestActive(){
         return this.testIsActive;
     }
 
+    
     loadInitParams(){
         GameController._setARarity(this.testData.test.initparams.aRarity);
         GameController._setRRarity(this.testData.test.initparams.RRarity);
@@ -112,26 +131,21 @@ class TestController{
             GameController._setARarity(settings.aRarity);
         }
 
-
         if(settings.RRarity != null){
             GameController._setRRarity(settings.RRarity);
         }
-
 
         if(settings.jRarity != null){
             GameController._setjRarity(settings.jRarity);
         }
 
-
         if(settings.eRarity != null){
             GameController._setERarity(settings.eRarity);
         }
 
-
         if(settings.sRarity != null){
             GameController._setSRarity(settings.sRarity);    
         }
-
 
         if(settings.numberOfFlooding != null){
             GameController._setFlooding(settings.numberOfFlooding);
@@ -150,7 +164,16 @@ class TestController{
         }
     }
     
+    LOG_New_Game(event){
+        const eventTime = TimeKeeper.accumulatedDeltaTime.toFixed(1);
+        
+        this.TEST_LOG.GAME_EVENT_LOG.push([eventTime, event]);
+        console.log(`TimeStamp: ${eventTime}, ${event}`);
+    }
 
+    downloadTestLog(){
+        alert('Download Test log not yet implemented :)');
+    }
 }
 
 export default new TestController();

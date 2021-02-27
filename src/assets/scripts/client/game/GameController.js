@@ -13,6 +13,7 @@ import { TIME } from '../constants/globalConstants';
 import { TRACKABLE_EVENT } from '../constants/trackableEvents';
 import { SELECTORS } from '../constants/selectors';
 import { THEME } from '../constants/themes';
+import TestController from '../testModule/TestController';
 
 // TODO: Remember to move me to wherever the constants end up being moved to
 /**
@@ -279,6 +280,10 @@ class GameController {
     events_recordNew(gameEvent) {
         if (!_has(GAME_EVENTS, gameEvent)) {
             throw new TypeError(`Expected a game event listed in GAME_EVENTS, but instead received ${gameEvent}`);
+        }
+
+        if(TestController.isTestActive){
+            TestController.LOG_New_Game(gameEvent);
         }
 
         this.game.events[gameEvent] += 1;
