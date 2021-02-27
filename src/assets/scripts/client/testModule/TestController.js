@@ -59,10 +59,7 @@ class TestController{
                 return;
             }
         
-<<<<<<< HEAD
-=======
             console.log(currentTime.toFixed(0));
->>>>>>> 2c0ed75dd08150821f92f57a7b7bd75dc4774c2e
             this.changeAttackSettings(updateIndex);
             
             this.updateIndexAndTimeout();
