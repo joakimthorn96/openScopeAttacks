@@ -84,12 +84,15 @@ class TestController{
         console.log(this.testCompletionTime.toFixed(0));
 
         this.nextUpdateIndex = 0;
-
+        
+        // Does not work implement alternative log file download option
+        /*
         var fs = require('fs');
         fs.writeFile("JSON_Log.json", JSON.stringify(this.LOG_New_Game, null, 1), function(err){
             if (err) throw err;
             console.log('complete');
         });
+        */
 
     }
 
@@ -163,6 +166,10 @@ class TestController{
         
         this.TEST_LOG.GAME_EVENT_LOG.push([eventTime, event]);
         console.log(`TimeStamp: ${eventTime}, ${event}`);
+    }
+
+    downloadTestLog(){
+        alert('Download Test log not yet implemented :)');
     }
 }
 

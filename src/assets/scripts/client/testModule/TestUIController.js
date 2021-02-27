@@ -97,12 +97,13 @@ export default class TestUIController{
         this.$dialog = $(UI_SETTINGS_MODAL_TEMPLATE);
         this.$dialogBody = this.$dialog.find(SELECTORS.DOM_SELECTORS.DIALOG_BODY);
 
-        const newH1 = $('<h1>Test dialog box for test UI</h1>');
         const newP = $('<p>Ut diam Integer vel justo neque. Nullam eget elit sit amet nibh ornare gravida. Proin odio arcu, hendrerit hendrerit turpis vel, venenatis pretium urna. Etiam sollicitudin posuere dapibus. Curabitur elementum sapien at nisi lobortis pulvinar. Aliquam tincidunt velit ac purus tincidunt, in ornare nisl fermentum. Sed sodales viverra pretium. Maecenas eu ex nunc. Aenean egestas sapien ac lacus euismod, ac aliquet sapien pellentesque.</p>');
 
-        this.$dialogBody.append(newH1);
         this.$dialogBody.append(newP);
 
+        const downloadButton = $('<button/>').text('Download Test Log').click(function () {TestController.downloadTestLog();});
+
+        this.$dialog.append(downloadButton);
         this.$element.append(this.$dialog);
 
     }
@@ -127,5 +128,6 @@ export default class TestUIController{
    toggleDialog() {
     this.$dialog.toggleClass(SELECTORS.CLASSNAMES.OPEN);
     }
+
 
 }
