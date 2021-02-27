@@ -9,6 +9,7 @@ import AttacksController from './AttacksController';
 import AttacksInformationController from './AttacksInformationController';
 import TrafficRateController from './TrafficRateController';
 import TutorialView from './TutorialView';
+import TestUIController from '../testModule/TestUIController';
 import { speech_toggle } from '../speech';
 import { EVENT } from '../constants/eventNames';
 import { SELECTORS } from '../constants/selectors';
@@ -25,6 +26,7 @@ class UiController {
      * @constructor
      */
     constructor() {
+
         /**
          * Local reference to `EventBus` singleton
          *
@@ -76,6 +78,20 @@ class UiController {
          * @default null
          */
         this.attacksController = null;
+
+
+                /**
+         * Element of the test dialog box
+         *
+         * @for UiController
+         * @property $testController
+         * @type {Jquery|Element}
+         * @default null
+         */
+
+        //Currently under development
+        this.testUIController = null;
+
 
         /**
          * @for UiController
@@ -346,6 +362,9 @@ class UiController {
          * @default null
          */
         this.$tutorialDialog = null;
+
+
+        
     }
 
     /**
@@ -363,6 +382,7 @@ class UiController {
         this.settingsController = new SettingsController($element);
         this.attacksController = new AttacksController($element);
         this.attacksInformationController = new AttacksInformationController($element);
+        this.testUIController = new TestUIController($element);
         this.trafficRateController = new TrafficRateController($element);
 
         this.$element = $element;
@@ -382,6 +402,7 @@ class UiController {
         this.$toggleOptions = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_OPTIONS);
         this.$toggleAttacks = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_ATTACKS);
         this.$toggleAttacksInformation = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_ATTACKS_INFORMATION);
+        this.$toggleUITest = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_TESTUI);
         this.$togglePause = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_PAUSE);
         this.$toggleRestrictedAreas = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_RESTRICTED_AREAS);
         this.$toggleSids = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_SIDS);
@@ -399,6 +420,9 @@ class UiController {
             .enable();
     }
 
+    /**
+     * Downloads simulation log
+     */
     download() {
       var startText = "Starting Settings: \n";
       for (let i = 0; i < GAME_ATTACK_VALUES.length; i++){
@@ -473,6 +497,7 @@ class UiController {
         this.$toggleOptions.on('click', (event) => this.onToggleOptions(event));
         this.$toggleAttacks.on('click', (event) => this.onToggleAttacks(event));
         this.$toggleAttacksInformation.on('click', (event) => this.onToggleAttacksInformation(event));
+        this.$toggleUITest.on('click', (event) => this.onToggleTestUI(event));
         this.$toggleVideoMap.on('click', (event) => this.onToggleVideoMap(event));
 
         return this;
@@ -506,6 +531,7 @@ class UiController {
         this.$toggleTutorial.off('click', (event) => this.onToggleTutorial(event));
         this.$toggleAttacks.off('click', (event) => this.onToggleAttacks(event));
         this.$toggleAttacksInformation.off('click', (event) => this.onToggleAttacksInformation(event));
+        this.$toggleUITest.off('click', (event) => this.onToggleTestUI(event));
         this.$toggleVideoMap.off('click', (event) => this.onToggleVideoMap(event));
 
         return this.destroy();
@@ -525,6 +551,8 @@ class UiController {
 
         this.attacksController = null;
         this.attacksInformationController = null;
+        this.testUIController = null;
+
         this.$element = null;
         this.$airportDialog = null;
         this.$airportDialogBody = null;
@@ -632,6 +660,10 @@ class UiController {
             this.onToggleOptions();
         }
 
+        if(this.testUIController.isDialogOpen()){
+            this.onToggleOptions();
+        }
+
         if (this.trafficRateController.isDialogOpen()) {
             this.onToggleTraffic();
         }
@@ -647,6 +679,7 @@ class UiController {
         if (this.isTutorialDialogOpen()) {
             this.onToggleTutorial();
         }
+        
     }
 
     /**
@@ -923,6 +956,23 @@ class UiController {
 
     /**
     * @for UiController
+    * @method onToggleTestUI
+    */
+   onToggleTestUI() {
+    // Event to be implemented??
+    /*
+    EventTracker.recordEvent(
+        TRACKABLE_EVENT.SETTINGS,
+        'toggle-dialog',
+        `${this.$toggleAttacksInformation.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
+    );
+    */
+    this.$toggleUITest.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
+    this.testUIController.toggleDialog();
+}
+
+    /**
+    * @for UiController
     * @method onToggleAttacksInformation
     */
    onToggleAttacksInformation() {
@@ -934,6 +984,8 @@ class UiController {
     this.$toggleAttacksInformation.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
     this.attacksInformationController.toggleDialog();
 }
+
+
 
     /**
      * @for UiController

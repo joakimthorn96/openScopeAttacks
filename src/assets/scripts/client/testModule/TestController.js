@@ -2,6 +2,9 @@ import GameController from '../game/GameController';
 import { TIME } from '../constants/globalConstants';
 import TimeKeeper from '../engine/TimeKeeper';
 
+
+
+
 class TestController{
 
     constructor(){
@@ -20,11 +23,12 @@ class TestController{
         this.testCompletionTime = 0;
         this.timeAtTestStart = 0;
         
-    }
-    
-    _parseTestJSON(){
+        this.TEST_LOG = {
+            GAME_EVENT_LOG: []
+        };
 
     }
+    
 
     _initTest(){
         this.loadInitParams();
@@ -80,12 +84,20 @@ class TestController{
         console.log(this.testCompletionTime.toFixed(0));
 
         this.nextUpdateIndex = 0;
+
+        var fs = require('fs');
+        fs.writeFile("JSON_Log.json", JSON.stringify(this.LOG_New_Game, null, 1), function(err){
+            if (err) throw err;
+            console.log('complete');
+        });
+
     }
 
     isTestActive(){
         return this.testIsActive;
     }
 
+    
     loadInitParams(){
         GameController._setARarity(this.testData.test.initparams.aRarity);
         GameController._setRRarity(this.testData.test.initparams.RRarity);
@@ -113,26 +125,21 @@ class TestController{
             GameController._setARarity(settings.aRarity);
         }
 
-
         if(settings.RRarity != null){
             GameController._setRRarity(settings.RRarity);
         }
-
 
         if(settings.jRarity != null){
             GameController._setjRarity(settings.jRarity);
         }
 
-
         if(settings.eRarity != null){
             GameController._setERarity(settings.eRarity);
         }
 
-
         if(settings.sRarity != null){
             GameController._setSRarity(settings.sRarity);    
         }
-
 
         if(settings.numberOfFlooding != null){
             GameController._setFlooding(settings.numberOfFlooding);
@@ -151,7 +158,12 @@ class TestController{
         }
     }
     
-
+    LOG_New_Game(event){
+        const eventTime = TimeKeeper.accumulatedDeltaTime.toFixed(1);
+        
+        this.TEST_LOG.GAME_EVENT_LOG.push([eventTime, event]);
+        console.log(`TimeStamp: ${eventTime}, ${event}`);
+    }
 }
 
 export default new TestController();
