@@ -128,18 +128,11 @@ class TestController{
     loadInitParams(){
         const initialSettings = this.test.initparams;
 
+        console.log('Test initial settings: ');
         for(const setting of SETTING_NAMES){
             GameController[SETTINGS_SET_FUNCTIONS[setting]](initialSettings[setting]);
+            console.log(`${setting} = ${GameController[setting]}`);
         }
-
-        console.log(GameController.aRarity);
-        console.log(GameController.RRarity);
-        console.log(GameController.jRarity);
-        console.log(GameController.eRarity);
-        console.log(GameController.numberOfFlooding);
-        console.log(GameController.jProb);
-        console.log(GameController.jRadius);
-        console.log(GameController.showAttackAircraftVisibility);
     }
 
     changeAttackSettings(updateIndex){
