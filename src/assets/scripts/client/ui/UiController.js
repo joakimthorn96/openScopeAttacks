@@ -242,7 +242,7 @@ class UiController {
          * @default null
          */
         this.$toggleOptions = null;
-
+        
 
         /**
          * Footer button element used to toggle the attacks menu on/off
@@ -495,7 +495,6 @@ class UiController {
         this.$toggleTerrain.on('click', (event) => this.onToggleTerrain(event));
         this.$toggleTraffic.on('click', (event) => this.onToggleTraffic(event));
         this.$toggleTutorial.on('click', (event) => this.onToggleTutorial(event));
-        this.$toggleOptions.on('click', (event) => this.onToggleOptions(event));
         this.$toggleAttacks.on('click', (event) => this.onToggleAttacks(event));
         this.$toggleAttacksInformation.on('click', (event) => this.onToggleAttacksInformation(event));
         this.$toggleUITest.on('click', (event) => this.onToggleTestUI(event));
@@ -534,7 +533,7 @@ class UiController {
         this.$toggleAttacksInformation.off('click', (event) => this.onToggleAttacksInformation(event));
         this.$toggleUITest.off('click', (event) => this.onToggleTestUI(event));
         this.$toggleVideoMap.off('click', (event) => this.onToggleVideoMap(event));
-
+        
         return this.destroy();
     }
 
@@ -940,7 +939,7 @@ class UiController {
     onToggleOptions() {
         this.$toggleOptions.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
         EventTracker.recordEvent(
-            TRACKABLE_EVENT.SETTINGS,
+            TRACKABLE_EVENT.OPTIONS,
             'toggle-dialog',
             `${this.$toggleOptions.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
         );
@@ -953,8 +952,8 @@ class UiController {
     */
     onToggleAttacks() {
         EventTracker.recordEvent(
-            TRACKABLE_EVENT.SETTINGS, //TODO ANTON kanske ska stå .ATTACKS här istället för .SETTINGS
-            'toggle-dialog',
+            TRACKABLE_EVENT.ATTACKS, //TODO ANTON kanske ska stå .ATTACKS här istället för .SETTINGS
+            'toggle-attacks',
             `${this.$toggleAttacks.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
         );
         this.$toggleAttacks.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
@@ -984,8 +983,8 @@ class UiController {
     */
    onToggleAttacksInformation() {
     EventTracker.recordEvent(
-        TRACKABLE_EVENT.SETTINGS,
-        'toggle-dialog',
+        TRACKABLE_EVENT.ATTACKS_INFO,
+        'toggle-attacks-information',
         `${this.$toggleAttacksInformation.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
     );
     this.$toggleAttacksInformation.toggleClass(SELECTORS.CLASSNAMES.ACTIVE);
