@@ -184,7 +184,7 @@ class TestController{
       //alert('Download Test log not yet implemented :)');
 
       var element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.LOG_New_Game, null, 1)));
+      element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.TEST_LOG, null, 1)));
       element.setAttribute('download', "log.json");
 
       element.style.display = 'none';
