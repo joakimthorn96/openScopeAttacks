@@ -25,6 +25,8 @@ import {
     radio_altitude
 } from '../utilities/radioUtilities';
 import { heading_to_string, radiansToDegrees, degreesToRadians } from '../utilities/unitConverters';
+import TestController from '../testModule/TestController';
+
 
 /**
  *
@@ -154,6 +156,10 @@ export default class AircraftCommander {
      * @return {function}
      */
     run(aircraft, command, data) {
+        if(TestController.isTestActive){
+        TestController.LOG_New_Command(aircraft.callsign, command, data);
+        }
+        
         var text = TimeKeeper.accumulatedDeltaTime.toFixed(1) + ':' + aircraft.callsign + ':' + command + ', ' + data + ':'+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
         GameController.log += text;
         if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType' || command === 'makeGuess') {

@@ -295,6 +295,16 @@ class GameController {
 
     /**
      * @for GameController
+     * @method game_get_Accumulated_Score
+     */
+    game_get_Accumulated_Score(){
+        const score = this.game.score;
+        return score;
+    }
+
+
+    /**
+     * @for GameController
      * @method game_get_weighted_score
      */
     game_get_weighted_score() {

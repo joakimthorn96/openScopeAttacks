@@ -4,7 +4,10 @@ import TimeKeeper from '../engine/TimeKeeper';
 import TestUIController from './TestUIController';
 import UiController from '../ui/UiController';
 
+const TESTS = {
+    TEST1: 'asdasd'
 
+}
 
 
 class TestController{
@@ -27,7 +30,9 @@ class TestController{
         
         this.TEST_LOG = {
             GAME_EVENT_LOG: [],
-            COMUNICATION_LOG: []
+            COMUNICATION_LOG: [],
+            ENTERED_COMMANDS: [],
+        
         };
 
     }
@@ -168,16 +173,23 @@ class TestController{
     
     LOG_New_Game(event){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
+        const score = GameController.game_get_Accumulated_Score();
         
-        this.TEST_LOG.GAME_EVENT_LOG.push([timeStamp, event]);
+        this.TEST_LOG.GAME_EVENT_LOG.push([timeStamp, event, score]);
         console.log(`TimeStamp: ${timeStamp}, ${event}`);
     }
 
     LOG_New_UI_LOG_ENTRY(message){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
 
+
         this.TEST_LOG.COMUNICATION_LOG.push([timeStamp, message]);
-        console.log(`TimeStamp: ${timeStamp}, ${message}`);
+        //console.log(`TimeStamp: ${timeStamp}, ${message}`);
+    }
+
+    LOG_New_Command(callsign, command, data){
+        const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
+        this.TEST_LOG.ENTERED_COMMANDS.push(timeStamp, callsign, command, data);
     }
 
     downloadTestLog(){
