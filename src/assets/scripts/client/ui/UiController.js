@@ -15,6 +15,7 @@ import { EVENT } from '../constants/eventNames';
 import { SELECTORS } from '../constants/selectors';
 import { TRACKABLE_EVENT } from '../constants/trackableEvents';
 import { GAME_ATTACK_VALUES } from '../constants/gameAttackConstants';
+import TestController from '../testModule/TestController';
 
 /**
  * Listens for events that occur in the UI and delegates work to the correct place
@@ -606,6 +607,12 @@ class UiController {
      * @method ui_log
      */
     ui_log(message, warn = false) {
+
+        // LOGS ui messages
+        if(TestController.isTestActive()){
+            TestController.LOG_New_UI_LOG_ENTRY(message);
+        }
+
         const html = $(`<span class="item"><span class="message">${message}</span></span>`);
 
         if (warn) {

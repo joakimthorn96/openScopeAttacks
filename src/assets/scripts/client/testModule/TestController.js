@@ -1,6 +1,8 @@
 import GameController from '../game/GameController';
 import { TIME } from '../constants/globalConstants';
 import TimeKeeper from '../engine/TimeKeeper';
+import TestUIController from './TestUIController';
+import UiController from '../ui/UiController';
 
 
 
@@ -24,7 +26,8 @@ class TestController{
         this.timeAtTestStart = 0;
         
         this.TEST_LOG = {
-            GAME_EVENT_LOG: []
+            GAME_EVENT_LOG: [],
+            COMUNICATION_LOG: []
         };
 
     }
@@ -93,6 +96,8 @@ class TestController{
             console.log('complete');
         });
         */
+       //GameController.game_pause();
+       UiController.onToggleTestUI();
 
     }
 
@@ -162,15 +167,35 @@ class TestController{
     }
     
     LOG_New_Game(event){
-        const eventTime = TimeKeeper.accumulatedDeltaTime.toFixed(1);
+        const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
         
-        this.TEST_LOG.GAME_EVENT_LOG.push([eventTime, event]);
-        console.log(`TimeStamp: ${eventTime}, ${event}`);
+        this.TEST_LOG.GAME_EVENT_LOG.push([timeStamp, event]);
+        console.log(`TimeStamp: ${timeStamp}, ${event}`);
+    }
+
+    LOG_New_UI_LOG_ENTRY(message){
+        const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
+
+        this.TEST_LOG.COMUNICATION_LOG.push([timeStamp, message]);
+        console.log(`TimeStamp: ${timeStamp}, ${message}`);
     }
 
     downloadTestLog(){
-        alert('Download Test log not yet implemented :)');
+      //alert('Download Test log not yet implemented :)');
+
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.LOG_New_Game, null, 1)));
+      element.setAttribute('download', "log.json");
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     }
+
+
 }
 
 export default new TestController();
