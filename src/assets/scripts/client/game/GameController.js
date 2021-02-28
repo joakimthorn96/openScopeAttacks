@@ -602,6 +602,10 @@ class GameController {
         return this.game.attack.getAttackByName(attackName);
     }
 
+    getGameOptions(){
+        return this.game.option;
+    }
+
     /**
      * Check whether or not the trailing distance separator should be drawn.
      *

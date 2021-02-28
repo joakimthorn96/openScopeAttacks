@@ -395,7 +395,7 @@ class TimeKeeper {
 
         // Executes test
         if(TestController.isTestActive()){
-            TestController.update();
+            TestController.updateSettings();
         }
         //----------------
 

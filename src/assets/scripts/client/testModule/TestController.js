@@ -4,30 +4,49 @@ import TimeKeeper from '../engine/TimeKeeper';
 import TestUIController from './TestUIController';
 import UiController from '../ui/UiController';
 
-const TESTS = {
-    TEST1: 'asdasd'
 
-}
+const SETTINGS_SET_FUNCTIONS = {
+    aRarity:`_setARarity`,
+    RRarity: `_setARarity`,
+    jRarity: `_setjRarity`,
+    eRarity: `_setERarity`,
+    sRarity: `_setSRarity`,
+    numberOfFlooding: `_setFlooding`,
+    jProb: `_setJProb`,
+    jRadius: `_setjRadius`,
+    showAttackAircraftVisibility: `_setAttackVisibility`
+};
+
+const SETTING_NAMES = [
+    'aRarity',
+    'RRarity',
+    'jRarity',
+    'eRarity',
+    'sRarity',
+    'numberOfFlooding',
+    'jProb',
+    'jRadius',
+    'showAttackAircraftVisibility'
+];
+
 
 
 class TestController{
 
     constructor(){
-        this.testData = require('./AttackTest.json');
-        
+
+        this.testData = require('./AttackTest.json');   
         console.log(this.testData);
 
+        this.test = null;
         this.testIsActive = false;
-        
+        this.numbOfUpdates = null;
+        this.nextUpdateIndex = 0;        
+        this.timeAtTestStart = 0;
+        this.testCompletionTime = 0;
+
         this.timeOut = 0;
 
-        this.numbOfUpdates = Object.keys(this.testData.test.updateSchema).length;
-        this.nextUpdateIndex = 0;
-
-        console.log(this.numbOfUpdates);
-        this.testCompletionTime = 0;
-        this.timeAtTestStart = 0;
-        
         this.TEST_LOG = {
             GAME_EVENT_LOG: [],
             COMUNICATION_LOG: [],
@@ -35,25 +54,31 @@ class TestController{
         
         };
 
+        this.option = null;
     }
     
 
     _initTest(){
+        this.option = GameController.getGameOptions();
+        
+        this.test = this.testData.test;
+        this.numbOfUpdates = Object.keys(this.test.updateSchema).length;
+
+        this.timeAtTestStart = TimeKeeper.accumulatedDeltaTime;
+        this.timeOut = this.timeAtTestStart + this.test.updateSchema[this.nextUpdateIndex].timestamp;
+        this.testCompletionTime = this.timeAtTestStart+this.test.initparams.duration;
+
         this.loadInitParams();
         this.testIsActive = true;
 
-        this.timeAtTestStart = TimeKeeper.accumulatedDeltaTime;
         console.log("Start test at time: ");
         console.log(this.timeAtTestStart.toFixed(0));
-
-        this.timeOut = this.timeAtTestStart + this.testData.test.updateSchema[this.nextUpdateIndex].timestamp;
-        this.testCompletionTime = this.timeAtTestStart+this.testData.test.initparams.duration;
         
         console.log(this.timeOut.toFixed(0));
         console.log(this.testCompletionTime.toFixed(0));
     }
 
-    update(){
+    updateSettings(){
         const currentTime = TimeKeeper.accumulatedDeltaTime;
         const timeOut = this.timeOut;
         const updateIndex = this.nextUpdateIndex;
@@ -67,9 +92,7 @@ class TestController{
                 return;
             }
         
-            console.log(currentTime.toFixed(0));
-            this.changeAttackSettings(updateIndex);
-            
+            this.changeAttackSettings(updateIndex);    
             this.updateIndexAndTimeout();
 
             console.log(currentTime.toFixed(0));
@@ -80,7 +103,7 @@ class TestController{
     updateIndexAndTimeout(){
         this.nextUpdateIndex++;
         if(this.nextUpdateIndex < this.numbOfUpdates){
-            this.timeOut = this.timeAtTestStart + this.testData.test.updateSchema[this.nextUpdateIndex].timestamp;
+            this.timeOut = this.timeAtTestStart + this.test.updateSchema[this.nextUpdateIndex].timestamp;
         } else {
           this.timeOut = this.testCompletionTime;
         }
@@ -90,19 +113,10 @@ class TestController{
         this.testIsActive = false;
         console.log("Test Done!!!!! At :");
         console.log(this.testCompletionTime.toFixed(0));
-
         this.nextUpdateIndex = 0;
         
-        // Does not work implement alternative log file download option
-        /*
-        var fs = require('fs');
-        fs.writeFile("JSON_Log.json", JSON.stringify(this.LOG_New_Game, null, 1), function(err){
-            if (err) throw err;
-            console.log('complete');
-        });
-        */
-       //GameController.game_pause();
-       UiController.onToggleTestUI();
+        this.resetSettings();
+        UiController.onToggleTestUI();
 
     }
 
@@ -112,15 +126,12 @@ class TestController{
 
     
     loadInitParams(){
-        GameController._setARarity(this.testData.test.initparams.aRarity);
-        GameController._setRRarity(this.testData.test.initparams.RRarity);
-        GameController._setjRarity(this.testData.test.initparams.jRarity);
-        GameController._setERarity(this.testData.test.initparams.eRarity);
-        GameController._setSRarity(this.testData.test.initparams.sRarity);
-        GameController._setFlooding(this.testData.test.initparams.numberOfFlooding);
-        GameController._setJProb(this.testData.test.initparams.jProb);
-        GameController._setjRadius(this.testData.test.initparams.jRadius);
-        GameController._setAttackVisibility(this.testData.test.initparams.showAttackAircraftVisibility);
+        const initialSettings = this.test.initparams;
+
+        for(const setting of SETTING_NAMES){
+            GameController[SETTINGS_SET_FUNCTIONS[setting]](initialSettings[setting]);
+        }
+
         console.log(GameController.aRarity);
         console.log(GameController.RRarity);
         console.log(GameController.jRarity);
@@ -132,57 +143,28 @@ class TestController{
     }
 
     changeAttackSettings(updateIndex){
-        const settings = this.testData.test.updateSchema[updateIndex];
-        
-        if(settings.aRarity != null){
-            GameController._setARarity(settings.aRarity);
-        }
+        const settings = this.test.updateSchema[updateIndex];
 
-        if(settings.RRarity != null){
-            GameController._setRRarity(settings.RRarity);
+        for(const setting of SETTING_NAMES){
+            if(settings[setting] != null){
+                GameController[SETTINGS_SET_FUNCTIONS[setting]](settings[setting]);
+            }
         }
+    }
 
-        if(settings.jRarity != null){
-            GameController._setjRarity(settings.jRarity);
-        }
+    resetSettings(){
 
-        if(settings.eRarity != null){
-            GameController._setERarity(settings.eRarity);
-        }
-
-        if(settings.sRarity != null){
-            GameController._setSRarity(settings.sRarity);    
-        }
-
-        if(settings.numberOfFlooding != null){
-            GameController._setFlooding(settings.numberOfFlooding);
-        }
-
-        if(settings.jProb != null){
-            GameController._setJProb(settings.jProb);
-        }
-
-        if(settings.jRadius != null){
-            GameController._setjRadius(settings.jRadius);
-        }
-
-        if(settings.showAttackAircraftVisibility != null){
-            GameController._setAttackVisibility(settings.showAttackAircraftVisibility)
-        }
     }
     
     LOG_New_Game(event){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
-        const score = GameController.game_get_Accumulated_Score();
-        
+        const score = GameController.game_get_Accumulated_Score();      
         this.TEST_LOG.GAME_EVENT_LOG.push([timeStamp, event, score]);
         console.log(`TimeStamp: ${timeStamp}, ${event}`);
     }
 
     LOG_New_UI_LOG_ENTRY(message){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
-
-
         this.TEST_LOG.COMUNICATION_LOG.push([timeStamp, message]);
         //console.log(`TimeStamp: ${timeStamp}, ${message}`);
     }
@@ -193,17 +175,13 @@ class TestController{
     }
 
     downloadTestLog(){
-      //alert('Download Test log not yet implemented :)');
-
       var element = document.createElement('a');
       element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.TEST_LOG, null, 1)));
       element.setAttribute('download', "log.json");
 
       element.style.display = 'none';
       document.body.appendChild(element);
-
       element.click();
-
       document.body.removeChild(element);
     }
 
