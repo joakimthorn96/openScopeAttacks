@@ -282,12 +282,16 @@ class GameController {
             throw new TypeError(`Expected a game event listed in GAME_EVENTS, but instead received ${gameEvent}`);
         }
 
-        if(TestController.isTestActive){
-            TestController.LOG_New_Game(gameEvent);
-        }
+
 
         this.game.events[gameEvent] += 1;
-        this.game.score += GAME_EVENTS_POINT_VALUES[gameEvent];
+
+        const eventPoints = GAME_EVENTS_POINT_VALUES[gameEvent];
+        this.game.score += eventPoints;
+
+        if(TestController.isTestActive){
+            TestController.LOG_New_Game(gameEvent, eventPoints);
+        }
 
         this.game_updateScore();
     }
@@ -328,6 +332,11 @@ class GameController {
         this.game.score = 0;
 
         this.game_updateScore();
+    }
+
+    game_get_events(){
+        const events = this.game.events;
+        return events;
     }
 
     /**

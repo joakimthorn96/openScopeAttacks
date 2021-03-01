@@ -157,11 +157,14 @@ export default class AircraftCommander {
      */
     run(aircraft, command, data) {
         if(TestController.isTestActive){
-        TestController.LOG_New_Command(aircraft.callsign, command, data);
+        TestController.LOG_New_Command(aircraft.callsign, command, data, GAME_ATTACK_NAMES[aircraft.attackType]);
         }
         
+        if(!TestController.isTestActive){
         var text = TimeKeeper.accumulatedDeltaTime.toFixed(1) + ':' + aircraft.callsign + ':' + command + ', ' + data + ':'+GAME_ATTACK_NAMES[aircraft.attackType] + '\n';
         GameController.log += text;
+        }
+        
         if (aircraft.attackType !== 1 || command === 'startListen' || command === 'showType' || command === 'makeGuess') {
             const { functionName } = AIRCRAFT_COMMAND_MAP[command];
             if (typeof functionName === 'undefined') {

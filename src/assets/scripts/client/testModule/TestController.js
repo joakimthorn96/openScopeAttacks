@@ -48,6 +48,12 @@ class TestController{
         this.timeOut = 0;
 
         this.TEST_LOG = {
+            
+            END_OF_TESTS_GENERAL_INFO:{
+                gameScore: null,
+                weightedGameScore: null,
+                numOfEvents: null
+            },
             GAME_EVENT_LOG: [],
             COMUNICATION_LOG: [],
             ENTERED_COMMANDS: [],
@@ -83,12 +89,16 @@ class TestController{
         this.resetSettings();
     }
 
-    testDone(){
+    endTest(){
         this.testIsActive = false;
         console.log("Test Done!!!!! At :");
         console.log(this.testCompletionTime.toFixed(0));
         this.nextUpdateIndex = 0;
         
+        this.TEST_LOG.END_OF_TESTS_GENERAL_INFO.gameScore = GameController.game_get_Accumulated_Score();
+        this.TEST_LOG.END_OF_TESTS_GENERAL_INFO.weightedGameScore = GameController.game_get_weighted_score();
+        this.TEST_LOG.END_OF_TESTS_GENERAL_INFO.numOfEvents = GameController.game_get_events();
+
         this.resetSettings();
         UiController.onToggleTestUI();
 
@@ -108,7 +118,7 @@ class TestController{
         if(currentTime > timeOut){
 
             if(currentTime > this.testCompletionTime){
-                this.testDone();
+                this.endTest();
                 return;
             }
         
@@ -156,10 +166,10 @@ class TestController{
     }
 
     
-    LOG_New_Game(event){
+    LOG_New_Game(event, eventPoints){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
-        const score = GameController.game_get_Accumulated_Score();      
-        this.TEST_LOG.GAME_EVENT_LOG.push([timeStamp, event, score]);
+        const totalScore = GameController.game_get_Accumulated_Score();      
+        this.TEST_LOG.GAME_EVENT_LOG.push([timeStamp, event, eventPoints, totalScore]);
         console.log(`TimeStamp: ${timeStamp}, ${event}`);
     }
 
@@ -169,9 +179,9 @@ class TestController{
         //console.log(`TimeStamp: ${timeStamp}, ${message}`);
     }
 
-    LOG_New_Command(callsign, command, data){
+    LOG_New_Command(callsign, command, data, attackType){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
-        this.TEST_LOG.ENTERED_COMMANDS.push(timeStamp, callsign, command, data);
+        this.TEST_LOG.ENTERED_COMMANDS.push([timeStamp, callsign, command, data, attackType]);
     }
 
     downloadTestLog(){
