@@ -49,8 +49,8 @@ ava('noop parser and zeroArgumentsValidator used by tutorial', t => {
     t.true(parse === noopParse() && validate === zeroArgVal());
 });
 
-ava('noop parser and zeroArgumentsValidator used by tests', t => {
-    const [parse, validate] = extractParseAndValidate(t, 'tests');
+ava('noop parser and zeroArgumentsValidator used by starttest', t => {
+    const [parse, validate] = extractParseAndValidate(t, 'starttest');
     t.true(parse === noopParse() && validate === zeroArgVal());
 });
 

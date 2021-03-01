@@ -152,5 +152,5 @@ export const PARSED_COMMAND_NAME = {
     TIMEWARP: 'timewarp',
     TRANSMIT: 'transmit',
     TUTORIAL: 'tutorial',
-    TESTS: 'tests'
+    TESTS: 'starttest'
 };

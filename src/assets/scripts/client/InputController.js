@@ -896,7 +896,7 @@ export default class InputController {
                 return true;
             case PARSED_COMMAND_NAME.TESTS:
                 //unresponsive test
-                TestController._initTest();
+                TestController.startTest();
                 //GameController._setRRarity(5);
                 //GameController._setARarity('High');
                 //GameController._setFlooding(20);

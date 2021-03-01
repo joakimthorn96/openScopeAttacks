@@ -58,7 +58,7 @@ class TestController{
     }
     
 
-    _initTest(){
+    startTest(){
         this.option = GameController.getGameOptions();
         
         this.test = this.testData.test;
@@ -76,6 +76,26 @@ class TestController{
         
         console.log(this.timeOut.toFixed(0));
         console.log(this.testCompletionTime.toFixed(0));
+    }
+
+    cancelTest(){
+        this.testIsActive = false;
+        this.resetSettings();
+    }
+
+    testDone(){
+        this.testIsActive = false;
+        console.log("Test Done!!!!! At :");
+        console.log(this.testCompletionTime.toFixed(0));
+        this.nextUpdateIndex = 0;
+        
+        this.resetSettings();
+        UiController.onToggleTestUI();
+
+    }
+
+    resetSettings(){
+
     }
 
     updateSettings(){
@@ -109,16 +129,6 @@ class TestController{
         }
     }
 
-    testDone(){
-        this.testIsActive = false;
-        console.log("Test Done!!!!! At :");
-        console.log(this.testCompletionTime.toFixed(0));
-        this.nextUpdateIndex = 0;
-        
-        this.resetSettings();
-        UiController.onToggleTestUI();
-
-    }
 
     isTestActive(){
         return this.testIsActive;
@@ -145,9 +155,6 @@ class TestController{
         }
     }
 
-    resetSettings(){
-
-    }
     
     LOG_New_Game(event){
         const timeStamp = TimeKeeper.accumulatedDeltaTime.toFixed(1);
