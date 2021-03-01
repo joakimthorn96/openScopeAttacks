@@ -5,7 +5,7 @@ import TestUIController from './TestUIController';
 import UiController from '../ui/UiController';
 
 
-const SETTINGS_SET_FUNCTIONS = {
+const ATTACK_SETTINGS_SET_FUNCTIONS = {
     aRarity:`_setARarity`,
     RRarity: `_setARarity`,
     jRarity: `_setjRarity`,
@@ -17,7 +17,7 @@ const SETTINGS_SET_FUNCTIONS = {
     showAttackAircraftVisibility: `_setAttackVisibility`
 };
 
-const SETTING_NAMES = [
+const ATTACK_SETTING_NAMES = [
     'aRarity',
     'RRarity',
     'jRarity',
@@ -129,8 +129,8 @@ class TestController{
         const initialSettings = this.test.initparams;
 
         console.log('Test initial settings: ');
-        for(const setting of SETTING_NAMES){
-            GameController[SETTINGS_SET_FUNCTIONS[setting]](initialSettings[setting]);
+        for(const setting of ATTACK_SETTING_NAMES){
+            GameController[ATTACK_SETTINGS_SET_FUNCTIONS[setting]](initialSettings[setting]);
             console.log(`${setting} = ${GameController[setting]}`);
         }
     }
@@ -138,9 +138,9 @@ class TestController{
     changeAttackSettings(updateIndex){
         const settings = this.test.updateSchema[updateIndex];
 
-        for(const setting of SETTING_NAMES){
+        for(const setting of ATTACK_SETTING_NAMES){
             if(settings[setting] != null){
-                GameController[SETTINGS_SET_FUNCTIONS[setting]](settings[setting]);
+                GameController[ATTACK_SETTINGS_SET_FUNCTIONS[setting]](settings[setting]);
             }
         }
     }
