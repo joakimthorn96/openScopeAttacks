@@ -35,6 +35,8 @@ class TestController{
 
     constructor(){
 
+        this.tests = ['test1', 'test2'];
+
         this.testData = require('./AttackTest.json');   
         console.log(this.testData);
 
@@ -67,7 +69,7 @@ class TestController{
     startTest(){
         this.option = GameController.getGameOptions();
         
-        this.test = this.testData.test;
+        this.test = this.testData[this.tests[0]];
         this.numbOfUpdates = Object.keys(this.test.updateSchema).length;
 
         this.timeAtTestStart = TimeKeeper.accumulatedDeltaTime;
