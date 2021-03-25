@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $, { speed } from 'jquery';
 import _cloneDeep from 'lodash/cloneDeep';
 import _filter from 'lodash/filter';
 import _has from 'lodash/has';
@@ -224,6 +224,67 @@ export default class CanvasController {
         return this;
     }
 
+    _downloadAttack() {
+        const radarTargetModels = this._scopeModel.radarTargetCollection.items;
+
+
+        var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
+        Object.keys(radarTargetModels[0].aircraftModel).forEach(function(key) {
+            finalText += key + ',';
+        });
+        finalText += '\n';
+        for (let i = 0; i < radarTargetModels.length; i++) {
+            const { aircraftModel } = radarTargetModels[i];
+
+            if (aircraftModel.attackType != 0) {
+                // console.log(aircraftModel);
+                Object.keys(aircraftModel).forEach(function(key) {
+                    var time_position = Date.now();
+                    var icao, callsign, origin_country, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, squawk, label;
+                    switch (key){
+                        // case 'airlineId':
+                        //     callsign += aircraftModel[key];
+                        //     break;
+                        // case 'flightNumber':
+                        //     callsign += aircraftModel[key];
+                        //     break;
+                        case 'callsign':
+                            callsign = aircraftModel[key];
+                        case 'origin':
+                            origin_country = aircraftModel[key];
+                            break;
+                        case 'positionModel':
+                            long = String(aircraftModel[key].longitude);
+                            lat = String(aircraftModel[key].latitude);
+                            break;
+                        case 'altitude':
+                            baro_alt = String(aircraftModel[key]);
+                            break;
+                        case 'flightPhase':
+                            on_ground = (aircraftModel[key] === 'APRON' || aircraftModel[key] === 'WAITING' || aircraftModel[key] === 'TAXI') ? 'True' : 'False';
+                            break;
+                    }
+                
+
+                    finalText += String(aircraftModel[key]) + ',';
+                    console.log(aircraftModel);
+                    
+                    // console.log(key, dictionary[key]);
+                });
+                finalText += '\n';
+            }   
+        }   
+
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalText));
+        element.setAttribute('download', "attackdata.csv");
+  
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
     /**
      * @for CanvasController
      * @method _setupHandlers
@@ -270,6 +331,7 @@ export default class CanvasController {
         this._eventBus.on(EVENT.AIRPORT_CHANGE, this._onAirportChangeHandler);
         this._eventBus.on(EVENT.SET_THEME, this._setThemeHandler);
         window.addEventListener('resize', this._onResizeHandler);
+        document.getElementById("dwn-attack").addEventListener("click",this._downloadAttack.bind(this), false);
 
         this.$element.addClass(this.theme.CLASSNAME);
 
@@ -1415,7 +1477,21 @@ export default class CanvasController {
         }
 
         cc.save();
+        //
+        // tmp = dictionary 
+        // 
+        //
+        // if (aircraftModel.attackType != 0 ) {
+        //     if (JSON.parse(localStorage.getItem('aircraft')))
+        //         var tmp = JSON.parse(localStorage.getItem('aircraft'));
+        //     else 
+        //         var tmp = {};
+        //     tmp[aircraftModel.airlineId+aircraftModel.flightNumber] = aircraftModel;
+        //     localStorage.setItem('aircraft', JSON.stringify(tmp));
+        // }
 
+            // console.log(aircraftModel);
+                            
         const paddingLR = 5;
         let match = false;
 
