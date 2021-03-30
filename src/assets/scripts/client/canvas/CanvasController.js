@@ -231,7 +231,6 @@ export default class CanvasController {
     _downloadAttack() {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
 
-
         var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
         finalText += '\n';
         for (let i = 0; i < radarTargetModels.length; i++) {
@@ -240,22 +239,28 @@ export default class CanvasController {
             if (aircraftModel.attackType != 0) { // If the current aircraft isn't of attack-type regular (=> affected)
                 console.log(aircraftModel);
                 // Formating the fields
-                let time_position = new Date(Date.now()).toISOString();
+                let time_position = new Date(Date.now()).toLocaleString();
                 let callsign = aircraftModel.callsign;
                 let origin_country = aircraftModel.origin;
                 let long = String(aircraftModel.positionModel.longitude);
-                let lat = String(aircraftModel.positionModel.latitude);
-                let baro_alt = String(aircraftModel.altitude);
+                let lat = String(aircraftModel.positionModel.latitude); 
                 let on_ground = (aircraftModel.flightPhase === 'APRON' || 
                                 aircraftModel.flightPhase === 'WAITING' || 
                                 aircraftModel.flightPhase === 'TAXI') ? 'True' : 'False';
-                let icao, last_contact, velocity, true_track, vertical_rate, geo_alt, squawk, label;
-                icao = last_contact = velocity = true_track = vertical_rate = geo_alt = squawk = label = '-';
+                let icao = aircraftModel.model.icao;
+                let baro_alt = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
+                                String(aircraftModel.fakeAltitude * 100 * 0.3048) : // Adjusting to unit and To meter from feet
+                                String(aircraftModel.altitude * 0.3048);
+                let velocity = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
+                                String(aircraftModel.fakeGroundSpeed * 10 * 0.5144) : // First to knots (*10), then to m/s (*0.5144)
+                                String(aircraftModel.trueAirspeed * 0.5144); 
+                let squawk = String(aircraftModel.transponderCode);
+                let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
+                let true_track = String(aircraftModel.heading);
+
+                let last_contact, vertical_rate, geo_alt;
+                last_contact = vertical_rate = geo_alt = '-';
         
-
-                // let icao, origin_country, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label = '-';
-                
-
                 finalText += icao+', '+callsign+', '+origin_country+', '+time_position+', '+last_contact+', '+long+', '+
                     lat+', '+baro_alt+', '+on_ground+', '+velocity+', '+true_track+', '+vertical_rate+', '+geo_alt+', '+
                     squawk+', '+label;
