@@ -364,8 +364,6 @@ class UiController {
         this.$toggleVideoMap = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_VIDEO_MAP);
         this.$toggleTraffic = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_TRAFFIC);
         document.getElementById("dwn-btn").addEventListener("click",this.download, false);
-
-        // document.getElementById("dwn-attack").addEventListener("click",this.downloadAttack, false);
         return this.setupHandlers()
             .enable();
     }
@@ -400,42 +398,6 @@ class UiController {
 
       document.body.removeChild(element);
     }
-
-    // downloadAttack() {
-    //     var startText = "Starting Settings: \n";
-    //     for (let i = 0; i < GAME_ATTACK_VALUES.length; i++){
-    //       var displayLab = "";
-    //       var optionsA = GAME_ATTACK_VALUES[i].optionList
-    //       for (let j = 0; j < optionsA.length; j++){
-    //         if (optionsA[j].value === GAME_ATTACK_VALUES[i].defaultValue){
-    //           displayLab = optionsA[j].displayLabel;
-    //           break;
-    //         } 
-    //       }
-    //       startText += GAME_ATTACK_VALUES[i].description+": "+displayLab+"\n";
-    //     }
-    //     startText += "\n\n\n"
-    //     console.log(startText);
-    //     console.log(GameController.optionUpdate);
-        
-    //     console.log('Aircraft:');
-    //     // console.log(ac.aircraft.list);
-    //     var aircraft = JSON.parse(localStorage.getItem('aircraft'));
-    //     console.log(aircraft);
-
-  
-    //     var finalText = startText + GameController.optionUpdate + "\n\n\n" + GameController.log;
-    //     var element = document.createElement('a');
-    //     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(finalText));
-    //     element.setAttribute('download', "log.txt");
-  
-    //     element.style.display = 'none';
-    //     document.body.appendChild(element);
-  
-    //     element.click();
-  
-    //     document.body.removeChild(element);
-    //   }
 
     /**
      * @for UiController

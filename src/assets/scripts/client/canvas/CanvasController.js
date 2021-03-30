@@ -224,56 +224,45 @@ export default class CanvasController {
         return this;
     }
 
+    /**
+     * Downloads a .csv file with information about flights that currently are affected by some attack.
+     * The type of data is similar to that of a real ADS-B message.
+     */
     _downloadAttack() {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
 
 
         var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
-        Object.keys(radarTargetModels[0].aircraftModel).forEach(function(key) {
-            finalText += key + ',';
-        });
         finalText += '\n';
         for (let i = 0; i < radarTargetModels.length; i++) {
             const { aircraftModel } = radarTargetModels[i];
 
-            if (aircraftModel.attackType != 0) {
-                // console.log(aircraftModel);
-                Object.keys(aircraftModel).forEach(function(key) {
-                    var time_position = Date.now();
-                    var icao, callsign, origin_country, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, squawk, label;
-                    switch (key){
-                        // case 'airlineId':
-                        //     callsign += aircraftModel[key];
-                        //     break;
-                        // case 'flightNumber':
-                        //     callsign += aircraftModel[key];
-                        //     break;
-                        case 'callsign':
-                            callsign = aircraftModel[key];
-                        case 'origin':
-                            origin_country = aircraftModel[key];
-                            break;
-                        case 'positionModel':
-                            long = String(aircraftModel[key].longitude);
-                            lat = String(aircraftModel[key].latitude);
-                            break;
-                        case 'altitude':
-                            baro_alt = String(aircraftModel[key]);
-                            break;
-                        case 'flightPhase':
-                            on_ground = (aircraftModel[key] === 'APRON' || aircraftModel[key] === 'WAITING' || aircraftModel[key] === 'TAXI') ? 'True' : 'False';
-                            break;
-                    }
+            if (aircraftModel.attackType != 0) { // If the current aircraft isn't of attack-type regular (=> affected)
+                console.log(aircraftModel);
+                // Formating the fields
+                let time_position = new Date(Date.now()).toISOString();
+                let callsign = aircraftModel.callsign;
+                let origin_country = aircraftModel.origin;
+                let long = String(aircraftModel.positionModel.longitude);
+                let lat = String(aircraftModel.positionModel.latitude);
+                let baro_alt = String(aircraftModel.altitude);
+                let on_ground = (aircraftModel.flightPhase === 'APRON' || 
+                                aircraftModel.flightPhase === 'WAITING' || 
+                                aircraftModel.flightPhase === 'TAXI') ? 'True' : 'False';
+                let icao, last_contact, velocity, true_track, vertical_rate, geo_alt, squawk, label;
+                icao = last_contact = velocity = true_track = vertical_rate = geo_alt = squawk = label = '-';
+        
+
+                // let icao, origin_country, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label = '-';
                 
 
-                    finalText += String(aircraftModel[key]) + ',';
-                    console.log(aircraftModel);
-                    
-                    // console.log(key, dictionary[key]);
-                });
+                finalText += icao+', '+callsign+', '+origin_country+', '+time_position+', '+last_contact+', '+long+', '+
+                    lat+', '+baro_alt+', '+on_ground+', '+velocity+', '+true_track+', '+vertical_rate+', '+geo_alt+', '+
+                    squawk+', '+label;
                 finalText += '\n';
             }   
         }   
+        finalText.slice(0, -1); // Remove last comma
 
         var element = document.createElement('a');
         element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalText));
@@ -331,7 +320,7 @@ export default class CanvasController {
         this._eventBus.on(EVENT.AIRPORT_CHANGE, this._onAirportChangeHandler);
         this._eventBus.on(EVENT.SET_THEME, this._setThemeHandler);
         window.addEventListener('resize', this._onResizeHandler);
-        document.getElementById("dwn-attack").addEventListener("click",this._downloadAttack.bind(this), false);
+        document.getElementById("dwn-attack").addEventListener("click",this._downloadAttack.bind(this), false); // Listener for attack download button
 
         this.$element.addClass(this.theme.CLASSNAME);
 
