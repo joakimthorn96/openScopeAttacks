@@ -55,6 +55,7 @@ import {
     radio_spellOut
 } from '../utilities/radioUtilities';
 import {
+    convertToThousands,
     degreesToRadians,
     nm,
     UNIT_CONVERSION_CONSTANTS
@@ -110,7 +111,7 @@ export default class AircraftModel {
         this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
         this.timePassed = 0;                        //Used for switching between fakeAltitude and realAltitude. Starting value
         this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
-
+        this.fakeSquawk = false;
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
 
         GameController.aircraft++;
@@ -128,6 +129,7 @@ export default class AircraftModel {
         * 2 - jumping
         * 3 - wrong value
         * 4 - standing still
+        * 5 - squawk error
         */
         this.attackType = 0;
 
@@ -2373,11 +2375,17 @@ export default class AircraftModel {
         } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 != 0){
             this.usedBefore = true;
         }
+        
 
         if(this.attackType == 4 && this.hasMadeJump && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.myRandomTime == 0){
           this.shallIStandStill = !this.shallIStandStill;
         }
 
+        // apply false squawk code
+        if (this.attackType === 5 && !this.fakeSquawk){
+            this.transponderCode = this.getFakeSquawk();
+            this.fakeSquawk = true;
+        } 
 
 
         if (this.hit) {
@@ -2428,7 +2436,23 @@ export default class AircraftModel {
         this.distance = vlen(this.positionModel.relativePosition);
         this.radial = radians_normalize(vradial(this.positionModel.relativePosition));
     }
+    /*
+    Generates a fake squawk code (with emergency calls or invalid values.)
+    */
+    getFakeSquawk(){
+        var emergency = ["7500", "7600", "7700"];
+        if (Math.random() >= 0.5){
+            return emergency[Math.floor(Math.random()*3)];
+        }else{
+            var code = ""
+            for(var i = 0; i <= 3; i++){
+               code += String(Math.floor(Math.random() * 10));
+            }
+            return code;
+        }
+        
 
+    }
     calculateJump() {
       let prob = GameController.jProb * 3   //var 12 nyss!
       this.usedBefore = false;
@@ -2490,9 +2514,12 @@ export default class AircraftModel {
           else if (random >= rates["response"]+rates["jump"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]){ //false information
               this.attackType = rarities["falseInformation"].attack;
               GameController.errorers++;
-          } else { //stopper
+          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["stopper"]){ //stopper
             this.attackType = rarities["standStill"].attack;
             GameController.stoppers++;
+          } else { //squawkers
+            this.attackType = rarities["squawk"].attack;
+            GameController.squawkers++;
           }
       } else {
         this.attackType = 0;

@@ -231,7 +231,7 @@ export default class CanvasController {
      */
     _downloadAttack() {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
-        var minutes = 20;
+        var minutes = 1;
         var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
         finalText += '\n';
         var start = performance.now();

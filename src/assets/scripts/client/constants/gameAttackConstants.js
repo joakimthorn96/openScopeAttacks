@@ -14,8 +14,10 @@ export const GAME_ATTACK_NAMES = {
     1: 'Non listen',
     2: 'Jumping',
     3: 'False information',
-    4: 'Standing still'
+    4: 'Standing still',
+    5: 'False squawk'
 };
+
 
 /**
  * User attacks
@@ -56,6 +58,41 @@ export const GAME_ATTACK_VALUES = [
             }
         ]
     },
+    {
+        name: 'squawkRarity',
+        defaultValue: '0',
+        description: 'Aircraft changing squawk value',
+        help: 'Changes the squawk code to emergency codes and / or invalid values.',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_SQUAWK_RARITY, 
+        optionList: [
+            {
+                displayLabel: '0',
+                value: '0'
+            },
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
+        ]
+    },
+
     {
         name: 'stopRarity',
         defaultValue: '0',

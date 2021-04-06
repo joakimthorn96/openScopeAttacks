@@ -102,6 +102,7 @@ class GameController {
         this.sRarity = 0; // Stand Still
         this.eRarity = 0; // Error
         this.RRarity = 0; // Response
+        this.QRarity = 0; // Squawk
         this.showAttackAircraftVisibility = false;
 
         this.needUpdateOfRates = 1;
@@ -124,6 +125,10 @@ class GameController {
             standStill: {
                 rate: 0,
                 attack: 4
+            },
+            squawk: {
+                rate:0,
+                attack: 5
             }
         };
 
@@ -132,6 +137,7 @@ class GameController {
         this.stoppers = 0;
         this.errorers = 0;
         this.aircraft = 0;
+        this.squawkers = 0; 
 
         this.log = 'Commands used while playing\nTimestamp (s):Aircraft:Command:Attacktype:\n';
 
@@ -194,6 +200,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
         this._eventBus.on(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
         this._eventBus.on(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
+        this._eventBus.on(EVENT.SET_SQUAWK_RARITY, this._setQRarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -225,6 +232,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_STANDSTILL_RARITY, this._setSRarity);
         this._eventBus.off(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
         this._eventBus.off(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
+        this._eventBus.off(EVENT.SET_SQUAWK_RARITY, this._setQRarity);
 
         return this.destroy();
     }
@@ -643,6 +651,12 @@ class GameController {
         }
 
         TimeKeeper.setPause(false);
+    }
+    _setQRarity = (themeName) => {
+        this.QRarity = parseInt(themeName);
+        this.rarities.squawk.rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed squawk errors weight to "+themeName+"\n";
     }
 
     _setRRarity = (themeName) => {
