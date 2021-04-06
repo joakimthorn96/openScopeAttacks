@@ -2438,6 +2438,8 @@ export default class AircraftModel {
     }
     /*
     Generates a fake squawk code (with emergency calls or invalid values.)
+    50% chance of emergency call, 
+    50% chance of invalid code including the numbers 8 or 9.
     */
     getFakeSquawk(){
         var emergency = ["7500", "7600", "7700"];
@@ -2448,6 +2450,10 @@ export default class AircraftModel {
             for(var i = 0; i <= 3; i++){
                code += String(Math.floor(Math.random() * 10));
             }
+            // changes random number in the squawk to a 8 or a 9.
+            var index = Math.floor(Math.random()*4);
+            code = code.substring(0, index) + Math.round(8+Math.random()) + code.substring(index + 1);
+            
             return code;
         }
         
