@@ -2381,6 +2381,9 @@ export default class AircraftModel {
           this.shallIStandStill = !this.shallIStandStill;
         }
 
+        // apply false heading
+        if(this.attackType == 6 )//&& ... starta här nästa gång! :D)
+
         // apply false squawk code
         if (this.attackType === 5 && !this.fakeSquawk){
             this.transponderCode = this.getFakeSquawk();
@@ -2456,8 +2459,6 @@ export default class AircraftModel {
             
             return code;
         }
-        
-
     }
     calculateJump() {
       let prob = GameController.jProb * 3   //var 12 nyss!
@@ -2520,12 +2521,15 @@ export default class AircraftModel {
           else if (random >= rates["response"]+rates["jump"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]){ //false information
               this.attackType = rarities["falseInformation"].attack;
               GameController.errorers++;
-          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["stopper"]){ //stopper
+          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["standStill"]){ //stopper
             this.attackType = rarities["standStill"].attack;
             GameController.stoppers++;
-          } else { //squawkers
+          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] + rates ["standStill"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["standStill"]+rates["squawk"]){ //squawkers
             this.attackType = rarities["squawk"].attack;
             GameController.squawkers++;
+          } else {
+              this.attackType = rarities["heading"].attack;
+              GameController.headers ++;
           }
       } else {
         this.attackType = 0;

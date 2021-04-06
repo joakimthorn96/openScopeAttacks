@@ -129,6 +129,10 @@ class GameController {
             squawk: {
                 rate:0,
                 attack: 5
+            },
+            heading:{
+                rate:0,
+                attack:6
             }
         };
 
@@ -138,6 +142,7 @@ class GameController {
         this.errorers = 0;
         this.aircraft = 0;
         this.squawkers = 0; 
+        this.headers = 0;
 
         this.log = 'Commands used while playing\nTimestamp (s):Aircraft:Command:Attacktype:\n';
 
@@ -201,6 +206,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
         this._eventBus.on(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
         this._eventBus.on(EVENT.SET_SQUAWK_RARITY, this._setQRarity);
+        this._eventBus.on(EVENT.SET_HEADING_RARITY, this._setHRarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -233,6 +239,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_ATTACK_AIRCRAFT_VISIBILITY, this._setAttackVisibility);
         this._eventBus.off(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
         this._eventBus.off(EVENT.SET_SQUAWK_RARITY, this._setQRarity);
+        this._eventBus.off(EVENT.SET_HEADING_RARITY, this._setHRarity);
 
         return this.destroy();
     }
@@ -652,6 +659,13 @@ class GameController {
 
         TimeKeeper.setPause(false);
     }
+    _setHRarity = (themeName) => {
+        this.HRarity = parseInt(themeName);
+        this.rarities.heading.rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed heading errors weight to "+themeName+"\n";
+    }
+
     _setQRarity = (themeName) => {
         this.QRarity = parseInt(themeName);
         this.rarities.squawk.rate = parseInt(themeName);

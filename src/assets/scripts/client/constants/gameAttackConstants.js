@@ -15,7 +15,8 @@ export const GAME_ATTACK_NAMES = {
     2: 'Jumping',
     3: 'False information',
     4: 'Standing still',
-    5: 'False squawk'
+    5: 'False squawk',
+    6: 'False heading'
 };
 
 
@@ -58,6 +59,41 @@ export const GAME_ATTACK_VALUES = [
             }
         ]
     },
+    {
+        name: 'headingRarity',
+        defaultValue: '0',
+        description: 'Aircraft changing heading value',
+        help: 'Changes the heading of the aircraft',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_HEADING_RARITY, 
+        optionList: [
+            {
+                displayLabel: '0',
+                value: '0'
+            },
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
+        ]
+    },
+
     {
         name: 'squawkRarity',
         defaultValue: '0',
