@@ -227,56 +227,63 @@ export default class CanvasController {
     /**
      * Downloads a .csv file with information about flights that currently are affected by some attack.
      * The type of data is similar to that of a real ADS-B message.
+     * Downloads continously for a set number of minutes.
      */
     _downloadAttack() {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
-
+        var minutes = 20;
         var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
         finalText += '\n';
-        for (let i = 0; i < radarTargetModels.length; i++) {
-            const { aircraftModel } = radarTargetModels[i];
+        var start = performance.now();
+        var myInterval = setInterval(() => {
 
-            if (aircraftModel.attackType != 0) { // If the current aircraft isn't of attack-type regular (=> affected)
-                console.log(aircraftModel);
-                // Formating the fields
-                let time_position = new Date(Date.now()).toLocaleString();
-                let callsign = aircraftModel.callsign;
-                let origin_country = aircraftModel.origin;
-                let long = String(aircraftModel.positionModel.longitude);
-                let lat = String(aircraftModel.positionModel.latitude); 
-                let on_ground = (aircraftModel.flightPhase === 'APRON' || 
-                                aircraftModel.flightPhase === 'WAITING' || 
-                                aircraftModel.flightPhase === 'TAXI') ? 'True' : 'False';
-                let icao = aircraftModel.model.icao;
-                let baro_alt = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
-                                String(aircraftModel.fakeAltitude * 100 * 0.3048) : // Adjusting to unit and To meter from feet
-                                String(aircraftModel.altitude * 0.3048);
-                let velocity = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
-                                String(aircraftModel.fakeGroundSpeed * 10 * 0.5144) : // First to knots (*10), then to m/s (*0.5144)
-                                String(aircraftModel.trueAirspeed * 0.5144); 
-                let squawk = String(aircraftModel.transponderCode);
-                let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
-                let true_track = String(aircraftModel.heading);
+            for (let i = 0; i < radarTargetModels.length; i++) {
+                const { aircraftModel } = radarTargetModels[i];
 
-                let last_contact, vertical_rate, geo_alt;
-                last_contact = vertical_rate = geo_alt = '-';
-        
-                finalText += icao+', '+callsign+', '+origin_country+', '+time_position+', '+last_contact+', '+long+', '+
-                    lat+', '+baro_alt+', '+on_ground+', '+velocity+', '+true_track+', '+vertical_rate+', '+geo_alt+', '+
-                    squawk+', '+label;
-                finalText += '\n';
-            }   
-        }   
-        finalText.slice(0, -1); // Remove last comma
+                if (aircraftModel.attackType != 0) { // If the current aircraft isn't of attack-type regular (=> affected)
+                    console.log(aircraftModel);
+                    // Formating the fields
+                    let time_position = new Date(Date.now()).toLocaleString();
+                    let callsign = aircraftModel.callsign;
+                    let origin_country = aircraftModel.origin;
+                    let long = String(aircraftModel.positionModel.longitude);
+                    let lat = String(aircraftModel.positionModel.latitude);
+                    let on_ground = (aircraftModel.flightPhase === 'APRON' ||
+                        aircraftModel.flightPhase === 'WAITING' ||
+                        aircraftModel.flightPhase === 'TAXI') ? 'True' : 'False';
+                    let icao = aircraftModel.model.icao;
+                    let baro_alt = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
+                        String(aircraftModel.fakeAltitude * 100 * 0.3048) : // Adjusting to unit and To meter from feet
+                        String(aircraftModel.altitude * 0.3048);
+                    let velocity = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
+                        String(aircraftModel.fakeGroundSpeed * 10 * 0.5144) : // First to knots (*10), then to m/s (*0.5144)
+                        String(aircraftModel.trueAirspeed * 0.5144);
+                    let squawk = String(aircraftModel.transponderCode);
+                    let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
+                    let true_track = String(aircraftModel.heading);
 
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalText));
-        element.setAttribute('download', "attackdata.csv");
-  
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+                    let last_contact, vertical_rate, geo_alt;
+                    last_contact = vertical_rate = geo_alt = '-';
+
+                    finalText += icao + ', ' + callsign + ', ' + origin_country + ', ' + time_position + ', ' + last_contact + ', ' + long + ', ' +
+                        lat + ', ' + baro_alt + ', ' + on_ground + ', ' + velocity + ', ' + true_track + ', ' + vertical_rate + ', ' + geo_alt + ', ' +
+                        squawk + ', ' + label;
+                    finalText += '\n';
+                }
+            }
+            if ((minutes * 60000) < (performance.now() - start)) {
+                clearInterval(myInterval);
+                finalText.slice(0, -1); // Remove last comma
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalText));
+                element.setAttribute('download', "attackdata.csv");
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
+        }, 3000);
     }
 
     /**
@@ -325,7 +332,7 @@ export default class CanvasController {
         this._eventBus.on(EVENT.AIRPORT_CHANGE, this._onAirportChangeHandler);
         this._eventBus.on(EVENT.SET_THEME, this._setThemeHandler);
         window.addEventListener('resize', this._onResizeHandler);
-        document.getElementById("dwn-attack").addEventListener("click",this._downloadAttack.bind(this), false); // Listener for attack download button
+        document.getElementById("dwn-attack").addEventListener("click", this._downloadAttack.bind(this), false); // Listener for attack download button
 
         this.$element.addClass(this.theme.CLASSNAME);
 
@@ -1484,8 +1491,8 @@ export default class CanvasController {
         //     localStorage.setItem('aircraft', JSON.stringify(tmp));
         // }
 
-            // console.log(aircraftModel);
-                            
+        // console.log(aircraftModel);
+
         const paddingLR = 5;
         let match = false;
 
