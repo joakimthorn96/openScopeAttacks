@@ -714,7 +714,7 @@ export default class AircraftModel {
     parse(data) {
         this.positionModel = data.positionModel;
         this.transponderCode = data.transponderCode;
-        this.trueTransponderCode = data.transponderCode;
+        this.trueTransponderCode = data.transponderCode; // placeholder
         this.airlineId = data.airline;
         this.airlineCallsign = data.airlineCallsign;
         this.flightNumber = data.callsign;
