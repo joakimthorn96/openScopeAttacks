@@ -260,7 +260,9 @@ export default class CanvasController {
                         String(aircraftModel.trueAirspeed * 0.5144);
                     let squawk = String(aircraftModel.transponderCode);
                     let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
-                    let true_track = String(aircraftModel.heading);
+                    let true_track = (aircraftModel.attackType === 6) ? 
+                        String(aircraftModel.fakeHeading) : 
+                        String(aircraftModel.heading);
 
                     let last_contact, vertical_rate, geo_alt;
                     last_contact = vertical_rate = geo_alt = '-';
@@ -1601,6 +1603,10 @@ export default class CanvasController {
                 cc.fillStyle = '#38b6ff';
             } else if (attackType == 4) {
                 cc.fillStyle = '#cb6ce6';
+            } else if (attackType == 5) {
+                cc.fillStyle = '#31f745'
+            } else if (attackType == 6) {
+                cc.fillStyle = '#e331f7'
             }
         } else {
             cc.fillStyle = fillStyle;

@@ -102,6 +102,8 @@ export default class AircraftModel {
      */
     constructor(options = {}) {
 
+        this.headingDiff = 3; // weight of heading change
+        this.headingRate = 12; //number of seconds between heading changes
 
         this.usedBefore = true;
         this.hasMadeJump = false;
@@ -113,6 +115,7 @@ export default class AircraftModel {
         this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
         this.fakeSquawk = false;
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
+        this.trueHeading = 0;
 
         GameController.aircraft++;
 
@@ -130,6 +133,7 @@ export default class AircraftModel {
         * 3 - wrong value
         * 4 - standing still
         * 5 - squawk error
+        * 6 - fake heading
         */
         this.attackType = 0;
 
@@ -714,6 +718,7 @@ export default class AircraftModel {
         this.flightNumber = data.callsign;
         this.category = data.category;
         this.heading = data.heading;
+        this.trueHeading = data.heading; // placeholder
         this.altitude = data.altitude;
         this.speed = data.speed;
         this.origin = _get(data, 'origin', this.origin);
@@ -2381,15 +2386,20 @@ export default class AircraftModel {
           this.shallIStandStill = !this.shallIStandStill;
         }
 
-        // apply false heading
-        if(this.attackType == 6 )//&& ... starta här nästa gång! :D)
-
         // apply false squawk code
-        if (this.attackType === 5 && !this.fakeSquawk){
+        if (this.attackType == 5 && !this.fakeSquawk){
             this.transponderCode = this.getFakeSquawk();
             this.fakeSquawk = true;
         } 
 
+        // apply false heading
+        // headingdiff: how much the fake heading should vary from the real heading 
+        // headingrate: how often the heading will change
+        if(this.attackType == 6 && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.headingRate == 0){
+            this.heading = this.trueHeading * Math.random() * this.headingDiff;
+        } else if (this.attackType == 6 && (Math.floor(TimeKeeper.accumulatedDeltaTime) % this.headingRate/4) == 0){
+            this.heading = this.trueHeading;
+        }
 
         if (this.hit) {
             // 90fps fall rate?...
@@ -2439,6 +2449,9 @@ export default class AircraftModel {
         this.distance = vlen(this.positionModel.relativePosition);
         this.radial = radians_normalize(vradial(this.positionModel.relativePosition));
     }
+
+
+
     /*
     Generates a fake squawk code (with emergency calls or invalid values.)
     50% chance of emergency call, 
