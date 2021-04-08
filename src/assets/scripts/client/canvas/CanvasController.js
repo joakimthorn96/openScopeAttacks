@@ -1121,7 +1121,13 @@ export default class CanvasController {
         }
 
         // Draw the radar target (aka aircraft position dot)
-        cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
+        
+        if (aircraftModel.attackType == 5 && aircraftModel.hasEmergency){
+            cc.fillStyle = '#ff890a';
+        } else {
+            cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
+        }
+        
         cc.beginPath();
         cc.arc(0, 0, CanvasStageModel.translateKilometersToPixels(radarTargetRadiusKm), 0, tau());
         cc.fill();
@@ -1555,7 +1561,7 @@ export default class CanvasController {
         cc.lineTo(...leaderEnd);
 
         if (aircraftModel.guess == 0) {
-            cc.strokeStyle = white;
+            cc.strokeStyle = white; 
         } else if (aircraftModel.guess == 1) {
             cc.strokeStyle = '#ff1616';
         } else if (aircraftModel.guess == 2) {

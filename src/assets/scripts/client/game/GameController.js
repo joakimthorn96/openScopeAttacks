@@ -103,6 +103,7 @@ class GameController {
         this.eRarity = 0; // Error
         this.RRarity = 0; // Response
         this.QRarity = 0; // Squawk
+        this.HRarity = 0; // Heading
         this.showAttackAircraftVisibility = false;
 
         this.needUpdateOfRates = 1;

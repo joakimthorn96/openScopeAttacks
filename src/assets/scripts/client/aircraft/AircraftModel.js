@@ -114,6 +114,7 @@ export default class AircraftModel {
         this.timePassed = 0;                        //Used for switching between fakeAltitude and realAltitude. Starting value
         this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
         this.fakeSquawk = false;
+        this.hasEmergency = false;
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
         this.trueHeading = 0;
 
@@ -713,6 +714,7 @@ export default class AircraftModel {
     parse(data) {
         this.positionModel = data.positionModel;
         this.transponderCode = data.transponderCode;
+        this.trueTransponderCode = data.transponderCode;
         this.airlineId = data.airline;
         this.airlineCallsign = data.airlineCallsign;
         this.flightNumber = data.callsign;
@@ -2390,7 +2392,11 @@ export default class AircraftModel {
         if (this.attackType == 5 && !this.fakeSquawk){
             this.transponderCode = this.getFakeSquawk();
             this.fakeSquawk = true;
-        } 
+        } else if (this.attackType != 5 && this.fakeSquawk){ // resets data if attack changes mid-simulation.
+            this.fakeSquawk = false;
+            this.hasEmergency = false;
+            this.transponderCode = this.trueTransponderCode;  
+        }
 
         // apply false heading
         // headingdiff: how much the fake heading should vary from the real heading 
@@ -2459,7 +2465,9 @@ export default class AircraftModel {
     */
     getFakeSquawk(){
         var emergency = ["7500", "7600", "7700"];
+        
         if (Math.random() >= 0.5){
+            this.hasEmergency = true;
             return emergency[Math.floor(Math.random()*3)];
         }else{
             var code = ""
