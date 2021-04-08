@@ -231,7 +231,7 @@ export default class CanvasController {
      */
     _downloadAttack() {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
-        var minutes = 1;
+        var minutes = 20;
         var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
         finalText += '\n';
         var start = performance.now();
@@ -260,9 +260,8 @@ export default class CanvasController {
                         String(aircraftModel.trueAirspeed * 0.5144);
                     let squawk = String(aircraftModel.transponderCode);
                     let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
-                    let true_track = (aircraftModel.attackType === 6) ? 
-                        String(aircraftModel.fakeHeading) : 
-                        String(aircraftModel.heading);
+                    let true_track = String(aircraftModel.heading);
+                        
 
                     let last_contact, vertical_rate, geo_alt;
                     last_contact = vertical_rate = geo_alt = '-';
