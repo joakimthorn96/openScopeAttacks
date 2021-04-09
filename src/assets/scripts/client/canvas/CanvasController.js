@@ -42,6 +42,7 @@ import {
 } from '../constants/globalConstants';
 import { GAME_OPTION_NAMES } from '../constants/gameOptionConstants';
 import { PROCEDURE_TYPE } from '../constants/routeConstants';
+import { GAME_ATTACK_NAMES } from '../constants/gameAttackConstants';
 
 /**
  * @class CanvasController
@@ -231,10 +232,11 @@ export default class CanvasController {
      */
     _downloadAttack() {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
-        var minutes = 20;
-        var finalText = "icao, callsign, origin_country, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label";
+        var minutes = 1;
+        var finalText = "icao, callsign, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label, attack_type";
         finalText += '\n';
         var start = performance.now();
+        var sleep = 3000;
         var myInterval = setInterval(() => {
 
             for (let i = 0; i < radarTargetModels.length; i++) {
@@ -243,9 +245,11 @@ export default class CanvasController {
                 if (aircraftModel.attackType != 0) { // If the current aircraft isn't of attack-type regular (=> affected)
                     console.log(aircraftModel);
                     // Formating the fields
+                    let last_contact = (aircraftModel.lastContact == "") ?
+                        "-" : aircraftModel.lastContact;
                     let time_position = new Date(Date.now()).toLocaleString();
+                    aircraftModel.lastContact = time_position;
                     let callsign = aircraftModel.callsign;
-                    let origin_country = aircraftModel.origin;
                     let long = String(aircraftModel.positionModel.longitude);
                     let lat = String(aircraftModel.positionModel.latitude);
                     let on_ground = (aircraftModel.flightPhase === 'APRON' ||
@@ -261,14 +265,16 @@ export default class CanvasController {
                     let squawk = String(aircraftModel.transponderCode);
                     let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
                     let true_track = String(aircraftModel.heading);
+                    let type = GAME_ATTACK_NAMES[aircraftModel.attackType];
+                    
                         
 
-                    let last_contact, vertical_rate, geo_alt;
-                    last_contact = vertical_rate = geo_alt = '-';
+                    let vertical_rate, geo_alt;
+                    vertical_rate = geo_alt = '-';
 
-                    finalText += icao + ', ' + callsign + ', ' + origin_country + ', ' + time_position + ', ' + last_contact + ', ' + long + ', ' +
+                    finalText += icao + ', ' + callsign + ', ' + time_position + ', ' + last_contact + ', ' + long + ', ' +
                         lat + ', ' + baro_alt + ', ' + on_ground + ', ' + velocity + ', ' + true_track + ', ' + vertical_rate + ', ' + geo_alt + ', ' +
-                        squawk + ', ' + label;
+                        squawk + ', ' + label + ', ' + type;
                     finalText += '\n';
                 }
             }
@@ -284,7 +290,7 @@ export default class CanvasController {
                 element.click();
                 document.body.removeChild(element);
             }
-        }, 3000);
+        }, sleep);
     }
 
     /**
