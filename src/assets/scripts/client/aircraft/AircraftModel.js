@@ -117,6 +117,7 @@ export default class AircraftModel {
         this.hasEmergency = false;
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
         this.trueHeading = 0;
+        this.lastContact = "";
 
         GameController.aircraft++;
 
@@ -2886,6 +2887,10 @@ export default class AircraftModel {
               GameController.errorers--;
           } else if(this.attackType == 4){
               GameController.stoppers--;
+          } else if(this.attackType == 5){
+              GameController.squawkers--;
+          } else if(GameController.attackType == 6){
+              GameController.headers--;
           }
           this.attackType = 0;
           GameController.aircraft --;
