@@ -54,6 +54,7 @@ import {
     radio_spellOut
 } from '../utilities/radioUtilities';
 import {
+    convertToThousands,
     degreesToRadians,
     nm,
     UNIT_CONVERSION_CONSTANTS
@@ -101,6 +102,8 @@ export default class AircraftModel {
      */
     constructor(options = {}) {
 
+        this.headingDiff = 3; // weight of heading change
+        this.headingRate = 12; //number of seconds between heading changes
 
         this.usedBefore = true;
         this.hasMadeJump = false;
@@ -110,8 +113,11 @@ export default class AircraftModel {
         this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
         this.timePassed = 0;                        //Used for switching between fakeAltitude and realAltitude. Starting value
         this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
-
+        this.fakeSquawk = false;
+        this.hasEmergency = false;
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
+        this.trueHeading = 0;
+        this.lastContact = "";
 
         GameController.aircraft++;
 
@@ -128,6 +134,8 @@ export default class AircraftModel {
         * 2 - jumping
         * 3 - wrong value
         * 4 - standing still
+        * 5 - squawk error
+        * 6 - fake heading
         */
         this.attackType = 0;
 
@@ -697,11 +705,13 @@ export default class AircraftModel {
     parse(data) {
         this.positionModel = data.positionModel;
         this.transponderCode = data.transponderCode;
+        this.trueTransponderCode = data.transponderCode; // placeholder
         this.airlineId = data.airline;
         this.airlineCallsign = data.airlineCallsign;
         this.flightNumber = data.callsign;
         this.category = data.category;
         this.heading = data.heading;
+        this.trueHeading = data.heading; // placeholder
         this.altitude = data.altitude;
         this.speed = data.speed;
         this.origin = _get(data, 'origin', this.origin);
@@ -2363,12 +2373,30 @@ export default class AircraftModel {
         } else if (Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 != 0){
             this.usedBefore = true;
         }
+        
 
         if(this.attackType == 4 && this.hasMadeJump && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.myRandomTime == 0){
           this.shallIStandStill = !this.shallIStandStill;
         }
 
+        // apply false squawk code
+        if (this.attackType == 5 && !this.fakeSquawk){
+            this.transponderCode = this.getFakeSquawk();
+            this.fakeSquawk = true;
+        } else if (this.attackType != 5 && this.fakeSquawk){ // resets data if attack changes mid-simulation.
+            this.fakeSquawk = false;
+            this.hasEmergency = false;
+            this.transponderCode = this.trueTransponderCode;  
+        }
 
+        // apply false heading
+        // headingdiff: how much the fake heading should vary from the real heading 
+        // headingrate: how often the heading will change
+        if(this.attackType == 6 && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.headingRate == 0){
+            this.heading = this.trueHeading * Math.random() * this.headingDiff;
+        } else if (this.attackType == 6 && (Math.floor(TimeKeeper.accumulatedDeltaTime) % this.headingRate/4) == 0){
+            this.heading = this.trueHeading;
+        }
 
         if (this.hit) {
             // 90fps fall rate?...
@@ -2421,6 +2449,31 @@ export default class AircraftModel {
         this.radial = radians_normalize(vradial(this.positionModel.relativePosition));
     }
 
+
+
+    /*
+    Generates a fake squawk code (with emergency calls or invalid values.)
+    50% chance of emergency call, 
+    50% chance of invalid code including the numbers 8 or 9.
+    */
+    getFakeSquawk(){
+        var emergency = ["7500", "7600", "7700"];
+        
+        if (Math.random() >= 0.5){
+            this.hasEmergency = true;
+            return emergency[Math.floor(Math.random()*3)];
+        }else{
+            var code = ""
+            for(var i = 0; i <= 3; i++){
+               code += String(Math.floor(Math.random() * 10));
+            }
+            // changes random number in the squawk to a 8 or a 9.
+            var index = Math.floor(Math.random()*4);
+            code = code.substring(0, index) + Math.round(8+Math.random()) + code.substring(index + 1);
+            
+            return code;
+        }
+    }
     calculateJump() {
       let prob = GameController.jProb * 3   //var 12 nyss!
       this.usedBefore = false;
@@ -2482,9 +2535,15 @@ export default class AircraftModel {
           else if (random >= rates["response"]+rates["jump"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]){ //false information
               this.attackType = rarities["falseInformation"].attack;
               GameController.errorers++;
-          } else { //stopper
+          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["standStill"]){ //stopper
             this.attackType = rarities["standStill"].attack;
             GameController.stoppers++;
+          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] + rates ["standStill"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["standStill"]+rates["squawk"]){ //squawkers
+            this.attackType = rarities["squawk"].attack;
+            GameController.squawkers++;
+          } else {
+              this.attackType = rarities["heading"].attack;
+              GameController.headers ++;
           }
       } else {
         this.attackType = 0;
@@ -2820,6 +2879,10 @@ export default class AircraftModel {
               GameController.errorers--;
           } else if(this.attackType == 4){
               GameController.stoppers--;
+          } else if(this.attackType == 5){
+              GameController.squawkers--;
+          } else if(GameController.attackType == 6){
+              GameController.headers--;
           }
           this.attackType = 0;
           GameController.aircraft --;

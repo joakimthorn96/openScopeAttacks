@@ -3,6 +3,7 @@ import _keys from 'lodash/keys';
 import AirportController from '../airport/AirportController';
 import EventBus from '../lib/EventBus';
 import EventTracker from '../EventTracker';
+import ac from '../aircraft/AircraftController';
 import GameController from '../game/GameController';
 import SettingsController from './SettingsController';
 import AttacksController from './AttacksController';

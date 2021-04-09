@@ -176,6 +176,8 @@ export const EVENT = {
     SET_STANDSTILL_RARITY: 'set-standstill-rarity',
     SET_ATTACK_AIRCRAFT_VISIBILITY: 'set-attack-aircraft-visibility',
     SET_FLOODING_NON_RESPONSIVE: 'set-flooding-non-responsive',
+    SET_SQUAWK_RARITY: 'set-squawk-rarity',
+    SET_HEADING_RARITY: 'set-heading-rarity',
 
     /**
      * Step through pre-defined timewarp speeds
