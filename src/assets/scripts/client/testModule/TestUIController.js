@@ -15,7 +15,7 @@ const UI_SETTINGS_MODAL_TEMPLATE = `
     <div class="option-dialog dialog">
         <p class="dialog-title">Tests</p>
         <div class="dialog-body nice-scrollbar"></div>
-        <p class="dialog-text"> To run a test use the command: tests
+        <p class="dialog-text"> To run a test use the command: starttest
         </p>
     </div>`;
 

@@ -749,6 +749,18 @@ class GameController {
         } else if (themeName == 'VeryHigh') {
             this.aRarity = 110; // 90 % of aircraft
             per = "90%";
+        }  else if (themeName == '10%') { //special cases added for attack tests
+            this.aRarity = 1000; // 10 % of aircraft
+            per = "10%";
+        } else if (themeName == '20%') { //special cases added for attack tests
+            this.aRarity = 500; // 20 % of aircraft
+            per = "20%";
+        } else if (themeName == '30%') { //special cases added for attack tests
+            this.aRarity = 333; // 30 % of aircraft
+            per = "30%";
+        } else if (themeName == '40%') { //special cases added for attack tests
+            this.aRarity = 400; // 40 % of aircraft
+            per = "40%";
         }
         this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed percentage of affected aircraft to "+per+"\n";
     };

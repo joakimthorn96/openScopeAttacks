@@ -6,8 +6,8 @@ import UiController from '../ui/UiController';
 
 
 const ATTACK_SETTINGS_SET_FUNCTIONS = {
-    aRarity:`_setARarity`,
-    RRarity: `_setARarity`,
+    aRarity: `_setARarity`,
+    RRarity: `_setRRarity`,
     jRarity: `_setjRarity`,
     eRarity: `_setERarity`,
     sRarity: `_setSRarity`,
@@ -163,6 +163,7 @@ class TestController{
         for(const setting of ATTACK_SETTING_NAMES){
             if(settings[setting] != null){
                 GameController[ATTACK_SETTINGS_SET_FUNCTIONS[setting]](settings[setting]);
+                console.log(`${setting} = ${GameController[setting]}`);
             }
         }
     }
