@@ -119,6 +119,7 @@ export default class AircraftModel {
         this.trueHeading = 0;
         this.lastContact = "";
         this.altRate = 0; // climb(positive) / descent(negative) rate in m/s 
+        this.geoAlt = 0;
 
         GameController.aircraft++;
 
@@ -2378,6 +2379,25 @@ export default class AircraftModel {
 
         if(this.attackType == 4 && this.hasMadeJump && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.myRandomTime == 0){
           this.shallIStandStill = !this.shallIStandStill;
+        }
+
+        if(this.altitude >= 18000){ // KSEA transitionAlt = 18000 ft
+            if(Math.random() > 0.5){
+                // Sets geoAlt to baroAlt +/- 0-3000 feet
+                // when aircraft is above 18000 ft.
+                this.geoAlt = this.altitude + (Math.random() * 3000);
+            } else {
+                this.geoAlt = this.altitude - (Math.random() * 3000);
+            }
+            
+        } else {
+            if(Math.random() > 0.5){
+                // Sets geoAlt to baroAlt +/- 0-200 feet
+                // when aircraft is below 18000 ft.
+                this.geoAlt = this.altitude + (Math.random() * 200);
+            } else {
+                this.geoAlt = this.altitude - (Math.random() * 200);
+            }
         }
 
         // apply false squawk code

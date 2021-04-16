@@ -278,11 +278,7 @@ export default class CanvasController {
                     let true_track = String(aircraftModel.heading);
                     let type = GAME_ATTACK_NAMES[aircraftModel.attackType];
                     let vertical_rate = String(aircraftModel.altRate);
-                    
-                        
-
-                    let geo_alt;
-                    geo_alt = '-';
+                    let geo_alt = String(geo_alt * 0.3048);
 
                     finalText += icao + ', ' + callsign + ', ' + time_position + ', ' + last_contact + ', ' + long + ', ' +
                         lat + ', ' + baro_alt + ', ' + on_ground + ', ' + velocity + ', ' + true_track + ', ' + vertical_rate + ', ' + geo_alt + ', ' +
