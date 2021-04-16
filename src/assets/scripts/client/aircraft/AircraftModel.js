@@ -102,17 +102,17 @@ export default class AircraftModel {
      */
     constructor(options = {}) {
 
-        this.headingDiff = 3; // weight of heading change
-        this.headingRate = 12; //number of seconds between heading changes
+        this.headingDiff = 3;   // weight of heading change
+        this.headingRate = 12;  //number of seconds between heading changes
 
         this.usedBefore = true;
         this.hasMadeJump = false;
-        this.amountOfAttack = -1; //init
+        this.amountOfAttack = -1;   //init
         this.needUpdate = 1;
         this.pastAmountofAttack = -1;
         this.fakeAltitude = Math.round(Math.floor(Math.random() * (400-50) + 50)/10) * 10;
-        this.timePassed = 0;                        //Used for switching between fakeAltitude and realAltitude. Starting value
-        this.switchingTime = 10;                    //How fast to switch? 2=often,  40=long time
+        this.timePassed = 0;    //Used for switching between fakeAltitude and realAltitude. Starting value
+        this.switchingTime = 10;    //How fast to switch? 2=often,  40=long time
         this.fakeSquawk = false;
         this.hasEmergency = false;
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
@@ -131,7 +131,7 @@ export default class AircraftModel {
         this.shallIStandStill = false;
         this.myRandomTime = Math.floor(Math.random()*500);
 
-        /**
+        /** Attack types:
         * 0 - regular
         * 1 - no listen
         * 2 - jumping
@@ -140,7 +140,7 @@ export default class AircraftModel {
         * 5 - squawk error
         * 6 - fake heading
         */
-        this.attackType = 0;
+        this.attackType = 0;    // Default value
 
         /**
          * Unique id
@@ -2397,10 +2397,12 @@ export default class AircraftModel {
             this.hasEmergency = false;
             this.transponderCode = this.trueTransponderCode;  
         }
+        /*
+         * apply false heading
+         * headingdiff: how much the fake heading should vary from the real heading 
+         * headingrate: how often the heading will change
+         */
 
-        // apply false heading
-        // headingdiff: how much the fake heading should vary from the real heading 
-        // headingrate: how often the heading will change
         if(this.attackType == 6 && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.headingRate == 0){
             this.heading = this.trueHeading * Math.random() * this.headingDiff;
         } else if (this.attackType == 6 && (Math.floor(TimeKeeper.accumulatedDeltaTime) % this.headingRate/4) == 0){
