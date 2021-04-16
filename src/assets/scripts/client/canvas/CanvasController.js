@@ -265,9 +265,7 @@ export default class CanvasController {
                     let callsign = aircraftModel.callsign;
                     let long = String(aircraftModel.positionModel.longitude);
                     let lat = String(aircraftModel.positionModel.latitude);
-                    let on_ground = (aircraftModel.flightPhase === 'APRON' ||
-                        aircraftModel.flightPhase === 'WAITING' ||
-                        aircraftModel.flightPhase === 'TAXI') ? 'True' : 'False';
+                    let on_ground = String(aircraftModel.isOnGround());
                     let icao = aircraftModel.model.icao;
                     let baro_alt = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
                         String(aircraftModel.fakeAltitude * 100 * 0.3048) : // Adjusting to unit and To meter from feet
@@ -279,11 +277,12 @@ export default class CanvasController {
                     let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
                     let true_track = String(aircraftModel.heading);
                     let type = GAME_ATTACK_NAMES[aircraftModel.attackType];
+                    let vertical_rate = String(aircraftModel.altRate);
                     
                         
 
-                    let vertical_rate, geo_alt;
-                    vertical_rate = geo_alt = '-';
+                    let geo_alt;
+                    geo_alt = '-';
 
                     finalText += icao + ', ' + callsign + ', ' + time_position + ', ' + last_contact + ', ' + long + ', ' +
                         lat + ', ' + baro_alt + ', ' + on_ground + ', ' + velocity + ', ' + true_track + ', ' + vertical_rate + ', ' + geo_alt + ', ' +

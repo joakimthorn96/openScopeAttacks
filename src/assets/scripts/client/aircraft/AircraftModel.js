@@ -118,6 +118,7 @@ export default class AircraftModel {
         this.fakeGroundSpeed = Math.floor(Math.random() * (60-28) + 28);
         this.trueHeading = 0;
         this.lastContact = "";
+        this.altRate = 0; // climb(positive) / descent(negative) rate in m/s 
 
         GameController.aircraft++;
 
@@ -2598,6 +2599,8 @@ export default class AircraftModel {
             this.decreaseAircraftAltitude();
         } else if (this.target.altitude > this.altitude) {
             this.increaseAircraftAltitude();
+        } else {
+            this.altRate = 0;
         }
     }
 
@@ -2617,6 +2620,7 @@ export default class AircraftModel {
 
         const feetPerSecond = descentRate * TIME.ONE_SECOND_IN_MINUTES;
         const feetDescended = feetPerSecond * TimeKeeper.getDeltaTimeForGameStateAndTimewarp();
+        this.altRate = feetPerSecond * (-0.3048);
 
         if (abs(altitude_diff) < feetDescended) {
             this.altitude = this.target.altitude;
@@ -2645,6 +2649,7 @@ export default class AircraftModel {
 
         const feetPerSecond = climbRate * TIME.ONE_SECOND_IN_MINUTES;
         const feetClimbed = feetPerSecond * TimeKeeper.getDeltaTimeForGameStateAndTimewarp();
+        this.altRate = feetPerSecond * (0.3048);
 
         if (abs(altitude_diff) < abs(feetClimbed)) {
             this.altitude = this.target.altitude;
