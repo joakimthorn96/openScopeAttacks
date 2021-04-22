@@ -237,7 +237,7 @@ export default class AttacksController {
         const simulatorVersion = window.GLOBAL.VERSION;
         const $container = $(UI_DIALOG_FOOTER_TEMPLATE);
 
-        $container.text(`openScope: ADS-B Attacks by Gustav Lindahl, Anton Blåberg`);
+        $container.text(`openScope: ADS-B Attacks by Gustav Lindahl, Anton Blåberg, Joakim Thorn and Alex Wahlgren`);
 
         return $container;
     }
