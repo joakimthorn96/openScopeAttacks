@@ -2460,8 +2460,6 @@ export default class AircraftModel {
         this.radial = radians_normalize(vradial(this.positionModel.relativePosition));
     }
 
-
-
     /*
     Generates a fake squawk code (with emergency calls or invalid values.)
     50% chance of emergency call, 
@@ -2485,6 +2483,7 @@ export default class AircraftModel {
             return code;
         }
     }
+    
     calculateJump() {
       let prob = GameController.jProb * 3   //var 12 nyss!
       this.usedBefore = false;

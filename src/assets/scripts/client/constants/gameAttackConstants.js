@@ -286,23 +286,23 @@ export const GAME_ATTACK_VALUES = [
             },
             {
                 displayLabel: 'Low',
-                value: '10'
-            },
-            {
-                displayLabel: 'Medium',
-                value: '15'
-            },
-            {
-                displayLabel: 'High',
                 value: '20'
             },
             {
+                displayLabel: 'Medium',
+                value: '40'
+            },
+            {
+                displayLabel: 'High',
+                value: '60'
+            },
+            {
                 displayLabel: 'Very high',
-                value: '30'
+                value: '80'
             },
             {
                 displayLabel: 'Crash computer',
-                value: '60'
+                value: '100'
             },
         ]
     },
