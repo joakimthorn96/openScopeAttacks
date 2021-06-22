@@ -105,6 +105,7 @@ class GameController {
         this.RRarity = 0; // Response
         this.QRarity = 0; // Squawk
         this.HRarity = 0; // Heading
+        this.DRarity = 0; // Duplicate
         this.showAttackAircraftVisibility = false;
 
         this.needUpdateOfRates = 1;
@@ -135,6 +136,10 @@ class GameController {
             heading:{
                 rate:0,
                 attack:6
+            },
+            duplicate: {
+                rate: 0,
+                attack: 7
             }
         };
 
@@ -145,6 +150,7 @@ class GameController {
         this.aircraft = 0;
         this.squawkers = 0; 
         this.headers = 0;
+        this.dupers = 0;
 
         this.log = 'Commands used while playing\nTimestamp (s):Aircraft:Command:Attacktype:\n';
 
@@ -209,6 +215,7 @@ class GameController {
         this._eventBus.on(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
         this._eventBus.on(EVENT.SET_SQUAWK_RARITY, this._setQRarity);
         this._eventBus.on(EVENT.SET_HEADING_RARITY, this._setHRarity);
+        this._eventBus.on(EVENT.SET_DUPLICATE_RARITY, this._setDRarity);
 
         window.addEventListener('blur', this._onWindowBlurHandler);
         window.addEventListener('focus', this._onWindowFocusHandler);
@@ -242,6 +249,7 @@ class GameController {
         this._eventBus.off(EVENT.SET_FLOODING_NON_RESPONSIVE, this._setFlooding);
         this._eventBus.off(EVENT.SET_SQUAWK_RARITY, this._setQRarity);
         this._eventBus.off(EVENT.SET_HEADING_RARITY, this._setHRarity);
+        this._eventBus.off(EVENT.SET_DUPLICATE_RARITY, this._setDRarity);
 
         return this.destroy();
     }
@@ -731,6 +739,13 @@ class GameController {
         this.rarities.standStill.rate = parseInt(themeName);
         this.needUpdateOfRates *= -1;
         this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed non-moving weight to "+themeName+"\n";
+    };
+
+    _setDRarity = (themeName) => {
+        this.DRarity = parseInt(themeName);
+        this.rarities.duplicate.rate = parseInt(themeName);
+        this.needUpdateOfRates *= -1;
+        this.optionUpdate += TimeKeeper.accumulatedDeltaTime.toFixed(1) + ': ' + "Changed duplicate aircraft weight to "+themeName+"\n";
     };
 
     _setJProb = (probValue) => {

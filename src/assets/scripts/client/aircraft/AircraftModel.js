@@ -78,6 +78,7 @@ import {
     TIME
 } from '../constants/globalConstants';
 import { ENVIRONMENT } from '../constants/environmentConstants';
+import AircraftController from './AircraftController';
 
 /**
  * @property FLIGHT_RULES
@@ -960,7 +961,7 @@ export default class AircraftModel {
     isArrival() {
         return this.fms.isArrival();
     }
-
+    
     /**
      * Returns whether the aircraft is a departure
      *
@@ -2897,6 +2898,8 @@ export default class AircraftModel {
               GameController.squawkers--;
           } else if(GameController.attackType == 6){
               GameController.headers--;
+          } else if (GameController.attackType == 7){
+              GameController.dupers--;
           }
           this.attackType = 0;
           GameController.aircraft --;

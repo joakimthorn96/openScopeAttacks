@@ -344,6 +344,8 @@ export default class AircraftController {
             return;
         }
 
+        
+
         var tempForFlood = this.floodingValue;
         this.floodingValue = GameController.numberOfFlooding;
 
@@ -928,3 +930,5 @@ export default class AircraftController {
         }
     }
 }
+
+
