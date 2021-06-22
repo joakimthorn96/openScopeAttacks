@@ -249,7 +249,7 @@ export default class CanvasController {
         var finalText = "icao, callsign, time_position, last_contact, long, lat, baro_alt, on_ground, velocity, true_track, vertical_rate, geo_alt, squawk, label, attack_type";
         finalText += '\n';
         var start = performance.now();
-        var sleep = 3000; // interval between "broadcasts" (ms)
+        var sleep = 500; // interval between "broadcasts" (ms)
         var myInterval = setInterval(() => {
 
             for (let i = 0; i < radarTargetModels.length; i++) {
