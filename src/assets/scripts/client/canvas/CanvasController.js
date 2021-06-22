@@ -1737,6 +1737,8 @@ export default class CanvasController {
                 cc.fillStyle = '#31f745'
             } else if (attackType == 6) {
                 cc.fillStyle = '#e331f7'
+            } else if (attackType == 7){
+                cc.fillStyle = '#ff7f50'
             }
         } else {
             cc.fillStyle = fillStyle;

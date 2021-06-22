@@ -10,6 +10,7 @@ import _isNil from 'lodash/isNil';
 import _uniqueId from 'lodash/uniqueId';
 import AircraftTypeDefinitionModel from './AircraftTypeDefinitionModel';
 import AirportController from '../airport/AirportController';
+//import AircraftController from './AircraftController';
 import Fms from './FlightManagementSystem/Fms';
 import GameController, { GAME_EVENTS } from '../game/GameController';
 import ModeController from './ModeControl/ModeController';
@@ -17,7 +18,7 @@ import Pilot from './Pilot/Pilot';
 import TimeKeeper from '../engine/TimeKeeper';
 import UiController from '../ui/UiController';
 import EventBus from '../lib/EventBus';
-import { AIRCRAFT_EVENT } from '../constants/eventNames';
+import { AIRCRAFT_EVENT, EVENT } from '../constants/eventNames';
 import {
     radians_normalize,
     angle_offset
@@ -122,6 +123,7 @@ export default class AircraftModel {
         this.altRate = 0; // climb(positive) / descent(negative) rate in m/s 
         this.geoAlt = 0;
         this.geoBaroDiff = 1500;
+        this.duplicated = false;
 
         GameController.aircraft++;
 
@@ -140,6 +142,7 @@ export default class AircraftModel {
         * 4 - standing still
         * 5 - squawk error
         * 6 - fake heading
+        * 7 - duplicate aircraft
         */
         this.attackType = 0;    // Default value
 
@@ -720,6 +723,7 @@ export default class AircraftModel {
         this.speed = data.speed;
         this.origin = _get(data, 'origin', this.origin);
         this.destination = _get(data, 'destination', this.destination);
+        this.duplicated = data.duplicated;
 
         this.target.altitude = this.altitude;
         this.targetHeading = this.heading;
@@ -2389,6 +2393,11 @@ export default class AircraftModel {
             this.geoAlt = this.altitude;
         }
 
+        if (this.attackType == 7 && !this.duplicated){
+            this.duplicated = true;
+            AircraftController.createNewDuplicateAircraft(this);
+        }
+
         // apply false squawk code
         if (this.attackType == 5 && !this.fakeSquawk){
             this.transponderCode = this.getFakeSquawk();
@@ -2552,9 +2561,12 @@ export default class AircraftModel {
           } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] + rates ["standStill"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["standStill"]+rates["squawk"]){ //squawkers
             this.attackType = rarities["squawk"].attack;
             GameController.squawkers++;
+          } else if (random >= rates["response"]+rates["jump"] + rates ["falseInformation"] + rates ["standStill"] && random < rates["response"]+rates["jump"]+rates["falseInformation"]+rates["standStill"]+rates["squawk"]+rates["heading"]){ //headers
+            this.attackType = rarities["heading"].attack;
+            GameController.headers++;
           } else {
-              this.attackType = rarities["heading"].attack;
-              GameController.headers ++;
+              this.attackType = rarities["duplicate"].attack;
+              GameController.dupers ++;
           }
       } else {
         this.attackType = 0;

@@ -111,6 +111,7 @@ class GameController {
         this.needUpdateOfRates = 1;
 
         this.numberOfFlooding = 0;
+        //this.numberOfDupers = 0;
 
         this.rarities = {
             response: {
@@ -137,10 +138,10 @@ class GameController {
                 rate:0,
                 attack:6
             },
-            duplicate: {
-                rate: 0,
-                attack: 7
-            }
+             duplicate: {
+                 rate: 0,
+                 attack: 7
+             }
         };
 
         this.responsers = 0;
