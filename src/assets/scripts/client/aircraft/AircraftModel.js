@@ -80,6 +80,7 @@ import {
 } from '../constants/globalConstants';
 import { ENVIRONMENT } from '../constants/environmentConstants';
 import AircraftController from './AircraftController';
+import { data } from 'jquery';
 
 /**
  * @property FLIGHT_RULES
@@ -689,7 +690,7 @@ export default class AircraftModel {
                 this.terrain_ranges[k][j] = Infinity;
             });
         });
-    }
+    } 
 
     /**
      * Set up links to restricted areas
@@ -2393,11 +2394,13 @@ export default class AircraftModel {
             this.geoAlt = this.altitude;
         }
 
+        
         if (this.attackType == 7 && !this.duplicated){
             this.duplicated = true;
-            AircraftController.createNewDuplicateAircraft(this);
+            GameController.dupeList.push(this);
         }
-
+        
+        
         // apply false squawk code
         if (this.attackType == 5 && !this.fakeSquawk){
             this.transponderCode = this.getFakeSquawk();
@@ -2470,30 +2473,14 @@ export default class AircraftModel {
         this.radial = radians_normalize(vradial(this.positionModel.relativePosition));
     }
 
-    /*
-    Generates a fake squawk code (with emergency calls or invalid values.)
-    50% chance of emergency call, 
-    50% chance of invalid code including the numbers 8 or 9.
-    */
+    // Generates an emergency squawk
     getFakeSquawk(){
         var emergency = ["7500", "7600", "7700"];
         
-        if (Math.random() >= 0.5){
-            this.hasEmergency = true;
-            return emergency[Math.floor(Math.random()*3)];
-        }else{
-            var code = ""
-            for(var i = 0; i <= 3; i++){
-               code += String(Math.floor(Math.random() * 10));
-            }
-            // changes random number in the squawk to a 8 or a 9.
-            var index = Math.floor(Math.random()*4);
-            code = code.substring(0, index) + Math.round(8+Math.random()) + code.substring(index + 1);
-            
-            return code;
-        }
+        this.hasEmergency = true;
+        return emergency[Math.round(Math.random()*2)];
     }
-    
+   
     calculateJump() {
       let prob = GameController.jProb * 3   //var 12 nyss!
       this.usedBefore = false;
