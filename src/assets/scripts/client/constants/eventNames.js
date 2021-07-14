@@ -178,7 +178,6 @@ export const EVENT = {
     SET_FLOODING_NON_RESPONSIVE: 'set-flooding-non-responsive',
     SET_SQUAWK_RARITY: 'set-squawk-rarity',
     SET_HEADING_RARITY: 'set-heading-rarity',
-    SET_DUPLICATE_RARITY: 'set-duplicate-rarity',
 
     /**
      * Step through pre-defined timewarp speeds
