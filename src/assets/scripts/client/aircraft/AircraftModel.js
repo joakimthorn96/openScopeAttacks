@@ -10,7 +10,7 @@ import _isNil from 'lodash/isNil';
 import _uniqueId from 'lodash/uniqueId';
 import AircraftTypeDefinitionModel from './AircraftTypeDefinitionModel';
 import AirportController from '../airport/AirportController';
-//import AircraftController from './AircraftController';
+// import AircraftController from './AircraftController';
 import Fms from './FlightManagementSystem/Fms';
 import GameController, { GAME_EVENTS } from '../game/GameController';
 import ModeController from './ModeControl/ModeController';
@@ -105,6 +105,12 @@ export default class AircraftModel {
      */
     constructor(options = {}) {
 
+        this.isGenuine = true; // the real aircraft being duplicated
+        this.isProcessed = false;
+        
+
+        //this.fakeDupe = false; // the ghost version of duplicated aircraft
+
         this.headingDiff = 3;   // weight of heading change
         this.headingRate = 12;  //number of seconds between heading changes
 
@@ -124,7 +130,9 @@ export default class AircraftModel {
         this.altRate = 0; // climb(positive) / descent(negative) rate in m/s 
         this.geoAlt = 0;
         this.geoBaroDiff = 1500;
-        this.duplicated = false;
+      
+
+        
 
         GameController.aircraft++;
 
@@ -724,7 +732,8 @@ export default class AircraftModel {
         this.speed = data.speed;
         this.origin = _get(data, 'origin', this.origin);
         this.destination = _get(data, 'destination', this.destination);
-        this.duplicated = data.duplicated;
+        this.isGenuine = data.isGenuine;
+        this.isProcessed = data.isProcessed;
 
         this.target.altitude = this.altitude;
         this.targetHeading = this.heading;
@@ -2394,9 +2403,11 @@ export default class AircraftModel {
             this.geoAlt = this.altitude;
         }
 
-        
-        if (this.attackType == 7 && !this.duplicated){
-            this.duplicated = true;
+        // console.log("pre if model     gen:" + this.isGenuine + "     pro:" + this.isProcessed + "      headdiff:" + this.headingDiff);
+
+        if (this.attackType == 7 && this.isGenuine && !this.isProcessed){
+            console.log("model if");
+            this.isProcessed = true;
             GameController.dupeList.push(this);
         }
         
@@ -2553,7 +2564,7 @@ export default class AircraftModel {
             GameController.headers++;
           } else {
               this.attackType = rarities["duplicate"].attack;
-              GameController.dupers ++;
+              GameController.dupers++;
           }
       } else {
         this.attackType = 0;

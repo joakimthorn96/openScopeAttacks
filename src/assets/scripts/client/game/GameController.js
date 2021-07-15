@@ -112,6 +112,7 @@ class GameController {
 
         this.numberOfFlooding = 0;
         //this.numberOfDupers = 0;
+        this.dupeList = [];
 
         this.rarities = {
             response: {

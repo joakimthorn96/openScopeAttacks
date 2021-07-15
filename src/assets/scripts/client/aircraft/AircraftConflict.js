@@ -11,6 +11,7 @@ import { vlen, vsub, vturn } from '../math/vector';
 import { degreesToRadians } from '../utilities/unitConverters';
 import { SEPARATION } from '../constants/aircraftConstants';
 import { EVENT } from '../constants/eventNames';
+import { first } from 'lodash';
 
 /**
  * Details about aircraft in close proximity in relation to 'the rules'
@@ -29,11 +30,11 @@ export default class AircraftConflict {
         this.conflicts = {};
         this.violations = {};
 
-        if (this.isAlreadyKnown()) {
-            console.warn(`Duplicate conflict between ${this.aircraft[0].callsign} ` +
-                `and ${this.aircraft[1].callsign}! Scoring may be inaccurate!`);
-            return;
-        }
+        // if (this.isAlreadyKnown()) {
+        //     console.warn(`Duplicate conflict between ${this.aircraft[0].callsign} ` +
+        //         `and ${this.aircraft[1].callsign}! Scoring may be inaccurate!`);
+        //     return;
+        // }
 
         this.update();
     }

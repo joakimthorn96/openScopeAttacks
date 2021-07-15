@@ -1214,11 +1214,11 @@ export default class CanvasController {
 
         // Draw the radar target (aka aircraft position dot)
         
-        // if (aircraftModel.attackType == 5 && aircraftModel.hasEmergency){
-        //     cc.fillStyle = '#ff890a';
-        // } else {
-        //     cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
-        // }
+         if (aircraftModel.attackType == 5 && aircraftModel.hasEmergency){
+             cc.fillStyle = '#ff890a';
+        } else {
+            cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
+        }
         
         cc.beginPath();
         cc.arc(0, 0, CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm), 0, tau());
