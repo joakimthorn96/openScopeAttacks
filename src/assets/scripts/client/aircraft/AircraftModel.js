@@ -10,7 +10,6 @@ import _isNil from 'lodash/isNil';
 import _uniqueId from 'lodash/uniqueId';
 import AircraftTypeDefinitionModel from './AircraftTypeDefinitionModel';
 import AirportController from '../airport/AirportController';
-// import AircraftController from './AircraftController';
 import Fms from './FlightManagementSystem/Fms';
 import GameController, { GAME_EVENTS } from '../game/GameController';
 import ModeController from './ModeControl/ModeController';
@@ -107,9 +106,6 @@ export default class AircraftModel {
 
         this.isGenuine = true; // the real aircraft being duplicated
         this.isProcessed = false;
-        
-
-        //this.fakeDupe = false; // the ghost version of duplicated aircraft
 
         this.headingDiff = 3;   // weight of heading change
         this.headingRate = 12;  //number of seconds between heading changes
@@ -2403,10 +2399,7 @@ export default class AircraftModel {
             this.geoAlt = this.altitude;
         }
 
-        // console.log("pre if model     gen:" + this.isGenuine + "     pro:" + this.isProcessed + "      headdiff:" + this.headingDiff);
-
         if (this.attackType == 7 && this.isGenuine && !this.isProcessed){
-            console.log("model if");
             this.isProcessed = true;
             GameController.dupeList.push(this);
         }

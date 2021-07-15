@@ -65,7 +65,6 @@ export default class AircraftController {
         }
 
         this.floodingValue = -1;
-        // this.duplicateValue = -1;
 
         /**
          * Reference to an `AirlineController` instance
@@ -945,7 +944,6 @@ export default class AircraftController {
     }
 
     createNewDuplicateAircraft(aircraftModel) {
-        //var initializationProps = this._buildDuplicateData(aircraftModel);
 
         const airlineList = this._airlineController.getAirline();
         const airlineIndex = Math.floor(Math.random()*airlineList.length)
@@ -955,7 +953,6 @@ export default class AircraftController {
         const dupe = aircraftModel;
         const id = dupe.model.icao;
         const call = dupe.callsign;
-        console.log(id + ", " + call);
 
         const spawnDiff = 3;
         const aLat = AirportController.airport_get().positionModel.latitude;
@@ -967,64 +964,25 @@ export default class AircraftController {
             airlineCallsign: airline.radioName,
             altitude: Math.round(Math.floor(Math.random() * (40000-5000) + 5000)/1000) * 1000,
             attackType: 7,
-            callsign: call, //Math.floor(Math.random()*(value+1200))+"",
+            callsign: call, 
             category: "arrival",
             destination: AirportController.airport_get().icao,
             fleet: "default",
             heading: Math.random()*360*10,
-            icao: id,           //dupe.icao, //airline.fleets.default[Math.floor(Math.random()*airline.fleets.default.length)][0],
+            icao: id, 
             isFlooding: false,
             isGenuine: false,
             isProcessed: true,
-            model: dupe.model, //aircraftTypeDefinition,
+            model: dupe.model, 
             origin: dupe.origin,
             positionModel: new DynamicPositionModel([aLat+Math.random()*spawnDiff-spawnDiff/2, aLon+Math.random()*spawnDiff-spawnDiff/2], AirportController.airport_get().positionModel, Math.random()),
             routeString: this.tRoute,
-            speed: dupe.speed, //Math.floor(Math.random() * (60-28) + 28),
-            transponderCode: dupe.transponderCode //"4135",
+            speed: dupe.speed,
+            transponderCode: dupe.transponderCode
         };
         
         this._createAircraftWithInitializationProps(initializationProps);
-        console.log(this.aircraft.list);
     }
-    /*
-    _buildDuplicateData(aircaftModel){
-        var dupe = aircaftModel;
-        var value = Math.random()*10;
-        
-        const airlineList = dupe._airlineController.getAirline();
-        const airlineIndex = Math.floor(Math.random()*airlineList.length)
-        const airline = airlineList[airlineIndex];
-    
-        const { name, fleet } = airlineNameAndFleetHelper([airline.icao]);
-        let airlineModel = dupe._airlineController.findAirlineById(name);
-        const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId(airline.icao, airlineModel)
-        
-        const spawnDiff = 3;
-        const aLat = AirportController.airport_get().positionModel.latitude;
-        const aLon = AirportController.airport_get().positionModel.longitude;
-        
-        return {
-            airline: dupe.airline.icao,
-            airlineCallsign: dupe.airline.radioName,
-            altitude: Math.round(Math.floor(Math.random() * (40000-5000) + 5000)/1000) * 1000,
-            attackType: 7,
-            callsign: Math.floor(Math.random()*(value+1200))+"",
-            category: "arrival",
-            destination: dupe.AirportController.airport_get().icao,
-            fleet: "default",
-            heading: Math.random()*360+value*10,
-            icao: dupe.airline.fleets.default[Math.floor(Math.random()*airline.fleets.default.length)][0],
-            isFlooding: false,
-            duplicated: true,
-            model: dupe.aircraftTypeDefinition,
-            origin: "",
-            positionModel: new DynamicPositionModel([aLat+Math.random()*spawnDiff-spawnDiff/2, aLon+Math.random()*spawnDiff-spawnDiff/2], AirportController.airport_get().positionModel, Math.random()),
-            routeString: dupe.tRoute,
-            speed: Math.floor(Math.random() * (60-28) + 28),
-            transponderCode: dupe.transponderCode,
-        }; 
-    }*/
 }
 
 
