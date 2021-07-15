@@ -17,6 +17,7 @@ export const GAME_ATTACK_NAMES = {
     4: 'Standing still',
     5: 'False squawk',
     6: 'False heading',
+    7: 'Duplicate aircraft'
 };
 
 
@@ -94,6 +95,40 @@ export const GAME_ATTACK_VALUES = [
         ]
     },
 
+    {
+        name: 'duplicateRarity',
+        defaultValue: '0',
+        description: 'Duplicate aircraft',
+        help: 'Simulates a duplicate of an already existing aircraft.',
+        type: 'select',
+        onChangeEventHandler: EVENT.SET_DUPLICATE_RARITY, 
+        optionList: [
+            {
+                displayLabel: '0',
+                value: '0'
+            },
+            {
+                displayLabel: '1',
+                value: '1'
+            },
+            {
+                displayLabel: '2',
+                value: '2'
+            },
+            {
+                displayLabel: '3',
+                value: '3'
+            },
+            {
+                displayLabel: '4',
+                value: '4'
+            },
+            {
+                displayLabel: '5',
+                value: '5'
+            }
+        ]
+    },
 
     {
         name: 'squawkRarity',
