@@ -104,11 +104,11 @@ export default class AircraftModel {
      */
     constructor(options = {}) {
 
-        this.isGenuine = true; // the real aircraft being duplicated
+        this.isGenuine = true;      // used for duplication attack
         this.isProcessed = false;
 
-        this.headingDiff = 3;   // weight of heading change
-        this.headingRate = 12;  //number of seconds between heading changes
+        this.headingDiff = 3;       // weight of heading change
+        this.headingRate = 12;      //number of seconds between heading changes
 
         this.usedBefore = true;
         this.hasMadeJump = false;
@@ -2380,6 +2380,8 @@ export default class AircraftModel {
             return;
         }
 
+        export var genuine = this.isGenuine;
+        export var processed = this.isProcessed;
 
         //Caluclate jump for attackType 2
         if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 == 0) {

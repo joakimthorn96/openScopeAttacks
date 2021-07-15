@@ -260,24 +260,41 @@ export default class CanvasController {
                     // Formating the fields
                     let last_contact = (aircraftModel.lastContact == "") ?
                         "-" : aircraftModel.lastContact;
+                        
                     let time_position = new Date(Date.now()).toLocaleString();
+
                     aircraftModel.lastContact = time_position;
+
                     let callsign = aircraftModel.callsign;
+
                     let long = String(aircraftModel.positionModel.longitude);
+
                     let lat = String(aircraftModel.positionModel.latitude);
+
+                    
+
                     let on_ground = String(aircraftModel.isOnGround());
+
                     let icao = aircraftModel.model.icao;
+                    
                     let baro_alt = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
                         String(aircraftModel.fakeAltitude * 100 * 0.3048) : // Adjusting to unit and To meter from feet
                         String(aircraftModel.altitude * 0.3048);
+
                     let velocity = (aircraftModel.attackType === 3) ? // If the aircraft is sending false information
                         String(aircraftModel.fakeGroundSpeed * 10 * 0.5144) : // First to knots (*10), then to m/s (*0.5144)
                         String(aircraftModel.trueAirspeed * 0.5144);
+
                     let squawk = String(aircraftModel.transponderCode);
+
                     let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
+
                     let true_track = String(aircraftModel.heading);
+
                     let type = GAME_ATTACK_NAMES[aircraftModel.attackType];
+
                     let vertical_rate = String(aircraftModel.altRate);
+
                     let geo_alt = String(aircraftModel.geoAlt * 0.3048);
 
                     finalText += icao + ', ' + callsign + ', ' + time_position + ', ' + last_contact + ', ' + long + ', ' +
