@@ -104,8 +104,8 @@ export default class AircraftModel {
      */
     constructor(options = {}) {
 
-        this.isGenuine = true;      // used for duplication attack
-        this.isProcessed = false;
+        //this.isGenuine = true;      // used for duplication attack
+        //this.isProcessed = false;
 
         this.headingDiff = 3;       // weight of heading change
         this.headingRate = 12;      //number of seconds between heading changes
@@ -125,10 +125,8 @@ export default class AircraftModel {
         this.lastContact = "";
         this.altRate = 0; // climb(positive) / descent(negative) rate in m/s 
         this.geoAlt = 0;
-        this.geoBaroDiff = 1500;
-      
+        this.geoBaroDiff = 1500;        
 
-        
 
         GameController.aircraft++;
 
@@ -2380,8 +2378,6 @@ export default class AircraftModel {
             return;
         }
 
-        export var genuine = this.isGenuine;
-        export var processed = this.isProcessed;
 
         //Caluclate jump for attackType 2
         if (this.hasMadeJump && this.usedBefore && this.attackType === 2 && Math.floor(TimeKeeper.accumulatedDeltaTime) % 2 == 0) {
