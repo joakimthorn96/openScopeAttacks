@@ -1228,6 +1228,8 @@ export default class CanvasController {
         }
 
         // Draw the radar target (aka aircraft position dot)
+        // TODO: Make sure coloring is correct for ALL aircraft
+        // only works for a few atm..
     
          if (aircraftModel.attackType == 7 && aircraftModel.isGenuine == false){
              cc.fillStyle = '#ff890a';
