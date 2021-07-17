@@ -942,6 +942,15 @@ export default class AircraftController {
         }
     }
 
+    removeDuplicateAircraft(){
+        for(let i = this.aircraft.list.length -1; i >= 0; i--){
+            var air = this.aircraft.list[i];
+            if (!air.isGenuine){
+                this.aircraft_remove(air);
+            }
+        }
+    }
+
     createNewDuplicateAircraft(aircraftModel) {
 
         const airlineList = this._airlineController.getAirline();
