@@ -350,7 +350,6 @@ export default class AircraftController {
         
         if (dupeList.length > 0){
             for (let i = 0; i < dupeList.length; i++){
-                console.log("controller listloop");
                 this.createNewDuplicateAircraft(dupeList[i]);
                 dupeList.splice(i, 1);
                 }
