@@ -271,8 +271,6 @@ export default class CanvasController {
 
                     let lat = String(aircraftModel.positionModel.latitude);
 
-                    
-
                     let on_ground = String(aircraftModel.isOnGround());
 
                     let icao = aircraftModel.model.icao;
@@ -1230,8 +1228,8 @@ export default class CanvasController {
         }
 
         // Draw the radar target (aka aircraft position dot)
-        
-         if (aircraftModel.attackType == 5 && aircraftModel.hasEmergency){
+    
+         if (aircraftModel.attackType == 7 && aircraftModel.isGenuine == false){
              cc.fillStyle = '#ff890a';
         } else {
             cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
