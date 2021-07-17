@@ -959,7 +959,7 @@ export default class AircraftController {
         
         const initializationProps = {
             
-            airline: airline.icao,
+            airline: "",//airline.icao,
             airlineCallsign: airline.radioName,
             altitude: Math.round(Math.floor(Math.random() * (40000-5000) + 5000)/1000) * 1000,
             attackType: 7,
