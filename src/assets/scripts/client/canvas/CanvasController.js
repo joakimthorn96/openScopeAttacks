@@ -1739,6 +1739,7 @@ export default class CanvasController {
 
         const { attackType } = aircraftModel;
 
+        
         if (GameController.showAttackAircraftVisibility == 'true') {
             if (attackType == 0) {
                 cc.fillStyle = fillStyle;
@@ -1755,6 +1756,9 @@ export default class CanvasController {
             } else if (attackType == 6) {
                 cc.fillStyle = '#e331f7'
             } else if (attackType == 7){
+                // TODO: This does not seem to work for the "fake" version of 
+                // duplicated aircraft, only the "real" one. 
+                // Not crucial but should still be fixed.
                 cc.fillStyle = '#ff7f50'
             }
         } else {
