@@ -944,7 +944,7 @@ export default class AircraftController {
 
 
     // TODO: Call this function whenever duplicate attack settings change
-    // within a session. Otherwise the simulation might need a restart to remove
+    // within a session. Otherwise the simulation will need a restart to remove
     // the duplicates. 
     removeDuplicateAircraft(){
         for(let i = this.aircraft.list.length -1; i >= 0; i--){
