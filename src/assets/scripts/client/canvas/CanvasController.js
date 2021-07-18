@@ -285,8 +285,14 @@ export default class CanvasController {
 
                     let squawk = String(aircraftModel.transponderCode);
 
-                    let label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
-
+                    if (aircraftModel.attackType == 7 && aircraftModel.isGenuine == true){
+                        var label = "Duplicate: Authentic";
+                    } else if (aircraftModel.attackType == 7 && aircraftModel.isGenuine == false){
+                        var label = "Duplicate: Fabricated";
+                    } else {
+                        var label = String(aircraftModel.attackType); // 1/2/3 etc. for attacks
+                    }
+                    
                     let true_track = String(aircraftModel.heading);
 
                     let type = GAME_ATTACK_NAMES[aircraftModel.attackType];
@@ -1229,7 +1235,7 @@ export default class CanvasController {
 
         // Draw the radar target (aka aircraft position dot)
     
-         if (aircraftModel.attackType == 7 && aircraftModel.isGenuine == false){
+        if (aircraftModel.attackType == 7 && aircraftModel.isGenuine == false){
              cc.fillStyle = '#ff890a';
         } else {
             cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
@@ -1750,14 +1756,14 @@ export default class CanvasController {
             } else if (attackType == 4) {
                 cc.fillStyle = '#cb6ce6';
             } else if (attackType == 5) {
-                cc.fillStyle = '#31f745'
+                cc.fillStyle = '#31f745';
             } else if (attackType == 6) {
-                cc.fillStyle = '#e331f7'
+                cc.fillStyle = '#e331f7';
             } else if (attackType == 7){
                 // TODO: This does not seem to work for the "fake" version of 
                 // duplicated aircraft, only the "real" one. 
                 // Not crucial but should still be fixed.
-                cc.fillStyle = '#ff7f50'
+                cc.fillStyle = '#ff7f50';
             }
         } else {
             cc.fillStyle = fillStyle;
