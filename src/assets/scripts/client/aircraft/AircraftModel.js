@@ -102,10 +102,7 @@ export default class AircraftModel {
      * @constructor
      * @param options {object}
      */
-    constructor(options = {}) {
-
-        //this.isGenuine = true;      // used for duplication attack
-        //this.isProcessed = false;
+    constructor(options = {}) {   
 
         this.headingDiff = 3;       // weight of heading change
         this.headingRate = 12;      //number of seconds between heading changes
@@ -2386,7 +2383,6 @@ export default class AircraftModel {
             this.usedBefore = true;
         }
         
-
         if(this.attackType == 4 && this.hasMadeJump && Math.floor(TimeKeeper.accumulatedDeltaTime) % this.myRandomTime == 0){
           this.shallIStandStill = !this.shallIStandStill;
         }
@@ -2397,6 +2393,9 @@ export default class AircraftModel {
             this.geoAlt = this.altitude;
         }
 
+        // Duplicate attack
+        // isGenuine: used for duplication attack to determine if aircraft is the real or duplicated version
+        // isProcessed: used to determine if aircraft has already been duplicated or is about to be
         if (this.attackType == 7 && this.isGenuine && !this.isProcessed){
             this.isProcessed = true;
             GameController.dupeList.push(this);
