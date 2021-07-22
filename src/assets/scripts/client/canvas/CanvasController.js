@@ -256,7 +256,7 @@ export default class CanvasController {
                 const { aircraftModel } = radarTargetModels[i];
 
                 if (aircraftModel.attackType != 0) { // If the current aircraft isn't of attack-type "regular" (=> affected)
-                    console.log(aircraftModel);
+                    //console.log(aircraftModel);
                     // Formating the fields
                     let last_contact = (aircraftModel.lastContact == "") ?
                         "-" : aircraftModel.lastContact;
